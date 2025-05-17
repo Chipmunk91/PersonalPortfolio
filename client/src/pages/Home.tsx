@@ -175,8 +175,8 @@ export default function Home() {
           </div>
           
           <div className="mt-12 text-center">
-            <Link href="/playground">
-              <Button className="mx-2">Try Interactive Playground</Button>
+            <Link href="/projects">
+              <Button className="mx-2">View All Projects</Button>
             </Link>
             <Link href="/theory">
               <Button variant="outline" className="mx-2">Explore Theoretical Background</Button>
