@@ -17,9 +17,11 @@ import {
 interface ProjectCardProps {
   project: ProjectType;
   index: number;
+  onSelect?: (project: ProjectType) => void;
+  onVideoPreview?: (project: ProjectType) => void;
 }
 
-export function ProjectCard({ project, index }: ProjectCardProps) {
+export function ProjectCard({ project, index, onSelect, onVideoPreview }: ProjectCardProps) {
   const [showTheory, setShowTheory] = useState(false);
   const [location, setLocation] = useLocation();
   
@@ -36,15 +38,26 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
     }
   };
 
-  // Handle project card click to navigate to project playground
+  // Handle project card click to select for embedded playground
   const handleProjectClick = (e: React.MouseEvent) => {
     // Prevent click if we clicked on one of the buttons/links
     if ((e.target as HTMLElement).closest('a, button')) {
       return;
     }
     
-    // Navigate to the playground with the project id
-    setLocation(`/playground/${project.id}`);
+    // Update the parent component with this project
+    if (onSelect) {
+      onSelect(project);
+    }
+  };
+  
+  // Handle image click for video preview
+  const handleImageClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    
+    if (onVideoPreview) {
+      onVideoPreview(project);
+    }
   };
 
   return (
@@ -60,13 +73,18 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         onClick={handleProjectClick}
       >
         <div className="relative">
-          <img 
-            src={project.imageUrl} 
-            alt={project.title} 
-            className="w-full h-48 object-cover" 
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-            <PlayCircle className="w-16 h-16 text-white" />
+          <div 
+            className="cursor-pointer" 
+            onClick={handleImageClick}
+          >
+            <img 
+              src={project.imageUrl} 
+              alt={project.title} 
+              className="w-full h-48 object-cover" 
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+              <PlayCircle className="w-16 h-16 text-white" />
+            </div>
           </div>
         </div>
         

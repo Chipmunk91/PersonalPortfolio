@@ -1,17 +1,68 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ProjectCard } from './ProjectCard';
 import { projects } from '@/lib/data';
 import { ProjectType } from '@/lib/types';
 import { motion } from 'framer-motion';
-import { Sliders, BarChart3, Layers } from 'lucide-react';
+import { Sliders, BarChart3, Layers, Github, PlayCircle } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 export function ProjectsSection() {
   const [filter, setFilter] = useState<string>('all');
+  const [selectedProject, setSelectedProject] = useState<ProjectType | null>(null);
+  const [playgroundConfig, setPlaygroundConfig] = useState<any>({});
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [currentVideoProject, setCurrentVideoProject] = useState<ProjectType | null>(null);
   
   const filteredProjects = projects.filter(project => 
     filter === 'all' || project.categories.includes(filter)
   );
+  
+  // When a project is selected, update the playground configuration
+  useEffect(() => {
+    if (selectedProject) {
+      // Default configurations based on project type
+      if (selectedProject.categories.includes('ai')) {
+        setPlaygroundConfig({
+          model: 'gpt-3.5',
+          temperature: 0.7,
+          maxLength: 100,
+          prompt: 'Generate a creative story about...'
+        });
+      } else {
+        setPlaygroundConfig({
+          nodes: 50,
+          strength: 5,
+          speed: 3,
+          type: 'Force-Directed Graph'
+        });
+      }
+    }
+  }, [selectedProject]);
+  
+  // Handle project selection for the playground
+  const handleProjectSelect = (project: ProjectType) => {
+    setSelectedProject(project);
+    
+    // Scroll to the playground section
+    document.getElementById('playground-section')?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
+  
+  // Handle video preview for a project
+  const handleVideoPreview = (project: ProjectType) => {
+    setCurrentVideoProject(project);
+    setShowVideoModal(true);
+  };
 
   return (
     <section id="projects" className="py-20 bg-gray-50 dark:bg-gray-800">
