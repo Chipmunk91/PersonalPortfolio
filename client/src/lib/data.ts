@@ -66,6 +66,66 @@ export const projects: ProjectType[] = [
     technologies: ['Three.js', 'WebGL', 'React'],
     demoUrl: '#',
     githubUrl: '#'
+  },
+  {
+    id: 4,
+    title: 'Language Model Playground',
+    description: 'An interactive interface for exploring language model outputs with real-time parameter adjustments.',
+    imageUrl: 'https://images.unsplash.com/photo-1546776310-eef45dd6d63c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500',
+    categories: ['ai', 'interactive'],
+    technologies: ['React', 'Node.js', 'GPT API'],
+    demoUrl: '#',
+    githubUrl: '#'
+  },
+  {
+    id: 5,
+    title: 'Financial Data Visualizer',
+    description: 'A comprehensive dashboard for visualizing complex financial data with customizable charts and filters.',
+    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500',
+    categories: ['visualization', 'interactive'],
+    technologies: ['D3.js', 'React', 'Redux'],
+    demoUrl: '#',
+    githubUrl: '#'
+  },
+  {
+    id: 6,
+    title: 'Image Recognition Analyzer',
+    description: 'A tool that visualizes how image recognition models process and identify features in images.',
+    imageUrl: 'https://images.unsplash.com/photo-1512756290469-ec264b7fbf87?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500',
+    categories: ['ai', 'visualization'],
+    technologies: ['TensorFlow.js', 'Canvas API', 'React'],
+    demoUrl: '#',
+    githubUrl: '#'
+  },
+  {
+    id: 7,
+    title: 'Interactive Data Sonification',
+    description: 'Converting complex datasets into interactive audio experiences to explore data through sound.',
+    imageUrl: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500',
+    categories: ['interactive', 'visualization'],
+    technologies: ['Web Audio API', 'D3.js', 'React'],
+    demoUrl: '#',
+    githubUrl: '#'
+  },
+  {
+    id: 8,
+    title: 'Chatbot Conversation Analyzer',
+    description: 'A visualization tool for analyzing conversation patterns and sentiment in chatbot interactions.',
+    imageUrl: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500',
+    categories: ['ai', 'visualization'],
+    technologies: ['D3.js', 'NLP.js', 'React'],
+    demoUrl: '#',
+    githubUrl: '#'
+  },
+  {
+    id: 9,
+    title: 'Biomedical Data Explorer',
+    description: 'An interactive visualization platform for exploring complex biomedical datasets and relationships.',
+    imageUrl: 'https://images.unsplash.com/photo-1530210124550-912dc1381cb8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500',
+    categories: ['visualization', 'interactive'],
+    technologies: ['Three.js', 'WebGL', 'D3.js'],
+    demoUrl: '#',
+    githubUrl: '#'
   }
 ];
 
