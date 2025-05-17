@@ -129,7 +129,7 @@ export function ProjectCard({ project, index, onSelect, onVideoPreview }: Projec
                 className="text-secondary-500 hover:text-secondary-600 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium text-sm flex items-center gap-1 transition-colors"
               >
                 <FileText className="h-3 w-3" />
-                <span>Theory</span>
+                <span>Paper</span>
               </button>
               
               <a 
@@ -147,11 +147,11 @@ export function ProjectCard({ project, index, onSelect, onVideoPreview }: Projec
         </div>
       </motion.div>
       
-      {/* Theory Modal */}
+      {/* Paper Modal */}
       <Dialog open={showTheory} onOpenChange={setShowTheory}>
         <DialogContent className="w-full sm:w-[80vw] sm:max-w-[80%] max-h-[80vh] overflow-y-auto" style={{ maxWidth: "80%" }}>
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">{project.title} - Theoretical Background</DialogTitle>
+            <DialogTitle className="text-2xl font-bold">{project.title} - Research Paper</DialogTitle>
           </DialogHeader>
           
           <div className="prose dark:prose-invert max-w-none mt-4">
