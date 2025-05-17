@@ -473,8 +473,25 @@ export function ProjectsSection() {
                   </div>
                   
                   <div className="mt-4 flex justify-between">
-                    <Button>
-                      Reset
+                    <Button onClick={() => {
+                      // Reset to default configuration for the selected project type
+                      if (selectedProject?.categories.includes('ai')) {
+                        setPlaygroundConfig({
+                          model: 'gpt-3.5',
+                          temperature: 0.7,
+                          maxLength: 100,
+                          prompt: 'Generate a creative story about...'
+                        });
+                      } else {
+                        setPlaygroundConfig({
+                          nodes: 50,
+                          strength: 5,
+                          speed: 3,
+                          type: 'Force-Directed Graph'
+                        });
+                      }
+                    }}>
+                      Reset Parameters
                     </Button>
                     <Button variant="outline" className="flex items-center gap-1">
                       <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -489,14 +506,7 @@ export function ProjectsSection() {
             </div>
             
             {selectedProject && (
-              <div className="mt-6 flex justify-between items-center">
-                <Button 
-                  onClick={() => setSelectedProject(null)} 
-                  variant="outline"
-                >
-                  Reset Playground
-                </Button>
-                
+              <div className="mt-6 flex justify-end items-center">
                 <a 
                   href={selectedProject.githubUrl} 
                   target="_blank"
