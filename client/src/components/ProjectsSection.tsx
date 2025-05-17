@@ -207,11 +207,11 @@ export function ProjectsSection() {
                 <button
                   key={index}
                   onClick={() => setCurrentPage(index)}
-                  className={`mx-1 h-3 rounded-full transition-all ${
+                  className={`mx-2 transition-all ${
                     currentPage === index
-                      ? "w-8 bg-primary-500 dark:bg-primary-400"
-                      : "w-3 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
-                  }`}
+                      ? "h-4 w-12 bg-blue-500 shadow-lg shadow-blue-300 dark:shadow-blue-900/30"
+                      : "h-4 w-4 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
+                  } rounded-full`}
                   aria-label={`Go to page ${index + 1}`}
                 />
               ))}
