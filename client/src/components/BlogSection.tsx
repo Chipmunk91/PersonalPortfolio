@@ -5,6 +5,7 @@ import { blogPosts } from '@/lib/data';
 import { Input } from '@/components/ui/input';
 import { Search, ChevronRight, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLocation } from 'wouter';
 
 export function BlogSection() {
   const [activeFilter, setActiveFilter] = useState('all');

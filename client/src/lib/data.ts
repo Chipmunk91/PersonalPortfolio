@@ -100,5 +100,65 @@ export const blogPosts: BlogPostType[] = [
     readTime: 12,
     author: 'Hiroshi Tanaka',
     date: 'March 18, 2023'
+  },
+  {
+    id: 4,
+    title: 'Interactive Data Storytelling with Three.js',
+    excerpt: 'How to use Three.js to create immersive 3D visualizations that tell compelling stories with complex datasets.',
+    imageUrl: 'https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400',
+    category: 'tutorial',
+    readTime: 10,
+    author: 'Hiroshi Tanaka',
+    date: 'February 22, 2023'
+  },
+  {
+    id: 5,
+    title: 'Ethical Considerations in AI Visualization',
+    excerpt: 'Exploring the ethical implications of how we visualize AI systems and their impact on user trust and understanding.',
+    imageUrl: 'https://images.unsplash.com/photo-1580894742597-87bc8789db3d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400',
+    category: 'insight',
+    readTime: 7,
+    author: 'Hiroshi Tanaka',
+    date: 'January 15, 2023'
+  },
+  {
+    id: 6,
+    title: 'Visualizing Transformer Models with React',
+    excerpt: 'A detailed walkthrough of creating interactive visualizations for transformer-based NLP models using React and D3.',
+    imageUrl: 'https://images.unsplash.com/photo-1456428746267-a1756408f782?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400',
+    category: 'tutorial',
+    readTime: 15,
+    author: 'Hiroshi Tanaka',
+    date: 'December 10, 2022'
+  },
+  {
+    id: 7,
+    title: 'Revamping a Financial Dashboard with Data Visualization',
+    excerpt: 'Case study on how we transformed a complex financial dashboard into an intuitive visual experience.',
+    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400',
+    category: 'case-study',
+    readTime: 8,
+    author: 'Hiroshi Tanaka',
+    date: 'November 5, 2022'
+  },
+  {
+    id: 8,
+    title: 'The Psychology of Color in Data Visualization',
+    excerpt: 'Understanding how color choices impact the perception and interpretation of data visualizations.',
+    imageUrl: 'https://images.unsplash.com/photo-1550684376-efcbd6e3f031?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400',
+    category: 'insight',
+    readTime: 6,
+    author: 'Hiroshi Tanaka',
+    date: 'October 18, 2022'
+  },
+  {
+    id: 9,
+    title: 'Building Accessible Data Visualizations',
+    excerpt: 'Best practices for creating data visualizations that are accessible to users with different abilities.',
+    imageUrl: 'https://images.unsplash.com/photo-1599507593499-a3f7d7d97667?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400',
+    category: 'tutorial',
+    readTime: 9,
+    author: 'Hiroshi Tanaka',
+    date: 'September 25, 2022'
   }
 ];
