@@ -25,6 +25,13 @@ export function ProjectsSection() {
     filter === 'all' || project.categories.includes(filter)
   );
   
+  // Select the first project by default when component mounts
+  useEffect(() => {
+    if (projects.length > 0 && !selectedProject) {
+      setSelectedProject(projects[0]);
+    }
+  }, []);
+
   // When a project is selected, update the playground configuration
   useEffect(() => {
     if (selectedProject) {
