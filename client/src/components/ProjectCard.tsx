@@ -1,6 +1,7 @@
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink, Github, FileText } from 'lucide-react';
 import { ProjectType } from '@/lib/types';
 import { motion } from 'framer-motion';
+import { Link } from 'wouter';
 
 interface ProjectCardProps {
   project: ProjectType;
@@ -57,7 +58,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           ))}
         </div>
         
-        <div className="flex justify-between items-center">
+        <div className="flex flex-wrap gap-4 items-center justify-between">
           <a 
             href={project.demoUrl} 
             className="text-primary-500 hover:text-primary-600 font-medium text-sm flex items-center gap-1 transition-colors"
@@ -65,13 +66,24 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             <span>Live Demo</span>
             <ExternalLink className="h-3 w-3" />
           </a>
-          <a 
-            href={project.githubUrl} 
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 font-medium text-sm flex items-center gap-1 transition-colors"
-          >
-            <Github className="h-3 w-3" />
-            <span>Source Code</span>
-          </a>
+          
+          <div className="flex gap-4">
+            <Link 
+              href="/theory" 
+              className="text-secondary-500 hover:text-secondary-600 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium text-sm flex items-center gap-1 transition-colors"
+            >
+              <FileText className="h-3 w-3" />
+              <span>Theory</span>
+            </Link>
+            
+            <a 
+              href={project.githubUrl} 
+              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 font-medium text-sm flex items-center gap-1 transition-colors"
+            >
+              <Github className="h-3 w-3" />
+              <span>Source</span>
+            </a>
+          </div>
         </div>
       </div>
     </motion.div>
