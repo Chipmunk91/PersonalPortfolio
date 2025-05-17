@@ -3,14 +3,13 @@ import { Button } from '@/components/ui/button';
 import { BlogPostCard } from './BlogPostCard';
 import { blogPosts } from '@/lib/data';
 import { Input } from '@/components/ui/input';
-import { Search, ChevronRight, Mail } from 'lucide-react';
+import { Search, ChevronRight, Mail, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useLocation } from 'wouter';
 
 export function BlogSection() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [_, setLocation] = useLocation();
+  const [showAllArticles, setShowAllArticles] = useState(false);
   
   const filteredPosts = blogPosts.filter(post => {
     // Category filter
@@ -23,6 +22,9 @@ export function BlogSection() {
     
     return passesCategory && passesSearch;
   });
+  
+  // Show only 6 posts initially, or all posts if showAllArticles is true
+  const displayedPosts = showAllArticles ? filteredPosts : filteredPosts.slice(0, 6);
 
   return (
     <section id="blog" className="py-20 bg-white dark:bg-gray-900">
@@ -93,7 +95,7 @@ export function BlogSection() {
         
         {/* Blog Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredPosts.map((post, index) => (
+          {displayedPosts.map((post, index) => (
             <BlogPostCard 
               key={post.id}
               post={post}
@@ -112,10 +114,13 @@ export function BlogSection() {
           <Button 
             variant="outline" 
             className="inline-flex items-center gap-2 px-6 py-3 h-auto rounded-full"
-            onClick={() => setLocation('/blog/all')}
+            onClick={() => setShowAllArticles(prev => !prev)}
           >
-            <span>View All Articles</span>
-            <ChevronRight className="h-4 w-4" />
+            <span>{showAllArticles ? 'Show Fewer Articles' : 'View All Articles'}</span>
+            {showAllArticles ? 
+              <ChevronDown className="h-4 w-4" /> : 
+              <ChevronRight className="h-4 w-4" />
+            }
           </Button>
         </motion.div>
         
