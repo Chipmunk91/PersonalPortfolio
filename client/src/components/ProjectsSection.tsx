@@ -119,28 +119,40 @@ export function ProjectsSection() {
           <Button
             variant={filter === 'all' ? 'default' : 'outline'}
             className="rounded-full"
-            onClick={() => setFilter('all')}
+            onClick={() => {
+              setFilter('all');
+              setCurrentPage(0); // Reset to first page when changing filter
+            }}
           >
             All Projects
           </Button>
           <Button
             variant={filter === 'visualization' ? 'default' : 'outline'}
             className="rounded-full"
-            onClick={() => setFilter('visualization')}
+            onClick={() => {
+              setFilter('visualization');
+              setCurrentPage(0); // Reset to first page when changing filter
+            }}
           >
             Visualization
           </Button>
           <Button
             variant={filter === 'ai' ? 'default' : 'outline'}
             className="rounded-full"
-            onClick={() => setFilter('ai')}
+            onClick={() => {
+              setFilter('ai');
+              setCurrentPage(0); // Reset to first page when changing filter
+            }}
           >
             AI/ML
           </Button>
           <Button
             variant={filter === 'interactive' ? 'default' : 'outline'}
             className="rounded-full"
-            onClick={() => setFilter('interactive')}
+            onClick={() => {
+              setFilter('interactive');
+              setCurrentPage(0); // Reset to first page when changing filter
+            }}
           >
             Interactive
           </Button>
