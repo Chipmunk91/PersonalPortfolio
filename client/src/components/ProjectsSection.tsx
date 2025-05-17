@@ -4,7 +4,7 @@ import { ProjectCard } from './ProjectCard';
 import { projects } from '@/lib/data';
 import { ProjectType } from '@/lib/types';
 import { motion } from 'framer-motion';
-import { Sliders, BarChart3, Layers, Github, PlayCircle } from 'lucide-react';
+import { Sliders, BarChart3, Layers, Github, PlayCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -20,6 +20,8 @@ export function ProjectsSection() {
   const [playgroundConfig, setPlaygroundConfig] = useState<any>({});
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [currentVideoProject, setCurrentVideoProject] = useState<ProjectType | null>(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const projectsPerPage = 3;
   
   const filteredProjects = projects.filter(project => 
     filter === 'all' || project.categories.includes(filter)
@@ -70,6 +72,25 @@ export function ProjectsSection() {
     setCurrentVideoProject(project);
     setShowVideoModal(true);
   };
+  
+  // Calculate pagination for the carousel
+  const totalPages = Math.ceil(filteredProjects.length / projectsPerPage);
+  
+  // Navigate to the previous page of projects
+  const goToPrevPage = () => {
+    setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
+  };
+  
+  // Navigate to the next page of projects
+  const goToNextPage = () => {
+    setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
+  };
+  
+  // Get the current page of projects to display
+  const paginatedProjects = filteredProjects.slice(
+    currentPage * projectsPerPage,
+    (currentPage + 1) * projectsPerPage
+  );
 
   return (
     <section id="projects" className="py-20 bg-gray-50 dark:bg-gray-800">
@@ -125,17 +146,77 @@ export function ProjectsSection() {
           </Button>
         </motion.div>
         
-        {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => (
-            <ProjectCard 
-              key={project.id}
-              project={project}
-              index={index}
-              onSelect={handleProjectSelect}
-              onVideoPreview={handleVideoPreview}
-            />
-          ))}
+        {/* Project Carousel */}
+        <div className="relative">
+          {/* Navigation Arrows */}
+          <div className="absolute top-1/2 -left-5 -translate-y-1/2 z-10">
+            <button 
+              onClick={goToPrevPage}
+              className="h-10 w-10 rounded-full bg-white dark:bg-gray-700 shadow-md flex items-center justify-center text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+              aria-label="Previous projects"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+          </div>
+          
+          <div className="overflow-hidden">
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              initial={{ x: 0 }}
+              animate={{ x: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              key={currentPage}
+            >
+              {paginatedProjects.map((project, index) => (
+                <ProjectCard 
+                  key={project.id}
+                  project={project}
+                  index={index}
+                  onSelect={handleProjectSelect}
+                  onVideoPreview={handleVideoPreview}
+                />
+              ))}
+              
+              {/* Fill empty slots with blank spaces to maintain grid */}
+              {paginatedProjects.length < projectsPerPage && 
+                Array(projectsPerPage - paginatedProjects.length)
+                  .fill(0)
+                  .map((_, i) => (
+                    <div key={`empty-${i}`} className="invisible">
+                      {/* Empty space */}
+                    </div>
+                  ))
+              }
+            </motion.div>
+          </div>
+          
+          <div className="absolute top-1/2 -right-5 -translate-y-1/2 z-10">
+            <button 
+              onClick={goToNextPage}
+              className="h-10 w-10 rounded-full bg-white dark:bg-gray-700 shadow-md flex items-center justify-center text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+              aria-label="Next projects"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </button>
+          </div>
+          
+          {/* Page Indicators */}
+          {totalPages > 1 && (
+            <div className="flex justify-center mt-6">
+              {Array.from({ length: totalPages }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPage(index)}
+                  className={`mx-1 h-2 rounded-full transition-all ${
+                    currentPage === index
+                      ? "w-6 bg-primary-500"
+                      : "w-2 bg-gray-300 dark:bg-gray-600"
+                  }`}
+                  aria-label={`Go to page ${index + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
         
         {/* Live Playground Section */}
