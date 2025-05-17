@@ -209,7 +209,7 @@ export function ProjectsSection() {
                   onClick={() => setCurrentPage(index)}
                   className={`mx-1 h-2 rounded-full transition-all ${
                     currentPage === index
-                      ? "w-6 bg-primary-500 dark:bg-primary-400" 
+                      ? "w-6 bg-primary-500"
                       : "w-2 bg-gray-300 dark:bg-gray-600"
                   }`}
                   aria-label={`Go to page ${index + 1}`}
