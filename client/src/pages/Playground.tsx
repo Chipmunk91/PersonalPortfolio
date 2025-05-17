@@ -4,7 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { Sliders, BarChart3, Layers, ArrowLeft, Github } from 'lucide-react';
-import { Link, useParams } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { projects } from '@/lib/data';
 import { ProjectType } from '@/lib/types';
 
@@ -263,9 +263,13 @@ const AIVisualization = ({ config }: { config: any }) => {
 };
 
 export default function Playground() {
-  const [params] = useParams();
-  const projectId = parseInt(params?.id || '1');
   const [config, setConfig] = useState({});
+  const [location] = useLocation();
+  
+  // Extract the project ID from the URL or use default
+  const projectId = location.includes('/playground/') 
+    ? parseInt(location.split('/playground/')[1]) || 1 
+    : 1;
   
   // Find the current project
   const project = projects.find(p => p.id === projectId) || projects[0];
