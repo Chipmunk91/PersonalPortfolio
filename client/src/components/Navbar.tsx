@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { ThemeToggle } from './ThemeToggle';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -7,6 +7,7 @@ import { Menu } from 'lucide-react';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [location] = useLocation();
   
   // Handle scroll event to change navbar appearance
   useEffect(() => {
@@ -20,19 +21,22 @@ export function Navbar() {
     };
   }, []);
 
-  const navClasses = isScrolled 
+  // Determine if we're on the homepage
+  const isHomepage = location === '/';
+
+  const navClasses = isScrolled || !isHomepage
     ? "fixed w-full z-50 top-0 left-0 transition-all duration-300 bg-white dark:bg-gray-900 shadow-md"
     : "fixed w-full z-50 top-0 left-0 transition-all duration-300 bg-transparent";
   
-  const linkClasses = isScrolled
-    ? "text-gray-800 dark:text-white hover:text-primary hover:dark:text-primary-400 transition-colors"
+  const linkClasses = isScrolled || !isHomepage
+    ? "text-gray-800 dark:text-white hover:text-primary-500 hover:dark:text-primary-400 transition-colors"
     : "text-white dark:text-white hover:text-primary-500 dark:hover:text-primary-400 transition-colors";
 
   return (
     <nav className={navClasses}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
-          <Link href="/" className="text-2xl font-bold text-white dark:text-white">
+          <Link href="/" className={`text-2xl font-bold ${isScrolled || !isHomepage ? 'text-gray-900 dark:text-white' : 'text-white dark:text-white'}`}>
             Hiroshi<span className="text-primary-500">.dev</span>
           </Link>
           
@@ -48,20 +52,29 @@ export function Navbar() {
               </SheetTrigger>
               <SheetContent>
                 <div className="flex flex-col space-y-4 mt-8">
-                  <a href="#about" className="px-3 py-2 text-base font-medium">About</a>
-                  <a href="#projects" className="px-3 py-2 text-base font-medium">Projects</a>
-                  <a href="#blog" className="px-3 py-2 text-base font-medium">Blog</a>
-                  <a href="#contact" className="px-3 py-2 text-base font-medium bg-primary-500 text-white rounded-md">Contact Me</a>
+                  <Link href="/about" className="px-3 py-2 text-base font-medium">About</Link>
+                  <Link href="/projects" className="px-3 py-2 text-base font-medium">Projects</Link>
+                  <Link href="/playground" className="px-3 py-2 text-base font-medium">Playground</Link>
+                  <Link href="/theory" className="px-3 py-2 text-base font-medium">Theory</Link>
+                  <Link href="/blog" className="px-3 py-2 text-base font-medium">Blog</Link>
+                  <Link href="/contact" className="px-3 py-2 text-base font-medium bg-primary-500 text-white rounded-md">Contact Me</Link>
                 </div>
               </SheetContent>
             </Sheet>
             
             {/* Desktop menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#about" className={linkClasses}>About</a>
-              <a href="#projects" className={linkClasses}>Projects</a>
-              <a href="#blog" className={linkClasses}>Blog</a>
-              <a href="#contact" className="px-4 py-2 rounded-md bg-primary-500 text-white hover:bg-primary-600 transition-colors">Contact Me</a>
+              <Link href="/about" className={linkClasses}>About</Link>
+              <div className="relative group">
+                <span className={`${linkClasses} cursor-pointer`}>Projects</span>
+                <div className="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-xl rounded-md overflow-hidden transform scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 transition-all duration-300 origin-top-left z-50">
+                  <Link href="/projects" className="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">All Projects</Link>
+                  <Link href="/playground" className="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Interactive Playground</Link>
+                  <Link href="/theory" className="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Theoretical Background</Link>
+                </div>
+              </div>
+              <Link href="/blog" className={linkClasses}>Blog</Link>
+              <Link href="/contact" className="px-4 py-2 rounded-md bg-primary-500 text-white hover:bg-primary-600 transition-colors">Contact Me</Link>
             </div>
           </div>
         </div>
