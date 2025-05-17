@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { ExternalLink, Github, FileText, X } from 'lucide-react';
+import { ExternalLink, Github, FileText, X, PlayCircle } from 'lucide-react';
 import { ProjectType } from '@/lib/types';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { Link, useLocation } from 'wouter';
 import {
   Dialog,
   DialogContent,
@@ -20,6 +21,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, index }: ProjectCardProps) {
   const [showTheory, setShowTheory] = useState(false);
+  const [location, setLocation] = useLocation();
   
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -34,22 +36,39 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
     }
   };
 
+  // Handle project card click to navigate to project playground
+  const handleProjectClick = (e: React.MouseEvent) => {
+    // Prevent click if we clicked on one of the buttons/links
+    if ((e.target as HTMLElement).closest('a, button')) {
+      return;
+    }
+    
+    // Navigate to the playground with the project id
+    setLocation(`/playground/${project.id}`);
+  };
+
   return (
     <>
       <motion.div 
-        className="project-card bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg relative"
+        className="project-card bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg relative cursor-pointer"
         data-categories={project.categories.join(',')}
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
         whileHover={{ y: -5, transition: { duration: 0.2 } }}
+        onClick={handleProjectClick}
       >
-        <img 
-          src={project.imageUrl} 
-          alt={project.title} 
-          className="w-full h-48 object-cover" 
-        />
+        <div className="relative">
+          <img 
+            src={project.imageUrl} 
+            alt={project.title} 
+            className="w-full h-48 object-cover" 
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+            <PlayCircle className="w-16 h-16 text-white" />
+          </div>
+        </div>
         
         <div className="p-6">
           <div className="flex justify-between items-start mb-4">
@@ -75,6 +94,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             <a 
               href={project.demoUrl} 
               className="text-primary-500 hover:text-primary-600 font-medium text-sm flex items-center gap-1 transition-colors"
+              onClick={(e) => e.stopPropagation()}
             >
               <span>Live Demo</span>
               <ExternalLink className="h-3 w-3" />
@@ -82,7 +102,10 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             
             <div className="flex gap-4">
               <button 
-                onClick={() => setShowTheory(true)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowTheory(true);
+                }}
                 className="text-secondary-500 hover:text-secondary-600 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium text-sm flex items-center gap-1 transition-colors"
               >
                 <FileText className="h-3 w-3" />
@@ -92,6 +115,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
               <a 
                 href={project.githubUrl} 
                 className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 font-medium text-sm flex items-center gap-1 transition-colors"
+                onClick={(e) => e.stopPropagation()}
               >
                 <Github className="h-3 w-3" />
                 <span>Source</span>

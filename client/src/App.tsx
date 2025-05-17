@@ -19,6 +19,7 @@ function Router() {
       <Route path="/about" component={About}/>
       <Route path="/projects" component={Projects}/>
       <Route path="/playground" component={Playground}/>
+      <Route path="/playground/:id" component={Playground}/>
       <Route path="/theory" component={Theory}/>
       <Route path="/blog" component={Blog}/>
       <Route path="/contact" component={Contact}/>
