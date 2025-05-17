@@ -162,7 +162,7 @@ export function ProjectsSection() {
           <div className="overflow-hidden">
             <motion.div 
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              initial={{ x: 0 }}
+              initial={{ x: "100%" }}
               animate={{ x: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               key={currentPage}
@@ -207,10 +207,10 @@ export function ProjectsSection() {
                 <button
                   key={index}
                   onClick={() => setCurrentPage(index)}
-                  className={`mx-1 h-2 rounded-full transition-all ${
+                  className={`mx-1 h-3 rounded-full transition-all ${
                     currentPage === index
-                      ? "w-6 bg-primary-500"
-                      : "w-2 bg-gray-300 dark:bg-gray-600"
+                      ? "w-8 bg-primary-500 dark:bg-primary-400"
+                      : "w-3 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
                   }`}
                   aria-label={`Go to page ${index + 1}`}
                 />
