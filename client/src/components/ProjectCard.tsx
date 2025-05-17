@@ -107,7 +107,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             
             {/* Modal */}
             <motion.div 
-              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl max-h-[80vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-xl p-6 z-50 shadow-2xl"
+              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-h-[80vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-xl p-6 z-50 shadow-2xl"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
