@@ -26,6 +26,8 @@ export default function BlogPost() {
     if (params && params.id) {
       const foundPost = blogPosts.find(p => p.id === parseInt(params.id, 10));
       setPost(foundPost || null);
+      // Scroll to top when changing blog posts
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [params]);
   
