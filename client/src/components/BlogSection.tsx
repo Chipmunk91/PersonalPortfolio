@@ -10,6 +10,8 @@ export function BlogSection() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [showAllArticles, setShowAllArticles] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 6;
   
   const filteredPosts = blogPosts.filter(post => {
     // Category filter
@@ -23,8 +25,13 @@ export function BlogSection() {
     return passesCategory && passesSearch;
   });
   
-  // Show only 6 posts initially, or all posts if showAllArticles is true
-  const displayedPosts = showAllArticles ? filteredPosts : filteredPosts.slice(0, 6);
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+  
+  // Get posts to display based on current mode and page
+  const displayedPosts = showAllArticles 
+    ? filteredPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage)
+    : filteredPosts.slice(0, 6);
 
   return (
     <section id="blog" className="py-20 bg-white dark:bg-gray-900">
@@ -111,17 +118,35 @@ export function BlogSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <Button 
-            variant="outline" 
-            className="inline-flex items-center gap-2 px-6 py-3 h-auto rounded-full"
-            onClick={() => setShowAllArticles(prev => !prev)}
-          >
-            <span>{showAllArticles ? 'Show Fewer Articles' : 'View All Articles'}</span>
-            {showAllArticles ? 
-              <ChevronDown className="h-4 w-4" /> : 
+          {!showAllArticles ? (
+            <Button 
+              variant="outline" 
+              className="inline-flex items-center gap-2 px-6 py-3 h-auto rounded-full"
+              onClick={() => {
+                setShowAllArticles(true);
+                setCurrentPage(1);
+              }}
+            >
+              <span>View All Articles</span>
               <ChevronRight className="h-4 w-4" />
-            }
-          </Button>
+            </Button>
+          ) : (
+            <div className="flex flex-col items-center space-y-4">
+              <div className="flex justify-center gap-2 flex-wrap">
+                {Array.from({ length: totalPages }).map((_, index) => (
+                  <Button
+                    key={index}
+                    variant={currentPage === index + 1 ? "default" : "outline"}
+                    size="sm"
+                    className="w-10 h-10 rounded-full"
+                    onClick={() => setCurrentPage(index + 1)}
+                  >
+                    {index + 1}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
         </motion.div>
         
         {/* Newsletter Signup */}
