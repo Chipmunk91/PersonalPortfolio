@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
-import { SocialProof } from "@/components/SocialProof";
 import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { BlogSection } from "@/components/BlogSection";
@@ -32,7 +31,6 @@ export default function Home() {
     <div className="min-h-screen">
       <Navbar />
       <Hero />
-      <SocialProof />
       <AboutSection />
       <ProjectsSection />
       <BlogSection />

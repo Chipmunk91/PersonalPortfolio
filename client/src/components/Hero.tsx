@@ -24,21 +24,13 @@ export function Hero() {
           <p className="text-xl sm:text-2xl text-gray-300 mb-8">
             Helping companies transform complex data into intuitive, interactive experiences that drive insights and decision-making.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+          <div className="mb-12">
             <Button
               size="lg"
               className="px-8 py-6 rounded-lg bg-primary-500 hover:bg-primary-600 text-white font-medium text-lg transition-colors duration-300 shadow-lg hover:shadow-xl h-auto"
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Explore My Work
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="px-8 py-6 rounded-lg bg-transparent hover:bg-white/10 text-white border border-white font-medium text-lg transition-colors duration-300 h-auto"
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              Book a Call
             </Button>
           </div>
           
