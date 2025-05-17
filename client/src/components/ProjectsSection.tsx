@@ -586,18 +586,7 @@ export function ProjectsSection() {
               </div>
             </div>
             
-            {selectedProject && (
-              <div className="mt-6 flex justify-end items-center">
-                <a 
-                  href={selectedProject.githubUrl} 
-                  target="_blank"
-                  className="text-primary-500 hover:text-primary-600 font-medium flex items-center gap-1 transition-colors"
-                >
-                  <span>View Source Code</span>
-                  <Github className="h-4 w-4" />
-                </a>
-              </div>
-            )}
+
             
             {/* Video Preview Modal */}
             <Dialog open={showVideoModal} onOpenChange={setShowVideoModal}>
