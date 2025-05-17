@@ -120,7 +120,7 @@ export default function Home() {
           </div>
           
           <div className="flex justify-center mt-10">
-            <Link href="/about">
+            <Link href="/about" onClick={() => window.scrollTo(0, 0)}>
               <Button variant="outline" className="group">
                 <span>Learn more about my expertise</span>
                 <ArrowRight className="ml-2 h-4 w-4 transform transition-transform group-hover:translate-x-1" />
@@ -138,7 +138,7 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Featured Projects</h2>
               <p className="text-gray-600 dark:text-gray-400">Some of my recent work</p>
             </div>
-            <Link href="/projects">
+            <Link href="/projects" onClick={() => window.scrollTo(0, 0)}>
               <Button variant="link" className="text-primary-500">
                 <span>View all projects</span>
                 <ArrowRight className="ml-1 h-4 w-4" />
@@ -162,7 +162,7 @@ export default function Home() {
                     {project.description}
                   </p>
                   <div className="flex justify-end">
-                    <Link href="/projects">
+                    <Link href="/projects" onClick={() => window.scrollTo(0, 0)}>
                       <Button variant="outline" size="sm" className="flex items-center gap-1">
                         <span>View details</span>
                         <ArrowUpRight className="h-3 w-3" />
@@ -186,7 +186,7 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Latest Insights</h2>
               <p className="text-gray-600 dark:text-gray-400">Thoughts and tutorials on AI visualization</p>
             </div>
-            <Link href="/blog">
+            <Link href="/blog" onClick={() => window.scrollTo(0, 0)}>
               <Button variant="link" className="text-primary-500">
                 <span>Read all articles</span>
                 <ArrowRight className="ml-1 h-4 w-4" />
@@ -220,7 +220,7 @@ export default function Home() {
                     <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
                       {post.excerpt}
                     </p>
-                    <Link href="/blog">
+                    <Link href="/blog" onClick={() => window.scrollTo(0, 0)}>
                       <Button variant="link" className="text-primary-500 p-0">Read article</Button>
                     </Link>
                   </div>
@@ -238,7 +238,7 @@ export default function Home() {
           <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
             Let's collaborate on your next project and create powerful, interactive visualizations that drive insights.
           </p>
-          <Link href="/contact">
+          <Link href="/contact" onClick={() => window.scrollTo(0, 0)}>
             <Button className="bg-white text-primary-600 hover:bg-gray-100 transition-colors">
               Get in touch
             </Button>
