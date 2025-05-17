@@ -54,7 +54,6 @@ export function Navbar() {
                 <div className="flex flex-col space-y-4 mt-8">
                   <Link href="/about" className="px-3 py-2 text-base font-medium">About</Link>
                   <Link href="/projects" className="px-3 py-2 text-base font-medium">Projects</Link>
-                  <Link href="/theory" className="px-3 py-2 text-base font-medium">Theory</Link>
                   <Link href="/blog" className="px-3 py-2 text-base font-medium">Blog</Link>
                   <Link href="/contact" className="px-3 py-2 text-base font-medium bg-primary-500 text-white rounded-md">Contact Me</Link>
                 </div>
@@ -64,13 +63,7 @@ export function Navbar() {
             {/* Desktop menu */}
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/about" className={linkClasses}>About</Link>
-              <div className="relative group">
-                <span className={`${linkClasses} cursor-pointer`}>Projects</span>
-                <div className="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-xl rounded-md overflow-hidden transform scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 transition-all duration-300 origin-top-left z-50">
-                  <Link href="/projects" className="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">All Projects</Link>
-                  <Link href="/theory" className="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Theoretical Background</Link>
-                </div>
-              </div>
+              <Link href="/projects" className={linkClasses}>Projects</Link>
               <Link href="/blog" className={linkClasses}>Blog</Link>
               <Link href="/contact" className="px-4 py-2 rounded-md bg-primary-500 text-white hover:bg-primary-600 transition-colors">Contact Me</Link>
             </div>
