@@ -1,5 +1,6 @@
 import { BlogPostType } from '@/lib/types';
 import { motion } from 'framer-motion';
+import { useLocation } from 'wouter';
 
 interface BlogPostCardProps {
   post: BlogPostType;
@@ -7,6 +8,8 @@ interface BlogPostCardProps {
 }
 
 export function BlogPostCard({ post, index }: BlogPostCardProps) {
+  const [_, setLocation] = useLocation();
+  
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'tutorial': 
@@ -20,13 +23,18 @@ export function BlogPostCard({ post, index }: BlogPostCardProps) {
     }
   };
 
+  const navigateToBlogPost = () => {
+    setLocation(`/blog/${post.id}`);
+  };
+
   return (
     <motion.div 
-      className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg"
+      className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg cursor-pointer transform hover:scale-105 transition-transform duration-300"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
+      onClick={navigateToBlogPost}
     >
       <img 
         src={post.imageUrl} 
@@ -44,7 +52,9 @@ export function BlogPostCard({ post, index }: BlogPostCardProps) {
           </span>
         </div>
         
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{post.title}</h3>
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 hover:text-primary-600 dark:hover:text-primary-400">
+          {post.title}
+        </h3>
         
         <p className="text-gray-600 dark:text-gray-400 mb-4">
           {post.excerpt}

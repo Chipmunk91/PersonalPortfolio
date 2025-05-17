@@ -58,13 +58,7 @@ export function AboutSection() {
               </p>
             </div>
             
-            {/* Action Button */}
-            <div className="flex justify-center">
-              <Button className="flex items-center justify-center gap-2 py-6 h-auto px-8">
-                <MessageSquare className="h-4 w-4" />
-                <span>Contact Me</span>
-              </Button>
-            </div>
+
           </div>
           
           <div className="lg:w-3/5">
