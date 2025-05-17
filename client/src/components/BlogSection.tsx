@@ -10,6 +10,7 @@ import { useLocation } from 'wouter';
 export function BlogSection() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [_, setLocation] = useLocation();
   
   const filteredPosts = blogPosts.filter(post => {
     // Category filter
@@ -108,7 +109,11 @@ export function BlogSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <Button variant="outline" className="inline-flex items-center gap-2 px-6 py-3 h-auto rounded-full">
+          <Button 
+            variant="outline" 
+            className="inline-flex items-center gap-2 px-6 py-3 h-auto rounded-full"
+            onClick={() => setLocation('/blog/all')}
+          >
             <span>View All Articles</span>
             <ChevronRight className="h-4 w-4" />
           </Button>
