@@ -98,7 +98,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           <>
             {/* Backdrop */}
             <motion.div 
-              className="fixed inset-0 bg-black/50 z-50"
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -107,10 +107,11 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             
             {/* Modal */}
             <motion.div 
-              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-h-[80vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-xl p-6 z-50 shadow-2xl"
-              initial={{ opacity: 0, scale: 0.9 }}
+              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-h-[80vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-xl p-8 z-50 shadow-2xl border border-gray-200 dark:border-gray-700"
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
               <div className="flex justify-between items-start mb-4">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{project.title} - Theoretical Background</h3>
@@ -120,14 +121,16 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
               </div>
               
               <div className="prose dark:prose-invert max-w-none">
-                <h4>Methodology</h4>
-                <p>
-                  This project implements advanced visualization techniques based on the principles of information design and cognitive psychology. The approach focuses on representing complex data in an intuitive, interactive manner that promotes discovery and insight.
-                </p>
+                <div className="bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-secondary-900/20 p-6 rounded-lg mb-6">
+                  <h4 className="text-xl font-bold text-primary-700 dark:text-primary-300 mb-3">Methodology</h4>
+                  <p className="text-gray-800 dark:text-gray-200">
+                    This project implements advanced visualization techniques based on the principles of information design and cognitive psychology. The approach focuses on representing complex data in an intuitive, interactive manner that promotes discovery and insight.
+                  </p>
+                </div>
                 
-                <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg my-4">
-                  <h5 className="text-sm font-semibold mb-2">Key Algorithms</h5>
-                  <pre className="text-xs overflow-x-auto">
+                <div className="bg-gray-100 dark:bg-gray-800 p-5 rounded-lg my-6 border-l-4 border-secondary-500">
+                  <h5 className="text-md font-semibold mb-3 text-secondary-700 dark:text-secondary-300">Key Algorithms</h5>
+                  <pre className="text-xs overflow-x-auto bg-white dark:bg-gray-900 p-4 rounded shadow-inner">
                     <code>
 {`// Dimensionality reduction using t-SNE
 function tSNE(data, perplexity = 30, iterations = 1000) {
@@ -155,24 +158,43 @@ function tSNE(data, perplexity = 30, iterations = 1000) {
                   </pre>
                 </div>
                 
-                <h4>Mathematical Foundation</h4>
-                <p>
-                  The visualization employs non-linear dimensionality reduction techniques to preserve the local structure of high-dimensional data when mapping to lower dimensions. This is accomplished through a combination of:
-                </p>
-                <ul>
-                  <li>Stochastic neighbor embedding</li>
-                  <li>Force-directed graph layout algorithms</li>
-                  <li>Kernel density estimation for continuous distributions</li>
-                </ul>
+                <div className="bg-gradient-to-r from-accent-50 to-gray-50 dark:from-accent-900/20 dark:to-gray-800/50 p-6 rounded-lg my-6">
+                  <h4 className="text-xl font-bold text-accent-700 dark:text-accent-300 mb-3">Mathematical Foundation</h4>
+                  <p className="text-gray-800 dark:text-gray-200">
+                    The visualization employs non-linear dimensionality reduction techniques to preserve the local structure of high-dimensional data when mapping to lower dimensions. This is accomplished through a combination of:
+                  </p>
+                  <ul className="mt-3 space-y-1">
+                    <li className="flex items-center">
+                      <span className="inline-block w-2 h-2 rounded-full bg-accent-500 mr-2"></span>
+                      Stochastic neighbor embedding
+                    </li>
+                    <li className="flex items-center">
+                      <span className="inline-block w-2 h-2 rounded-full bg-accent-500 mr-2"></span>
+                      Force-directed graph layout algorithms
+                    </li>
+                    <li className="flex items-center">
+                      <span className="inline-block w-2 h-2 rounded-full bg-accent-500 mr-2"></span>
+                      Kernel density estimation for continuous distributions
+                    </li>
+                  </ul>
+                </div>
                 
-                <h4>References</h4>
-                <ul className="text-sm">
-                  <li>Smith, J. et al. (2024). "Advances in Interactive Data Visualization." Journal of Visual Analytics, 45(2), 112-128.</li>
-                  <li>Brown, A. (2023). "Perceptual Optimization in Information Displays." IEEE Transactions on Visualization, 18(3), 89-103.</li>
-                </ul>
+                <div className="bg-gray-50 dark:bg-gray-800/50 p-5 rounded-lg mt-6 border border-gray-200 dark:border-gray-700">
+                  <h4 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-3">References</h4>
+                  <ul className="text-sm space-y-2">
+                    <li className="text-gray-700 dark:text-gray-300">Smith, J. et al. (2024). "Advances in Interactive Data Visualization." <em>Journal of Visual Analytics</em>, 45(2), 112-128.</li>
+                    <li className="text-gray-700 dark:text-gray-300">Brown, A. (2023). "Perceptual Optimization in Information Displays." <em>IEEE Transactions on Visualization</em>, 18(3), 89-103.</li>
+                  </ul>
+                </div>
                 
-                <div className="mt-6 flex justify-end">
-                  <Button onClick={() => setShowTheory(false)}>Close</Button>
+                <div className="mt-8 flex justify-end">
+                  <Button 
+                    onClick={() => setShowTheory(false)}
+                    className="px-6 py-2"
+                    variant="default"
+                  >
+                    Close
+                  </Button>
                 </div>
               </div>
             </motion.div>
