@@ -58,15 +58,11 @@ export function AboutSection() {
               </p>
             </div>
             
-            {/* Action Buttons */}
-            <div className="flex gap-4">
-              <Button variant="outline" className="flex-1 flex items-center justify-center gap-2 py-6 h-auto">
-                <FileText className="h-4 w-4" />
-                <span>Resume</span>
-              </Button>
-              <Button className="flex-1 flex items-center justify-center gap-2 py-6 h-auto">
+            {/* Action Button */}
+            <div className="flex justify-center">
+              <Button className="flex items-center justify-center gap-2 py-6 h-auto px-8">
                 <MessageSquare className="h-4 w-4" />
-                <span>Contact</span>
+                <span>Contact Me</span>
               </Button>
             </div>
           </div>
@@ -105,23 +101,85 @@ export function AboutSection() {
               </div>
             </motion.div>
             
-            {/* Skills Visualization */}
+            {/* Skills Visualization - Grouped with Progress */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Skills & Expertise</h3>
-              <div className="flex flex-wrap gap-3 mb-8">
-                {skills.map((skill, index) => (
-                  <SkillTag 
-                    key={index}
-                    name={skill.name}
-                    category={skill.category}
-                    delay={index * 0.05}
-                  />
-                ))}
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-6">Skills & Expertise</h3>
+              
+              {/* Data Visualization */}
+              <div className="mb-8">
+                <h4 className="text-lg font-medium text-primary-600 dark:text-primary-400 mb-3">Data Visualization</h4>
+                <div className="grid grid-cols-2 gap-4 mb-3">
+                  {skills
+                    .filter(skill => skill.category === 'visualization')
+                    .map((skill, index) => (
+                      <div key={index} className="flex flex-col">
+                        <div className="flex justify-between mb-1">
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{skill.name}</span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400">95%</span>
+                        </div>
+                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                          <div className="bg-primary-500 h-2 rounded-full" style={{ width: '95%' }}></div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+              
+              {/* Web Development */}
+              <div className="mb-8">
+                <h4 className="text-lg font-medium text-secondary-600 dark:text-secondary-400 mb-3">Web Development</h4>
+                <div className="grid grid-cols-2 gap-4 mb-3">
+                  {skills
+                    .filter(skill => skill.category === 'frontend' || skill.category === 'languages')
+                    .map((skill, index) => (
+                      <div key={index} className="flex flex-col">
+                        <div className="flex justify-between mb-1">
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{skill.name}</span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
+                            {skill.category === 'frontend' ? '90%' : '85%'}
+                          </span>
+                        </div>
+                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                          <div 
+                            className="bg-secondary-500 h-2 rounded-full" 
+                            style={{ width: skill.category === 'frontend' ? '90%' : '85%' }}
+                          ></div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+              
+              {/* AI & Data Science */}
+              <div className="mb-4">
+                <h4 className="text-lg font-medium text-accent-600 dark:text-accent-400 mb-3">AI & Data Science</h4>
+                <div className="grid grid-cols-2 gap-4 mb-3">
+                  {skills
+                    .filter(skill => skill.category === 'ai' || skill.category === 'data' || skill.category === 'ux')
+                    .map((skill, index) => (
+                      <div key={index} className="flex flex-col">
+                        <div className="flex justify-between mb-1">
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{skill.name}</span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
+                            {skill.category === 'ai' ? '92%' : skill.category === 'data' ? '88%' : '80%'}
+                          </span>
+                        </div>
+                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                          <div 
+                            className="bg-accent-500 h-2 rounded-full" 
+                            style={{ 
+                              width: skill.category === 'ai' ? '92%' : skill.category === 'data' ? '88%' : '80%' 
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
               </div>
             </motion.div>
           </div>
