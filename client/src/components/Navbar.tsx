@@ -55,7 +55,7 @@ export function Navbar() {
                   <Link href="/about" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">About</Link>
                   <Link href="/projects" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">Projects</Link>
                   <Link href="/blog" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">Blog</Link>
-                  <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium bg-primary-500 text-white rounded-md border border-primary-400">Contact Me</Link>
+                  <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium bg-primary-500 text-white rounded-md">Contact Me</Link>
                 </div>
               </SheetContent>
             </Sheet>
@@ -65,7 +65,7 @@ export function Navbar() {
               <Link href="/about" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>About</Link>
               <Link href="/projects" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>Projects</Link>
               <Link href="/blog" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>Blog</Link>
-              <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className="px-4 py-2 rounded-md bg-primary-500 text-white hover:bg-primary-600 transition-colors border border-primary-400">Contact Me</Link>
+              <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className="px-4 py-2 rounded-md bg-primary-500 text-white hover:bg-primary-600 transition-colors">Contact Me</Link>
             </div>
           </div>
         </div>
