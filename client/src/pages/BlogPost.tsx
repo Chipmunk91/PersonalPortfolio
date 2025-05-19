@@ -1,8 +1,8 @@
-import { useEffect, useState, lazy, Suspense } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRoute, useLocation } from 'wouter';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { blogPosts } from '@/content/blog-posts';
+import { blogPosts, blogPostRegistry } from '@/content/blog-posts';
 import { BlogPostType } from '@/lib/types';
 import { 
   ChevronLeft, 
@@ -121,14 +121,20 @@ export default function BlogPost() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <Suspense fallback={<div className="text-center py-8">Loading article content...</div>}>
-                {/* Load the appropriate blog post content */}
-                {post.id === 1 ? (
-                  <Post1 />
-                ) : post.id === 2 ? (
-                  <Post2 />
-                ) : post.id === 3 ? (
-                  <Post3 />
-                ) : (
+                {/* Load blog post content from registry */}
+                {(() => {
+                  // Find the post in the registry
+                  const postEntry = blogPostRegistry.find(entry => entry.id === post.id);
+                  
+                  // If we found the post's component, render it
+                  if (postEntry) {
+                    const PostContent = postEntry.component;
+                    return <PostContent />;
+                  }
+                  
+                  // Otherwise return null and fall through to the default content
+                  return null;
+                })() || (
                   // Default content for posts that don't have a specific component yet
                   <div className="prose prose-lg dark:prose-invert max-w-none">
                     <p className="lead text-xl">

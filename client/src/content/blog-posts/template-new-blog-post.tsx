@@ -12,6 +12,10 @@ export const metadata: Omit<BlogPostType, 'id'> = {
   date: 'Month DD, YYYY' // Format: May 15, 2023
 };
 
+// To add this post to the blog:
+// 1. Save this file with a name format: XX-your-post-title.tsx (where XX is the next number in sequence)
+// 2. Register it in /client/src/content/blog-posts/index.ts
+
 // Post content component - This will be rendered when someone views your blog post
 export default function BlogPostContent() {
   return (

@@ -1,3 +1,4 @@
+import { lazy } from 'react';
 import { BlogPostType } from '@/lib/types';
 
 // Import blog post metadata (you'll need to add new imports here)
@@ -7,14 +8,36 @@ import { metadata as post3Metadata } from './03-how-to-add-new-blog-posts';
 // When adding a new post, import it here and add it to the blogPosts array below
 // Example: import { metadata as post4Metadata } from './04-your-new-post';
 
-// Create the blog posts array with all metadata
-export const blogPosts: BlogPostType[] = [
-  { id: 1, ...post1Metadata },
-  { id: 2, ...post2Metadata },
-  { id: 3, ...post3Metadata },
+// Register all blog posts with their metadata and component imports
+export const blogPostRegistry = [
+  { 
+    id: 1, 
+    metadata: post1Metadata,
+    component: lazy(() => import('./01-building-intuitive-ai-interfaces'))
+  },
+  { 
+    id: 2, 
+    metadata: post2Metadata,
+    component: lazy(() => import('./02-future-of-ai-explainability'))
+  },
+  { 
+    id: 3, 
+    metadata: post3Metadata,
+    component: lazy(() => import('./03-how-to-add-new-blog-posts'))
+  },
   // Add new blog posts here
-  // { id: 4, ...post4Metadata },
+  // { 
+  //   id: 4, 
+  //   metadata: post4Metadata,
+  //   component: lazy(() => import('./04-your-new-post'))
+  // },
 ];
+
+// Export simple blog post list for metadata purposes
+export const blogPosts: BlogPostType[] = blogPostRegistry.map(entry => ({
+  id: entry.id,
+  ...entry.metadata
+}));
 
 // Function to get a specific blog post by ID
 export function getBlogPostById(id: number): BlogPostType | undefined {
