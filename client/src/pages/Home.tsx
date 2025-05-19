@@ -225,9 +225,9 @@ export default function Home() {
       </section>
       
       {/* CTA Section */}
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="py-16 bg-gray-50 dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto bg-white dark:bg-gray-900 p-10 rounded-xl shadow-md">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Ready to transform your data into intuitive visuals?</h2>
             <p className="text-gray-600 dark:text-gray-400 text-xl mb-8">
               Let's collaborate on your next project and create powerful, interactive visualizations that drive insights.
