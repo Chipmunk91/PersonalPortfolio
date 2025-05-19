@@ -8,6 +8,7 @@ import { BlogPostType } from '@/lib/types';
 // Import blog post content components
 const Post1Content = lazy(() => import('@/content/blog-posts/01-building-intuitive-ai-interfaces'));
 const Post2Content = lazy(() => import('@/content/blog-posts/02-future-of-ai-explainability'));
+const Post3Content = lazy(() => import('@/content/blog-posts/03-how-to-add-new-blog-posts'));
 import { 
   ChevronLeft, 
   Calendar, 
@@ -130,6 +131,8 @@ export default function BlogPost() {
                   <Post1Content />
                 ) : post.id === 2 ? (
                   <Post2Content />
+                ) : post.id === 3 ? (
+                  <Post3Content />
                 ) : (
                   // Default content for posts that don't have a specific component yet
                   <div className="prose prose-lg dark:prose-invert max-w-none">
