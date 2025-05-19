@@ -27,16 +27,6 @@ export function Footer() {
             </div>
             
             <div>
-              <h4 className="font-medium mb-3">Resources</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Tutorials</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">GitHub</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Newsletter</a></li>
-              </ul>
-            </div>
-            
-            <div>
               <h4 className="font-medium mb-3">Legal</h4>
               <ul className="space-y-2">
                 <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
