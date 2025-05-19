@@ -1,56 +1,64 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { BlogPostCard } from './BlogPostCard';
-import { blogPosts } from '@/lib/data';
-import { Input } from '@/components/ui/input';
-import { Search, ChevronRight, Mail, ChevronDown } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { BlogPostCard } from "./BlogPostCard";
+import { blogPosts } from "@/lib/data";
+import { Input } from "@/components/ui/input";
+import { Search, ChevronRight, Mail, ChevronDown } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function BlogSection() {
-  const [activeFilter, setActiveFilter] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [showAllArticles, setShowAllArticles] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
-  
-  const filteredPosts = blogPosts.filter(post => {
+
+  const filteredPosts = blogPosts.filter((post) => {
     // Category filter
-    const passesCategory = activeFilter === 'all' || post.category === activeFilter;
-    
+    const passesCategory =
+      activeFilter === "all" || post.category === activeFilter;
+
     // Search filter
-    const passesSearch = !searchQuery || 
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    const passesSearch =
+      !searchQuery ||
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     return passesCategory && passesSearch;
   });
-  
+
   // Calculate pagination
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
-  
+
   // Get posts to display based on current mode and page
-  const displayedPosts = showAllArticles 
-    ? filteredPosts.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage)
+  const displayedPosts = showAllArticles
+    ? filteredPosts.slice(
+        (currentPage - 1) * postsPerPage,
+        currentPage * postsPerPage,
+      )
     : filteredPosts.slice(0, 6);
 
   return (
     <section id="blog" className="py-20 bg-white dark:bg-gray-900">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Blog & Insights</h2>
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+            Blog & Insights
+          </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Thoughts, tutorials, and deep dives into data visualization, AI interpretability, and interactive tools.
+            Thoughts, tutorials, and deep dives into data visualization, AI
+            interpretability, and interactive tools.
           </p>
         </motion.div>
-        
+
         {/* Blog Filters */}
-        <motion.div 
+        <motion.div
           className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -58,36 +66,36 @@ export function BlogSection() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <div className="flex flex-wrap justify-center gap-3">
-            <Button 
-              variant={activeFilter === 'all' ? 'default' : 'outline'}
+            <Button
+              variant={activeFilter === "all" ? "default" : "outline"}
               className="rounded-full"
-              onClick={() => setActiveFilter('all')}
+              onClick={() => setActiveFilter("all")}
             >
               All Posts
             </Button>
-            <Button 
-              variant={activeFilter === 'tutorial' ? 'default' : 'outline'}
+            <Button
+              variant={activeFilter === "tutorial" ? "default" : "outline"}
               className="rounded-full"
-              onClick={() => setActiveFilter('tutorial')}
+              onClick={() => setActiveFilter("tutorial")}
             >
               Tutorials
             </Button>
-            <Button 
-              variant={activeFilter === 'case-study' ? 'default' : 'outline'}
+            <Button
+              variant={activeFilter === "case-study" ? "default" : "outline"}
               className="rounded-full"
-              onClick={() => setActiveFilter('case-study')}
+              onClick={() => setActiveFilter("case-study")}
             >
               Case Studies
             </Button>
-            <Button 
-              variant={activeFilter === 'insight' ? 'default' : 'outline'}
+            <Button
+              variant={activeFilter === "insight" ? "default" : "outline"}
               className="rounded-full"
-              onClick={() => setActiveFilter('insight')}
+              onClick={() => setActiveFilter("insight")}
             >
               Insights
             </Button>
           </div>
-          
+
           <div className="relative w-full sm:w-auto">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
@@ -99,19 +107,15 @@ export function BlogSection() {
             />
           </div>
         </motion.div>
-        
+
         {/* Blog Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayedPosts.map((post, index) => (
-            <BlogPostCard 
-              key={post.id}
-              post={post}
-              index={index}
-            />
+            <BlogPostCard key={post.id} post={post} index={index} />
           ))}
         </div>
-        
-        <motion.div 
+
+        <motion.div
           className="mt-10 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -119,8 +123,8 @@ export function BlogSection() {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           {!showAllArticles ? (
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="inline-flex items-center gap-2 px-6 py-3 h-auto rounded-full"
               onClick={() => {
                 setShowAllArticles(true);
@@ -148,10 +152,20 @@ export function BlogSection() {
             </div>
           )}
         </motion.div>
-        
+
         {/* Newsletter Signup */}
-        <motion.div 
-          className="mt-16 bg-gradient-to-r from-primary-600 to-accent-600 rounded-2xl overflow-hidden shadow-xl"
+        <motion.div
+          className="
+          mt-16 
+          bg-gradient-to-r 
+          from-primary-600 to-accent-600 
+          rounded-xl overflow-hidden shadow-xl
+          border-b
+          md:border-b-0 
+          md:border-r 
+          border-gray-200 
+          dark:border-gray-700
+          "
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -160,18 +174,33 @@ export function BlogSection() {
           <div className="px-6 py-12 md:p-12">
             <div className="flex flex-col md:flex-row items-center">
               <div className="md:w-1/2 mb-8 md:mb-0">
-                <h3 className="text-2xl font-bold text-white mb-4">Subscribe to my newsletter</h3>
+                <h3 className="text-2xl font-bold mb-4">
+                  Subscribe to my newsletter
+                </h3>
                 <p className="text-primary-100 mb-6">
-                  Get the latest articles, tutorials, and resources on AI visualization and interpretability delivered straight to your inbox.
+                  Get the latest articles, tutorials, and resources on AI
+                  visualization and interpretability delivered straight to your
+                  inbox.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <Input 
-                    type="email" 
-                    placeholder="Your email address" 
-                    className="flex-1 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white h-12" 
+                  <Input
+                    type="email"
+                    placeholder="Your email address"
+                    className="flex-1 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white h-12"
                   />
-                  <Button 
-                    className="px-6 py-3 bg-white text-primary-600 dark:bg-gray-800 dark:text-white font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors h-12 border border-transparent dark:border-gray-700"
+                  <Button
+                    className="
+                    px-6 py-3 
+                    border border-primary-600
+                    bg-white 
+                    text-primary-600 
+                    dark:bg-gray-800 
+                    dark:text-white 
+                    font-medium rounded-lg 
+                    hover:bg-gray-100 
+                    dark:hover:bg-gray-700 
+                    transition-colors h-12 
+                    dark:border-gray-700"
                   >
                     Subscribe
                   </Button>
@@ -182,13 +211,13 @@ export function BlogSection() {
               </div>
               <div className="md:w-1/2 md:pl-12 flex justify-center">
                 <motion.div
-                  animate={{ 
+                  animate={{
                     y: [0, -10, 0],
                   }}
-                  transition={{ 
-                    duration: 6, 
+                  transition={{
+                    duration: 6,
                     repeat: Infinity,
-                    repeatType: "reverse"
+                    repeatType: "reverse",
                   }}
                 >
                   <Mail className="h-24 w-24 text-white opacity-20" />

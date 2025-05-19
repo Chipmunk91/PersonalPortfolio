@@ -270,7 +270,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+      <section className="py-16 bg-primary-50 dark:bg-primary-800 text-primary-900 dark:text-primary-100">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">
             Ready to transform your data into intuitive visuals?
@@ -281,11 +281,19 @@ export default function Home() {
           </p>
           <Link href="/contact" onClick={() => window.scrollTo(0, 0)}>
             <Button
+              variant="outline"
               className="
-                bg-primary-600 text-white 
-                hover:bg-primary-700 
-                dark:bg-primary-500 dark:hover:bg-primary-600
-                transition-colors
+              px-6 py-3 
+              border border-primary-600
+              text-primary-600
+              dark:bg-gray-800 
+              dark:text-white 
+              font-medium 
+              rounded-lg 
+              hover:bg-gray-100 
+              dark:hover:bg-gray-700 
+              transition-colors h-12 
+              dark:border-gray-700
               "
             >
               Get in touch
