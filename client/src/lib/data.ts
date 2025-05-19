@@ -137,4 +137,4 @@ export const projects: ProjectType[] = [
 // This makes it easier to add new posts by creating a single file with both metadata and content
 
 // Re-export the blog posts from the content directory
-export { blogPosts, initializeBlogPosts } from '@/content/blog-posts/dynamic-loader';
+export { blogPosts } from '@/content/blog-posts';
