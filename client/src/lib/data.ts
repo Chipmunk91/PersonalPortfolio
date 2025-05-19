@@ -132,9 +132,6 @@ export const projects: ProjectType[] = [
   }
 ];
 
-// Blog posts are now imported from @/content/blog-posts
-// See the individual files in client/src/content/blog-posts/ for blog content
-// This makes it easier to add new posts by creating a single file with both metadata and content
-
-// Re-export the blog posts from the content directory
-export { blogPosts } from '@/content/blog-posts';
+// Blog posts are now moved to the Markdown-based system
+// See client/src/content/blog-posts-md/ for the new Markdown files
+// This makes it easier to add new posts - just create a new .md file with frontmatter

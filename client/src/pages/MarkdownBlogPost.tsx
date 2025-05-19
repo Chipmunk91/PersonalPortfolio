@@ -3,8 +3,7 @@ import { useRoute, Link, useLocation } from 'wouter';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
-import { getBlogPostById } from '@/lib/markdownLoader';
-import { blogPosts } from '@/lib/data';
+import { getBlogPostById, loadBlogPostContent, getRelatedBlogPosts } from '@/lib/markdownBlog';
 import { BlogPostType } from '@/lib/types';
 import { motion } from 'framer-motion';
 import { 
@@ -40,17 +39,20 @@ export default function MarkdownBlogPost() {
       setLoading(true);
       
       if (postId) {
-        const postData = await getBlogPostById(postId);
+        // Get the blog post metadata
+        const postData = getBlogPostById(postId);
         
         if (postData) {
-          setPost(postData.metadata);
-          setContent(postData.content);
+          setPost(postData);
+          
+          // Load the content separately (markdown text)
+          const markdown = await loadBlogPostContent(postId);
+          if (markdown) {
+            setContent(markdown);
+          }
           
           // Find related posts in the same category
-          const related = blogPosts
-            .filter(p => p.id !== postId && p.category === postData.metadata.category)
-            .slice(0, 3);
-          
+          const related = getRelatedBlogPosts(postId, 3);
           setRelatedPosts(related);
         } else {
           // Post not found, redirect to 404
