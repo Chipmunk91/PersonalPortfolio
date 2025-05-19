@@ -56,10 +56,10 @@ export function Navbar() {
               </SheetTrigger>
               <SheetContent>
                 <div className="flex flex-col space-y-4 mt-8">
-                  <Link href="/about" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'navAbout')}</Link>
-                  <Link href="/projects" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'navProjects')}</Link>
-                  <Link href="/blog" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'navBlog')}</Link>
-                  <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'navContact')}</Link>
+                  <Link href="/about" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'nav.about')}</Link>
+                  <Link href="/projects" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'nav.projects')}</Link>
+                  <Link href="/blog" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'nav.blog')}</Link>
+                  <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'nav.contact')}</Link>
                   <div className="px-3 py-2 flex items-center">
                     <LanguageSelector />
                   </div>
@@ -69,10 +69,10 @@ export function Navbar() {
             
             {/* Desktop menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <Link href="/about" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'navAbout')}</Link>
-              <Link href="/projects" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'navProjects')}</Link>
-              <Link href="/blog" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'navBlog')}</Link>
-              <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'navContact')}</Link>
+              <Link href="/about" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'nav.about')}</Link>
+              <Link href="/projects" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'nav.projects')}</Link>
+              <Link href="/blog" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'nav.blog')}</Link>
+              <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'nav.contact')}</Link>
               <LanguageSelector />
             </div>
           </div>
