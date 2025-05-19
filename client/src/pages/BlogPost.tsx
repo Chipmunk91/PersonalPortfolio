@@ -2,13 +2,8 @@ import { useEffect, useState, lazy, Suspense } from 'react';
 import { useRoute, useLocation } from 'wouter';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { blogPosts } from '@/content/blog-posts';
+import { blogPosts, importPostComponent } from '@/content/blog-posts/auto-index';
 import { BlogPostType } from '@/lib/types';
-
-// Import blog post content components
-const Post1Content = lazy(() => import('@/content/blog-posts/01-building-intuitive-ai-interfaces'));
-const Post2Content = lazy(() => import('@/content/blog-posts/02-future-of-ai-explainability'));
-const Post3Content = lazy(() => import('@/content/blog-posts/03-how-to-add-new-blog-posts'));
 import { 
   ChevronLeft, 
   Calendar, 
@@ -26,11 +21,29 @@ export default function BlogPost() {
   const [_, params] = useRoute('/blog/:id');
   const [__, setLocation] = useLocation();
   const [post, setPost] = useState<BlogPostType | null>(null);
+  const [PostContent, setPostContent] = useState<React.ComponentType | null>(null);
   
   useEffect(() => {
     if (params && params.id) {
-      const foundPost = blogPosts.find(p => p.id === parseInt(params.id, 10));
+      const postId = parseInt(params.id, 10);
+      const foundPost = blogPosts.find(p => p.id === postId);
       setPost(foundPost || null);
+      
+      // Dynamically load the post content component
+      if (foundPost) {
+        const loadPostContent = async () => {
+          try {
+            const PostContentComponent = await importPostComponent(postId);
+            setPostContent(() => PostContentComponent);
+          } catch (error) {
+            console.error('Failed to load blog post content:', error);
+            setPostContent(null);
+          }
+        };
+        
+        loadPostContent();
+      }
+      
       // Scroll to top when changing blog posts
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -126,15 +139,11 @@ export default function BlogPost() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <Suspense fallback={<div className="text-center py-8">Loading article content...</div>}>
-                {/* Render the appropriate content component based on post ID */}
-                {post.id === 1 ? (
-                  <Post1Content />
-                ) : post.id === 2 ? (
-                  <Post2Content />
-                ) : post.id === 3 ? (
-                  <Post3Content />
+                {PostContent ? (
+                  // Render the dynamically loaded post content
+                  <PostContent />
                 ) : (
-                  // Default content for posts that don't have a specific component yet
+                  // Default content if no post component was found
                   <div className="prose prose-lg dark:prose-invert max-w-none">
                     <p className="lead text-xl">
                       {post.excerpt}
@@ -145,16 +154,15 @@ export default function BlogPost() {
                       This is a placeholder for blog post #{post.id}: "{post.title}".
                     </p>
                     
-                    <div className="bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 p-4 my-6">
-                      <h3 className="text-yellow-800 dark:text-yellow-200 font-medium mb-2">How to add content for this post</h3>
-                      <p className="text-yellow-700 dark:text-yellow-300">
+                    <div className="bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500 p-4 my-6">
+                      <h3 className="text-blue-800 dark:text-blue-200 font-medium mb-2">How to add content for this post</h3>
+                      <p className="text-blue-700 dark:text-blue-300">
                         To create content for this blog post:
                       </p>
-                      <ol className="list-decimal ml-5 text-yellow-700 dark:text-yellow-300">
+                      <ol className="list-decimal ml-5 text-blue-700 dark:text-blue-300">
                         <li>Create a new file in <code>client/src/content/blog-posts/</code> with format <code>XX-your-post-title.tsx</code></li>
                         <li>Include both metadata and content in that file (see existing posts as examples)</li>
-                        <li>Import and register it in <code>client/src/content/blog-posts/index.ts</code></li>
-                        <li>Add it to the conditional rendering in <code>BlogPost.tsx</code></li>
+                        <li>That's it! The system will automatically discover and display your post</li>
                       </ol>
                     </div>
                     
