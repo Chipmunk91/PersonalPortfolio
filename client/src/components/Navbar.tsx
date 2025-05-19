@@ -69,10 +69,11 @@ export function Navbar() {
             
             {/* Desktop menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <Link href="/about" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>About</Link>
-              <Link href="/projects" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>Projects</Link>
-              <Link href="/blog" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>Blog</Link>
-              <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>Contact Me</Link>
+              <Link href="/about" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'navAbout')}</Link>
+              <Link href="/projects" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'navProjects')}</Link>
+              <Link href="/blog" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'navBlog')}</Link>
+              <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'navContact')}</Link>
+              <LanguageSelector />
             </div>
           </div>
         </div>
