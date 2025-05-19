@@ -232,7 +232,7 @@ export default function Home() {
             Let's collaborate on your next project and create powerful, interactive visualizations that drive insights.
           </p>
           <Link href="/contact" onClick={() => window.scrollTo(0, 0)}>
-            <Button className="bg-white text-primary-600 hover:bg-gray-100 transition-colors">
+            <Button className="bg-white text-primary-600 hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 transition-colors border border-transparent dark:border-gray-700">
               Get in touch
             </Button>
           </Link>
