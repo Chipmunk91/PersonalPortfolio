@@ -156,7 +156,8 @@ export function BlogSection() {
         {/* Newsletter Signup */}
         <motion.div
           className="
-          mt-16 
+          mt-16
+          bg-white dark:bg-gray-900
           bg-gradient-to-r 
           from-primary-600 to-primary-800
           rounded-xl overflow-hidden shadow-xl
