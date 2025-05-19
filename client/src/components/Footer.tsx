@@ -1,5 +1,6 @@
 import { Linkedin, Twitter, Github } from 'lucide-react';
 import { FaMedium } from 'react-icons/fa';
+import { Link } from 'wouter';
 
 export function Footer() {
   return (
@@ -29,9 +30,9 @@ export function Footer() {
             <div>
               <h4 className="font-medium mb-3">Legal</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Cookie Policy</a></li>
+                <li><Link href="/privacy-policy" onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms-of-service" onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">Terms of Service</Link></li>
+                <li><Link href="/cookie-policy" onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">Cookie Policy</Link></li>
               </ul>
             </div>
           </div>

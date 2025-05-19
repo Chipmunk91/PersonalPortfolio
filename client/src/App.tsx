@@ -13,6 +13,9 @@ import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import AllBlogPosts from "@/pages/AllBlogPosts";
 import Contact from "@/pages/Contact";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
+import TermsOfService from "@/pages/TermsOfService";
+import CookiePolicy from "@/pages/CookiePolicy";
 
 function Router() {
   return (
@@ -27,6 +30,9 @@ function Router() {
       <Route path="/blog/all" component={AllBlogPosts}/>
       <Route path="/blog/:id" component={BlogPost}/>
       <Route path="/contact" component={Contact}/>
+      <Route path="/privacy-policy" component={PrivacyPolicy}/>
+      <Route path="/terms-of-service" component={TermsOfService}/>
+      <Route path="/cookie-policy" component={CookiePolicy}/>
       <Route component={NotFound} />
     </Switch>
   );
