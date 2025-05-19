@@ -158,13 +158,8 @@ export function BlogSection() {
           className="
           mt-16 
           bg-gradient-to-r 
-          from-primary-600 to-accent-600 
+          from-primary-600 to-primary-800
           rounded-xl overflow-hidden shadow-xl
-          border-b
-          md:border-b-0 
-          md:border-r 
-          border-gray-200 
-          dark:border-gray-700
           "
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

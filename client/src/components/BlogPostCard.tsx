@@ -29,7 +29,7 @@ export function BlogPostCard({ post, index }: BlogPostCardProps) {
 
   return (
     <motion.div 
-      className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg cursor-pointer transform hover:scale-105 transition-transform duration-300"
+      className="bg-white dark:bg-primary-900 rounded-xl overflow-hidden shadow-lg cursor-pointer transform hover:scale-105 transition-transform duration-300"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
