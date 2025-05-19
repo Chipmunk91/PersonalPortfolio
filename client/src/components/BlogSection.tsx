@@ -171,7 +171,7 @@ export function BlogSection() {
                     className="flex-1 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white h-12" 
                   />
                   <Button 
-                    className="px-6 py-3 bg-white text-primary-600 font-medium rounded-lg hover:bg-gray-100 transition-colors h-12"
+                    className="px-6 py-3 bg-white text-primary-600 dark:bg-gray-800 dark:text-white font-medium rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors h-12 border border-transparent dark:border-gray-700"
                   >
                     Subscribe
                   </Button>
