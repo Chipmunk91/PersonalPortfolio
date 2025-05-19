@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { useRoute, useLocation } from 'wouter';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { blogPosts } from '@/lib/data';
+import { blogPosts } from '@/content/blog-posts';
 import { BlogPostType } from '@/lib/types';
+
+// Import blog post content components
+const Post1Content = lazy(() => import('@/content/blog-posts/01-building-intuitive-ai-interfaces'));
+const Post2Content = lazy(() => import('@/content/blog-posts/02-future-of-ai-explainability'));
 import { 
   ChevronLeft, 
   Calendar, 
@@ -116,93 +120,55 @@ export default function BlogPost() {
           {/* Blog Post Content */}
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-10 mb-8">
             <motion.div
-              className="prose prose-lg dark:prose-invert max-w-none"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              {/* Blog content for post #1 */}
-              {post.id === 1 && (
-                <>
-                  <p className="lead text-xl">
-                    Learn how to design and implement user interfaces that make AI systems more accessible and understandable to non-technical users.
-                  </p>
-                  
-                  <h2>Introduction</h2>
-                  <p>
-                    Artificial Intelligence systems are becoming increasingly powerful, but their complexity often makes them inaccessible to non-technical users. 
-                    Designing intuitive interfaces for AI tools requires a unique approach that balances technical accuracy with user-friendly experiences.
-                  </p>
-                  
-                  <p>
-                    In this article, we'll explore principles and practical techniques for creating AI interfaces that anyone can use effectively, without sacrificing the 
-                    power of the underlying models.
-                  </p>
-                  
-                  <h2>Key Principles for Intuitive AI Interfaces</h2>
-                  
-                  <h3>1. Progressive Disclosure</h3>
-                  <p>
-                    One of the most important principles when designing AI interfaces is progressive disclosure - revealing information and controls gradually 
-                    as the user needs them. This prevents overwhelming users while still providing access to advanced features.
-                  </p>
-                </>
-              )}
-              
-              {/* Blog content for post #2 */}
-              {post.id === 2 && (
-                <>
-                  <p className="lead text-xl">
-                    Exploring emerging techniques for making complex AI models more transparent and their decisions more interpretable to humans.
-                  </p>
-                  
-                  <h2>The Explainability Challenge</h2>
-                  <p>
-                    As artificial intelligence systems become increasingly complex and pervasive in our daily lives, 
-                    the need to understand how they make decisions grows more urgent. This isn't just an academic concern—it's
-                    a practical necessity for AI adoption in high-stakes domains like healthcare, finance, and criminal justice.
-                  </p>
-                  
-                  <p>
-                    The field of AI explainability (also called XAI, for eXplainable AI) focuses on developing methods and 
-                    techniques to make AI systems more transparent, interpretable, and accountable. In this article, we'll 
-                    explore the current state of AI explainability and examine emerging approaches that promise to make even 
-                    the most complex models more understandable.
-                  </p>
-                </>
-              )}
-              
-              {/* Default content for other blog posts */}
-              {post.id !== 1 && post.id !== 2 && (
-                <>
-                  <p className="lead text-xl">
-                    {post.excerpt}
-                  </p>
-                  
-                  <h2>Introduction</h2>
-                  <p>
-                    This is a placeholder for blog post #{post.id}: "{post.title}". To add custom content for 
-                    this post, you would add specific content here or in a separate component.
-                  </p>
-                  
-                  <p>
-                    Each blog post can have its own unique content, formatted with headings, paragraphs, code snippets,
-                    images and more.
-                  </p>
-                  
-                  <h2>Main Concepts</h2>
-                  <p>
-                    Here you would explain the main concepts related to this blog post topic.
-                  </p>
-                  
-                  <ul>
-                    <li>First important point about {post.title}</li>
-                    <li>Second key insight related to the topic</li>
-                    <li>Third critical element to understand</li>
-                    <li>Additional considerations for implementation</li>
-                  </ul>
-                </>
-              )}
+              <Suspense fallback={<div className="text-center py-8">Loading article content...</div>}>
+                {/* Render the appropriate content component based on post ID */}
+                {post.id === 1 ? (
+                  <Post1Content />
+                ) : post.id === 2 ? (
+                  <Post2Content />
+                ) : (
+                  // Default content for posts that don't have a specific component yet
+                  <div className="prose prose-lg dark:prose-invert max-w-none">
+                    <p className="lead text-xl">
+                      {post.excerpt}
+                    </p>
+                    
+                    <h2>Introduction</h2>
+                    <p>
+                      This is a placeholder for blog post #{post.id}: "{post.title}".
+                    </p>
+                    
+                    <div className="bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 p-4 my-6">
+                      <h3 className="text-yellow-800 dark:text-yellow-200 font-medium mb-2">How to add content for this post</h3>
+                      <p className="text-yellow-700 dark:text-yellow-300">
+                        To create content for this blog post:
+                      </p>
+                      <ol className="list-decimal ml-5 text-yellow-700 dark:text-yellow-300">
+                        <li>Create a new file in <code>client/src/content/blog-posts/</code> with format <code>XX-your-post-title.tsx</code></li>
+                        <li>Include both metadata and content in that file (see existing posts as examples)</li>
+                        <li>Import and register it in <code>client/src/content/blog-posts/index.ts</code></li>
+                        <li>Add it to the conditional rendering in <code>BlogPost.tsx</code></li>
+                      </ol>
+                    </div>
+                    
+                    <h2>Sample Content Structure</h2>
+                    <p>
+                      Your blog post content should include sections like:
+                    </p>
+                    
+                    <ul>
+                      <li>Introduction - Explain what the article is about</li>
+                      <li>Main sections - Divide content into logical sections</li>
+                      <li>Code examples or visual elements where relevant</li>
+                      <li>Conclusion - Summarize key points</li>
+                    </ul>
+                  </div>
+                )}
+              </Suspense>
             </motion.div>
           </div>
           
