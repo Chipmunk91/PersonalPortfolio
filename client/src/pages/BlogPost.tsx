@@ -1,8 +1,8 @@
-import { useEffect, useState, lazy, Suspense } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRoute, useLocation } from 'wouter';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { blogPosts, importPostComponent } from '@/content/blog-posts/auto-index';
+import { blogPosts, loadPostContent, initializeBlogPosts } from '@/content/blog-posts/dynamic-loader';
 import { BlogPostType } from '@/lib/types';
 import { 
   ChevronLeft, 
@@ -22,18 +22,34 @@ export default function BlogPost() {
   const [__, setLocation] = useLocation();
   const [post, setPost] = useState<BlogPostType | null>(null);
   const [PostContent, setPostContent] = useState<React.ComponentType | null>(null);
+  const [postsLoaded, setPostsLoaded] = useState(false);
   
+  // Initialize the blog posts if needed
+  useEffect(() => {
+    async function loadPosts() {
+      if (blogPosts.length === 0 && !postsLoaded) {
+        await initializeBlogPosts();
+        setPostsLoaded(true);
+      }
+    }
+    
+    loadPosts();
+  }, [postsLoaded]);
+  
+  // Handle loading the specific blog post
   useEffect(() => {
     if (params && params.id) {
       const postId = parseInt(params.id, 10);
+      
+      // Find the post in our list
       const foundPost = blogPosts.find(p => p.id === postId);
       setPost(foundPost || null);
       
       // Dynamically load the post content component
       if (foundPost) {
-        const loadPostContent = async () => {
+        const loadContent = async () => {
           try {
-            const PostContentComponent = await importPostComponent(postId);
+            const PostContentComponent = await loadPostContent(postId);
             setPostContent(() => PostContentComponent);
           } catch (error) {
             console.error('Failed to load blog post content:', error);
@@ -41,13 +57,13 @@ export default function BlogPost() {
           }
         };
         
-        loadPostContent();
+        loadContent();
       }
       
       // Scroll to top when changing blog posts
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, [params]);
+  }, [params, postsLoaded]);
   
   if (!post) {
     return (
