@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { ThemeToggle } from './ThemeToggle';
+import { LanguageSelector } from './LanguageSelector';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { getTranslation } from '@/lib/translations';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
+  const { language } = useLanguage();
   
   // Handle scroll event to change navbar appearance
   useEffect(() => {
@@ -52,10 +56,13 @@ export function Navbar() {
               </SheetTrigger>
               <SheetContent>
                 <div className="flex flex-col space-y-4 mt-8">
-                  <Link href="/about" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">About</Link>
-                  <Link href="/projects" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">Projects</Link>
-                  <Link href="/blog" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">Blog</Link>
-                  <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">Contact Me</Link>
+                  <Link href="/about" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'navAbout')}</Link>
+                  <Link href="/projects" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'navProjects')}</Link>
+                  <Link href="/blog" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'navBlog')}</Link>
+                  <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'navContact')}</Link>
+                  <div className="px-3 py-2 flex items-center">
+                    <LanguageSelector />
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>
