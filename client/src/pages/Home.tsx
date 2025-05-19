@@ -225,14 +225,17 @@ export default function Home() {
       </section>
       
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-primary-800 to-primary-700 border-t border-b border-primary-900">
+      <section className="py-16 bg-primary-500 dark:bg-primary-600 border-t border-b border-primary-600 dark:border-primary-700">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Ready to transform your data into intuitive visuals?</h2>
-          <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold text-white dark:text-white mb-4">Ready to transform your data into intuitive visuals?</h2>
+          <p className="text-xl text-white dark:text-white opacity-90 mb-8 max-w-2xl mx-auto">
             Let's collaborate on your next project and create powerful, interactive visualizations that drive insights.
           </p>
           <Link href="/contact" onClick={() => window.scrollTo(0, 0)}>
-            <Button size="lg" variant="secondary" className="bg-white hover:bg-gray-100 text-primary-700 dark:text-primary-700 font-medium px-8 py-3 h-auto rounded-md shadow-lg">
+            <Button 
+              variant="outline"
+              className="border-2 border-white bg-transparent hover:bg-white/10 text-white dark:text-white text-base font-bold px-8 py-3 h-auto rounded-md shadow-md hover:shadow-lg transition-all"
+            >
               Get in touch
             </Button>
           </Link>
