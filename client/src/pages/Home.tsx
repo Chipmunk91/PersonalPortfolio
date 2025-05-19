@@ -161,14 +161,7 @@ export default function Home() {
                   <p className="text-gray-600 dark:text-gray-400 h-16 overflow-hidden mb-4">
                     {project.description}
                   </p>
-                  <div className="flex justify-end">
-                    <Link href="/projects" onClick={() => window.scrollTo(0, 0)}>
-                      <Button variant="outline" size="sm" className="flex items-center gap-1">
-                        <span>View details</span>
-                        <ArrowUpRight className="h-3 w-3" />
-                      </Button>
-                    </Link>
-                  </div>
+
                 </div>
               </motion.div>
             ))}
@@ -220,7 +213,7 @@ export default function Home() {
                     <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
                       {post.excerpt}
                     </p>
-                    <Link href="/blog" onClick={() => window.scrollTo(0, 0)}>
+                    <Link href={`/blog/${post.id}`} onClick={() => window.scrollTo(0, 0)}>
                       <Button variant="link" className="text-primary-500 p-0">Read article</Button>
                     </Link>
                   </div>
