@@ -77,33 +77,38 @@ export default function BlogPostContent() {
       </p>
       <ol>
         <li>Import your post's metadata</li>
-        <li>Add an entry to the <code>blogPostRegistry</code> array with the next available ID</li>
+        <li>Add it to the <code>blogPostsWithIds</code> array with the next available ID</li>
       </ol>
       
       <pre><code>{`// Add this import
-import { metadata as post4Metadata } from './04-your-post-title';
+import { metadata as post3Metadata } from './03-your-post-title';
 
-// Add your post to the registry
-export const blogPostRegistry = [
-  // ...existing posts
-  { 
-    id: 4, 
-    metadata: post4Metadata,
-    component: lazy(() => import('./04-your-post-title'))
-  },
+// Add your post to the array
+const blogPostsWithIds: BlogPostType[] = [
+  { id: 1, ...post1Metadata },
+  { id: 2, ...post2Metadata },
+  { id: 3, ...post3Metadata },
+  // Add more posts here
 ];`}</code></pre>
       
-      <div className="bg-green-50 dark:bg-green-900/30 border-l-4 border-green-500 p-4 my-6">
-        <h3 className="text-green-800 dark:text-green-200 font-medium mb-2">That's it!</h3>
-        <p className="text-green-700 dark:text-green-300">
-          You're done! No need to update any other files. The blog system will automatically:
-        </p>
-        <ul className="list-disc ml-5 text-green-700 dark:text-green-300">
-          <li>Show your post in the blog listings</li>
-          <li>Create a dedicated route for your post</li>
-          <li>Load your content when someone visits your post</li>
-        </ul>
-      </div>
+      <h3>Step 5: Update the BlogPost Component</h3>
+      <p>
+        Finally, update <code>client/src/pages/BlogPost.tsx</code> to import and render your new post:
+      </p>
+      
+      <pre><code>{`// Add this import near the top of the file
+const Post3Content = lazy(() => import('@/content/blog-posts/03-your-post-title'));
+
+// Then add a case for your post in the rendering logic:
+{post.id === 1 ? (
+  <Post1Content />
+) : post.id === 2 ? (
+  <Post2Content />
+) : post.id === 3 ? (
+  <Post3Content />
+) : (
+  // Default content...
+)}`}</code></pre>
       
       <h2>That's It!</h2>
       <p>

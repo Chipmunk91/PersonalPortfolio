@@ -1,63 +1,41 @@
-import { lazy } from 'react';
 import { BlogPostType } from '@/lib/types';
 
-// Import blog post metadata (you'll need to add new imports here)
+// This utility module dynamically manages blog posts
+// Each post is in its own file with both content and metadata
+// This makes it easier to add/edit/remove posts without modifying multiple files
+
+// Import metadata from each blog post
 import { metadata as post1Metadata } from './01-building-intuitive-ai-interfaces';
 import { metadata as post2Metadata } from './02-future-of-ai-explainability';
 import { metadata as post3Metadata } from './03-how-to-add-new-blog-posts';
-// When adding a new post, import it here and add it to the blogPosts array below
-// Example: import { metadata as post4Metadata } from './04-your-new-post';
 
-// Register all blog posts with their metadata and component imports
-export const blogPostRegistry = [
-  { 
-    id: 1, 
-    metadata: post1Metadata,
-    component: lazy(() => import('./01-building-intuitive-ai-interfaces'))
-  },
-  { 
-    id: 2, 
-    metadata: post2Metadata,
-    component: lazy(() => import('./02-future-of-ai-explainability'))
-  },
-  { 
-    id: 3, 
-    metadata: post3Metadata,
-    component: lazy(() => import('./03-how-to-add-new-blog-posts'))
-  },
-  // Add new blog posts here
-  // { 
-  //   id: 4, 
-  //   metadata: post4Metadata,
-  //   component: lazy(() => import('./04-your-new-post'))
-  // },
+// Add additional blog posts by:
+// 1. Creating a new file following the pattern XX-blog-post-name.tsx
+// 2. Including metadata and content in that file
+// 3. Importing the metadata here
+// 4. Adding it to the blogPostsWithIds array below
+
+// Add an ID to each post's metadata
+// IDs are based on the order they're listed here
+const blogPostsWithIds: BlogPostType[] = [
+  { id: 1, ...post1Metadata },
+  { id: 2, ...post2Metadata },
+  { id: 3, ...post3Metadata },
+  // Add more posts here as you create them
+  // Example: { id: 4, ...post4Metadata },
 ];
 
-// Export simple blog post list for metadata purposes
-export const blogPosts: BlogPostType[] = blogPostRegistry.map(entry => ({
-  id: entry.id,
-  ...entry.metadata
-}));
+// Export the complete list of blog posts with metadata
+export const blogPosts = blogPostsWithIds;
 
 // Function to get a specific blog post by ID
 export function getBlogPostById(id: number): BlogPostType | undefined {
   return blogPosts.find(post => post.id === id);
 }
 
-/*
-  INSTRUCTIONS FOR ADDING NEW BLOG POSTS:
-  
-  1. Create a new file in this directory with the pattern XX-your-post-title.tsx
-     - XX should be the next number in sequence (04, 05, etc.)
-     - This number will become the post ID
-  
-  2. Copy the structure from template-new-blog-post.tsx including:
-     - The metadata export (with title, excerpt, etc.)
-     - The default export for the content component
-  
-  3. Update this index.ts file:
-     - Import the metadata from your new post
-     - Add an entry to the blogPosts array
-  
-  4. That's it! Your post will appear in listings and have its own page
-*/
+// Guide for adding new blog posts:
+// 1. Create a new file in this directory (e.g., 03-your-post-title.tsx)
+// 2. Copy the structure from template-new-blog-post.tsx
+// 3. Add your content and metadata in that file
+// 4. Import the metadata here and add it to the blogPostsWithIds array
+// 5. Update the BlogPost.tsx file to include your new post in the rendering logic
