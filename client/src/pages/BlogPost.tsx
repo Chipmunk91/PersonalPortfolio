@@ -121,30 +121,14 @@ export default function BlogPost() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <Suspense fallback={<div className="text-center py-8">Loading article content...</div>}>
-                {/* Dynamically load the blog post content */}
-                {(() => {
-                  try {
-                    // Format the post ID with leading zero
-                    const postIdFormatted = String(post.id).padStart(2, '0');
-                    
-                    // Define the dynamic import
-                    const DynamicPost = lazy(() => 
-                      // Use dynamic import with specific path based on post ID
-                      import(`@/content/blog-posts/${postIdFormatted}-*`)
-                        .catch(err => {
-                          console.error(`Error loading blog post ${post.id}:`, err);
-                          // Return a default export if import fails
-                          return { default: () => null };
-                        })
-                    );
-                    
-                    // Return the component with error boundary
-                    return <DynamicPost />;
-                  } catch (error) {
-                    console.error("Failed to load blog post:", error);
-                    return null;
-                  }
-                })() || (
+                {/* Load the appropriate blog post content */}
+                {post.id === 1 ? (
+                  <Post1 />
+                ) : post.id === 2 ? (
+                  <Post2 />
+                ) : post.id === 3 ? (
+                  <Post3 />
+                ) : (
                   // Default content for posts that don't have a specific component yet
                   <div className="prose prose-lg dark:prose-invert max-w-none">
                     <p className="lead text-xl">
