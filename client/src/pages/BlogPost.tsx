@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { useRoute, useLocation } from 'wouter';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
@@ -16,6 +16,10 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+
+// Import blog content components
+const BuildingIntuitiveAIInterfaces = lazy(() => import('@/content/blog/building-intuitive-ai-interfaces'));
+const FutureOfAIExplainability = lazy(() => import('@/content/blog/future-of-ai-explainability'));
 
 export default function BlogPost() {
   const [_, params] = useRoute('/blog/:id');
@@ -116,42 +120,55 @@ export default function BlogPost() {
           {/* Blog Post Content */}
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-10 mb-8">
             <motion.div
-              className="prose prose-lg dark:prose-invert max-w-none"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <p className="lead text-xl">
-                {post.excerpt}
-              </p>
-              
-              <h2>Introduction</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
-              </p>
-              
-              <p>
-                Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
-              </p>
-              
-              <h2>Main Concepts</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
-              </p>
-              
-              <ul>
-                <li>First important point about {post.title}</li>
-                <li>Second key insight related to the topic</li>
-                <li>Third critical element to understand</li>
-                <li>Additional considerations for implementation</li>
-              </ul>
-              
-              <h2>Technical Implementation</h2>
-              <p>
-                Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
-              </p>
-              
-              <pre><code>
+              {/* Dynamically render blog content based on post ID */}
+              {post.id === 1 ? (
+                // First blog post - "Building Intuitive AI Interfaces"
+                // This content is loaded from a separate file
+                React.lazy(() => import('@/content/blog/building-intuitive-ai-interfaces'))
+              ) : post.id === 2 ? (
+                // Second blog post - "The Future of AI Explainability"
+                // This content is loaded from a separate file
+                React.lazy(() => import('@/content/blog/future-of-ai-explainability'))
+              ) : (
+                // Default content for other blog posts
+                <div className="prose prose-lg dark:prose-invert max-w-none">
+                  <p className="lead text-xl">
+                    {post.excerpt}
+                  </p>
+                  
+                  <h2>Introduction</h2>
+                  <p>
+                    This is a placeholder for blog post #{post.id}: "{post.title}". To add custom content for 
+                    this post, create a new file in client/src/content/blog/ and update this component to load it.
+                  </p>
+                  
+                  <p>
+                    Each blog post can have its own unique content, formatted with headings, paragraphs, code snippets,
+                    images and more. The content is stored in separate files to keep it organized and maintainable.
+                  </p>
+                  
+                  <h2>Main Concepts</h2>
+                  <p>
+                    Here you would explain the main concepts related to this blog post topic.
+                  </p>
+                  
+                  <ul>
+                    <li>First important point about {post.title}</li>
+                    <li>Second key insight related to the topic</li>
+                    <li>Third critical element to understand</li>
+                    <li>Additional considerations for implementation</li>
+                  </ul>
+                  
+                  <h2>Technical Implementation</h2>
+                  <p>
+                    If this post involves technical concepts, you can include code examples and implementation details.
+                  </p>
+                  
+                  <pre><code>
 {`// Example code related to ${post.title}
 function visualizeData(data) {
   const visualization = setupCanvas();
@@ -163,12 +180,15 @@ function visualizeData(data) {
   
   return visualization.render();
 }`}
-              </code></pre>
-              
-              <h2>Conclusion</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
-              </p>
+                  </code></pre>
+                  
+                  <h2>Conclusion</h2>
+                  <p>
+                    Every blog post should end with a conclusion that summarizes the key takeaways and perhaps 
+                    suggests next steps or further reading.
+                  </p>
+                </div>
+              )}
             </motion.div>
           </div>
           
