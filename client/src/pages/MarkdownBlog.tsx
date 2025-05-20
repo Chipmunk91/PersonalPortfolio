@@ -322,7 +322,7 @@ export default function MarkdownBlog() {
             </motion.div>
           </div>
           
-          {/* Blog Post Cards - Styled like Project Cards */}
+          {/* Blog Post Cards */}
           <motion.div 
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             initial={{ opacity: 0, y: 20 }}
@@ -340,7 +340,7 @@ export default function MarkdownBlog() {
                 onClick={() => {
                   setLocation(`/blog/${post.id}`);
                 }}
-                className="cursor-pointer bg-white dark:bg-gray-700 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                className="cursor-pointer bg-white dark:bg-gray-900 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow"
               >
                 <div className="relative">
                   <img 
