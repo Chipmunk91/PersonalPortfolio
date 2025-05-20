@@ -8,7 +8,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import About from "@/pages/About";
 import Projects from "@/pages/Projects";
-import MarkdownBlog from "@/pages/MarkdownBlog";
+import Blog from "@/pages/Blog";
 import Contact from "@/pages/Contact";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
@@ -20,8 +20,8 @@ function Router() {
       <Route path="/" component={Home}/>
       <Route path="/about" component={About}/>
       <Route path="/projects" component={Projects}/>
-      <Route path="/blog" component={MarkdownBlog}/>
-      <Route path="/blog/:id" component={MarkdownBlog}/>
+      <Route path="/blog" component={Blog}/>
+      <Route path="/blog/:id" component={Blog}/>
       <Route path="/contact" component={Contact}/>
       <Route path="/privacy-policy" component={PrivacyPolicy}/>
       <Route path="/terms-of-service" component={TermsOfService}/>

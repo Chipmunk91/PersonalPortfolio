@@ -23,7 +23,7 @@ import {
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
-export default function MarkdownBlog() {
+export default function Blog() {
   const [, setLocation] = useLocation();
   const [, params] = useRoute<{ id: string }>('/blog/:id');
 
