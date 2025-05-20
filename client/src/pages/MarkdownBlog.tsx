@@ -249,7 +249,7 @@ export default function MarkdownBlog() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navbar />
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 pt-24 pb-12">
         <h1 className="text-4xl font-bold mb-8 text-center">Blog & Insights</h1>
         <p className="text-center mb-8 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
           Thoughts, tutorials, and deep dives into data visualization, AI interpretability, and interactive tools.
