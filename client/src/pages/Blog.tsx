@@ -84,7 +84,7 @@ export default function Blog() {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-800">
         <Navbar />
         
-        <div className="container mx-auto px-4 py-12 max-w-4xl">
+        <div className="container mx-auto px-4 pt-24 pb-12 max-w-4xl">
           {/* Back Button */}
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
