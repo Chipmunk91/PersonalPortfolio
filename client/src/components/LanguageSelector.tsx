@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage, Language } from '@/contexts/LanguageContext';
 import {
   DropdownMenu,
@@ -13,6 +13,22 @@ export function LanguageSelector() {
   const { language, setLanguage, languages } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [location] = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
+  
+  // Track scroll position to match navbar behavior
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    
+    // Initial check
+    setIsScrolled(window.scrollY > 50);
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   
   // Determine if we're on the homepage
   const isHomepage = location === '/';
@@ -26,9 +42,9 @@ export function LanguageSelector() {
   const currentLanguage = languages.find(lang => lang.code === language) || languages[0];
   
   // Use the same styling logic as the Nav links
-  const linkClasses = isHomepage
-    ? "text-white dark:text-white hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
-    : "text-gray-800 dark:text-white hover:text-primary-500 hover:dark:text-primary-400 transition-colors";
+  const linkClasses = isScrolled || !isHomepage
+    ? "text-gray-800 dark:text-white hover:text-primary-500 hover:dark:text-primary-400 transition-colors"
+    : "text-white dark:text-white hover:text-primary-500 dark:hover:text-primary-400 transition-colors";
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
