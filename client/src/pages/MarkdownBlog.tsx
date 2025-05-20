@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useRoute, Link, useLocation } from 'wouter';
+import { useRoute, useLocation } from 'wouter';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { blogPosts, getBlogPostContent, parseFrontMatter } from '@/lib/blogLoader';
+import { blogPosts, getBlogPostContent } from '@/lib/blogLoader';
 import { BlogPostType } from '@/lib/types';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { 
@@ -43,8 +43,8 @@ export default function MarkdownBlog() {
         setPost(foundPost);
         
         // Get post content
-        const content = getBlogPostContent(id);
-        setContent(content);
+        const postContent = getBlogPostContent(id);
+        setContent(postContent);
         
         // Get related posts (same category, excluding current post)
         const related = blogPosts
