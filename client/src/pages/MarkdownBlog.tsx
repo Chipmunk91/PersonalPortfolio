@@ -66,7 +66,10 @@ export default function MarkdownBlog() {
             {markdownBlogPosts.map((post) => (
               <div 
                 key={post.id}
-                onClick={() => window.location.href = `/blog/${post.id}`}
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  setLocation(`/blog/${post.id}`);
+                }}
                 className="cursor-pointer bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
               >
                 <img 

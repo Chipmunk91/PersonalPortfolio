@@ -66,6 +66,7 @@ export const markdownBlogPosts: BlogPostType[] = [
 ];
 
 // Markdown content for each blog post - in a real app, these would be loaded from files
+// These are now stored in client/src/content/blog/ directory
 const markdownContent: Record<number, string> = {
   1: `---
 title: Building Intuitive AI Interfaces
