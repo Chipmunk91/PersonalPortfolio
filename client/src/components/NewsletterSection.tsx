@@ -31,24 +31,24 @@ export function NewsletterSection({
 
   return (
     <motion.div 
-      className="mt-24 mb-12 bg-gray-900 dark:bg-gray-900 rounded-xl overflow-hidden shadow-xl"
+      className="mt-24 mb-12 bg-gray-100 dark:bg-gray-900 rounded-xl overflow-hidden shadow-xl"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
       <div className="p-6 md:p-8">
-        <h3 className="text-2xl font-bold text-gray-100 dark:text-white mb-4">
+        <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
           {title}
         </h3>
-        <p className="text-gray-400 dark:text-gray-400 mb-6">
+        <p className="text-gray-600 dark:text-gray-400 mb-6">
           {description}
         </p>
         
         <div className="flex flex-col md:flex-row items-start gap-6">
-          <div className="md:w-1/2 bg-black dark:bg-black p-6 rounded-lg">
-            <h4 className="text-gray-100 dark:text-gray-100 font-bold mb-4">Newsletter benefits:</h4>
-            <ul className="space-y-2 text-gray-300 dark:text-gray-300">
+          <div className="md:w-1/2 bg-white dark:bg-black p-6 rounded-lg shadow-md">
+            <h4 className="text-gray-800 dark:text-gray-100 font-bold mb-4">Newsletter benefits:</h4>
+            <ul className="space-y-2 text-gray-700 dark:text-gray-300">
               <BenefitItem text="Early access to new articles and tools" />
               <BenefitItem text="Exclusive resources not published on the blog" />
               <BenefitItem text="Tips and techniques from industry experts" />
@@ -56,25 +56,25 @@ export function NewsletterSection({
             </ul>
           </div>
           
-          <div className="md:w-1/2 bg-black dark:bg-black p-6 rounded-lg">
+          <div className="md:w-1/2 bg-white dark:bg-black p-6 rounded-lg shadow-md">
             {isSubmitted ? (
               <div className="text-center py-8">
                 <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Check className="w-8 h-8 text-primary-600" />
                 </div>
-                <h4 className="text-xl font-bold mb-2 text-gray-100 dark:text-white">Thanks for subscribing!</h4>
-                <p className="text-gray-400 dark:text-gray-400">
+                <h4 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">Thanks for subscribing!</h4>
+                <p className="text-gray-600 dark:text-gray-400">
                   You'll receive your first newsletter soon.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
-                <h4 className="text-lg font-bold mb-4 text-gray-100 dark:text-white">
+                <h4 className="text-lg font-bold mb-4 text-gray-800 dark:text-white">
                   Join the newsletter
                 </h4>
                 
                 <div className="mb-4">
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 dark:text-gray-300 mb-1">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Email address
                   </label>
                   <Input
@@ -84,7 +84,7 @@ export function NewsletterSection({
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full bg-gray-800 dark:bg-gray-800 border-gray-700 dark:border-gray-700"
+                    className="w-full bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700"
                   />
                 </div>
                 
@@ -96,7 +96,7 @@ export function NewsletterSection({
                   {isSubmitting ? 'Subscribing...' : 'Subscribe'}
                 </Button>
                 
-                <p className="text-xs text-gray-400 dark:text-gray-400 mt-3">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-3">
                   We respect your privacy. Unsubscribe at any time.
                 </p>
               </form>
