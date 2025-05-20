@@ -21,7 +21,7 @@ import { Button } from '@/components/ui/button';
 
 export default function MarkdownBlog() {
   const [, setLocation] = useLocation();
-  const [, params] = useRoute<{ id: string }>('/blog/markdown/:id');
+  const [, params] = useRoute<{ id: string }>('/blog/:id');
   const [post, setPost] = useState<BlogPostType | undefined>(undefined);
   const [content, setContent] = useState<string>('');
   const [relatedPosts, setRelatedPosts] = useState<BlogPostType[]>([]);
