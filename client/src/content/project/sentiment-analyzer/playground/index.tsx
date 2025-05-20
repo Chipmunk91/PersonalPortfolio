@@ -1,478 +1,427 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { Slider } from "@/components/ui/slider";
+import { Label } from "@/components/ui/label";
 
-// Sentiment Analysis Dashboard Playground Component
-export default function SentimentAnalyzerPlayground({ config }: { config: any }) {
-  // State for playground configuration
-  const [textInput, setTextInput] = useState('');
-  const [modelType, setModelType] = useState(config?.modelType || 'transformer');
-  const [confidenceThreshold, setConfidenceThreshold] = useState(config?.confidenceThreshold || 0.5);
-  const [language, setLanguage] = useState(config?.language || 'english');
-  const [analyzedResults, setAnalyzedResults] = useState<any[]>([]);
-  
-  // Refs for charts
-  const sentimentChartRef = useRef<HTMLDivElement>(null);
-  const timelineChartRef = useRef<HTMLDivElement>(null);
-  
-  // Sample texts for quick analysis
-  const sampleTexts = [
-    "I absolutely love this product! It's amazing and has exceeded all my expectations.",
-    "This service was disappointing. The customer support was unresponsive and the quality was poor.",
-    "The movie was okay. It had some good moments but also some scenes that could have been better.",
-    "I can't believe how terrible my experience was. Never using this again!",
-    "The new update includes several improvements and fixes some minor bugs."
+interface SentimentAnalyzerProps {
+  onChange?: (values: any) => void;
+}
+
+// Mock sentiment analysis function (in a real app, this would call an API)
+const analyzeSentiment = (text: string) => {
+  // Simple keyword-based analyzer for demo purposes
+  const positiveWords = [
+    'good', 'great', 'excellent', 'amazing', 'wonderful', 'fantastic',
+    'happy', 'joy', 'love', 'like', 'best', 'beautiful', 'perfect',
+    'awesome', 'outstanding', 'superb', 'brilliant', 'delightful'
   ];
   
-  // Effect to update charts when results change
-  useEffect(() => {
-    if (sentimentChartRef.current && analyzedResults.length > 0) {
-      drawSentimentChart();
-    }
-    
-    if (timelineChartRef.current && analyzedResults.length > 0) {
-      drawTimelineChart();
-    }
-  }, [analyzedResults]);
+  const negativeWords = [
+    'bad', 'terrible', 'awful', 'horrible', 'worst', 'poor',
+    'hate', 'dislike', 'disappointed', 'disappointing', 'failure',
+    'ugly', 'wrong', 'sad', 'angry', 'frustrating', 'mediocre'
+  ];
   
-  // Draw sentiment distribution chart
-  const drawSentimentChart = () => {
-    const width = sentimentChartRef.current?.clientWidth || 400;
-    const height = 300;
-    const margin = { top: 20, right: 30, bottom: 40, left: 40 };
+  const neutralWords = [
+    'the', 'a', 'is', 'are', 'and', 'or', 'but', 'because',
+    'when', 'while', 'if', 'then', 'so', 'therefore', 'thus',
+    'however', 'although', 'nonetheless', 'nevertheless'
+  ];
+  
+  // Convert to lowercase and split into words
+  const words = text.toLowerCase().split(/\W+/);
+  
+  // Count word occurrences
+  const wordCounts: Record<string, number> = {};
+  words.forEach(word => {
+    if (word.trim().length > 0) {
+      wordCounts[word] = (wordCounts[word] || 0) + 1;
+    }
+  });
+  
+  // Calculate sentiment scores
+  let positiveScore = 0;
+  let negativeScore = 0;
+  let neutralScore = 0;
+  
+  Object.keys(wordCounts).forEach(word => {
+    if (positiveWords.includes(word)) {
+      positiveScore += wordCounts[word];
+    } else if (negativeWords.includes(word)) {
+      negativeScore += wordCounts[word];
+    } else if (neutralWords.includes(word)) {
+      neutralScore += wordCounts[word];
+    }
+  });
+  
+  const totalScore = positiveScore + negativeScore + neutralScore;
+  const sentiment = positiveScore > negativeScore ? 'positive' : 
+                   negativeScore > positiveScore ? 'negative' : 'neutral';
+  
+  // Get most common words
+  const wordArray = Object.entries(wordCounts)
+    .map(([word, count]) => ({ word, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 10);
+  
+  // Calculate emotional dimensions (for demo)
+  // In a real model, these would be calculated using more sophisticated methods
+  const joy = Math.min(1, positiveScore / (totalScore || 1) * 2);
+  const anger = Math.min(1, negativeScore / (totalScore || 1) * 1.5);
+  const fear = Math.min(1, negativeScore / (totalScore || 1) * 0.8);
+  const surprise = Math.min(1, (Math.random() * 0.5) + (positiveScore / (totalScore || 1) * 0.5));
+  
+  return {
+    sentiment,
+    score: {
+      positive: positiveScore / (totalScore || 1),
+      negative: negativeScore / (totalScore || 1),
+      neutral: neutralScore / (totalScore || 1)
+    },
+    emotions: {
+      joy,
+      anger, 
+      fear,
+      surprise
+    },
+    keywords: wordArray
+  };
+};
+
+export default function SentimentAnalyzer({ onChange }: SentimentAnalyzerProps) {
+  const [text, setText] = useState<string>("");
+  const [sampleMode, setSampleMode] = useState<'manual' | 'sample1' | 'sample2' | 'sample3'>('manual');
+  const [analysis, setAnalysis] = useState<any>(null);
+  const [visualizationMode, setVisualizationMode] = useState<'bar' | 'radar' | 'words'>('bar');
+  const [threshold, setThreshold] = useState<number>(0.1);
+  
+  // SVG references for the visualizations
+  const barChartRef = useRef<SVGSVGElement>(null);
+  const radarChartRef = useRef<SVGSVGElement>(null);
+  const wordCloudRef = useRef<SVGSVGElement>(null);
+  
+  // Sample texts
+  const sampleTexts = {
+    sample1: "I absolutely love this product! It's amazing and works perfectly. The design is beautiful and functionality is outstanding. I'm very happy with my purchase and would highly recommend it to anyone.",
+    sample2: "This was a terrible experience. The product is poorly made and broke after just a few days. Customer service was unhelpful and rude. I'm extremely disappointed and would not recommend this to anyone.",
+    sample3: "The product arrived on time and seems to work as described. The packaging was standard and the manual provided basic instructions. It's what I expected based on the description, nothing more or less."
+  };
+  
+  // Analyze text when it changes or threshold changes
+  useEffect(() => {
+    if (text.trim().length > 0) {
+      const result = analyzeSentiment(text);
+      setAnalysis(result);
+      
+      // If we have onChange prop, call it
+      if (onChange) {
+        onChange({
+          text,
+          threshold,
+          result
+        });
+      }
+    } else {
+      setAnalysis(null);
+    }
+  }, [text, threshold, onChange]);
+  
+  // Render visualizations when analysis changes
+  useEffect(() => {
+    if (analysis) {
+      if (barChartRef.current && visualizationMode === 'bar') {
+        renderBarChart();
+      }
+      if (radarChartRef.current && visualizationMode === 'radar') {
+        renderRadarChart();
+      }
+      if (wordCloudRef.current && visualizationMode === 'words') {
+        renderWordCloud();
+      }
+    }
+  }, [analysis, visualizationMode]);
+  
+  // Handle sample text selection
+  useEffect(() => {
+    if (sampleMode === 'manual') {
+      // Keep the current text
+    } else {
+      setText(sampleTexts[sampleMode]);
+    }
+  }, [sampleMode]);
+  
+  const renderBarChart = () => {
+    const svg = d3.select(barChartRef.current);
+    svg.selectAll("*").remove();
     
-    // Clear previous SVG
-    d3.select(sentimentChartRef.current).selectAll("*").remove();
-    
-    // Create SVG
-    const svg = d3.select(sentimentChartRef.current)
-      .append("svg")
-      .attr("width", width)
-      .attr("height", height);
-    
-    // Count sentiment distribution
-    const sentimentCounts = {
-      positive: analyzedResults.filter(r => r.sentiment === 'positive').length,
-      neutral: analyzedResults.filter(r => r.sentiment === 'neutral').length,
-      negative: analyzedResults.filter(r => r.sentiment === 'negative').length
-    };
+    const width = 300;
+    const height = 200;
+    const margin = { top: 20, right: 20, bottom: 40, left: 40 };
     
     const data = [
-      { sentiment: 'Positive', count: sentimentCounts.positive, color: '#16a34a' },
-      { sentiment: 'Neutral', count: sentimentCounts.neutral, color: '#3b82f6' },
-      { sentiment: 'Negative', count: sentimentCounts.negative, color: '#ef4444' }
+      { name: 'Positive', value: analysis.score.positive },
+      { name: 'Neutral', value: analysis.score.neutral },
+      { name: 'Negative', value: analysis.score.negative }
     ];
     
-    // Set up scales
     const x = d3.scaleBand()
-      .domain(data.map(d => d.sentiment))
       .range([margin.left, width - margin.right])
-      .padding(0.3);
-    
-    const total = d3.sum(data, d => d.count);
-    const maxCount = d3.max(data, d => d.count) || 0;
+      .domain(data.map(d => d.name))
+      .padding(0.1);
     
     const y = d3.scaleLinear()
-      .domain([0, maxCount])
-      .range([height - margin.bottom, margin.top]);
+      .range([height - margin.bottom, margin.top])
+      .domain([0, 1]);
     
-    // Draw bars
-    svg.selectAll("rect")
-      .data(data)
-      .join("rect")
-      .attr("x", d => x(d.sentiment)!)
-      .attr("y", d => y(d.count))
-      .attr("width", x.bandwidth())
-      .attr("height", d => height - margin.bottom - y(d.count))
-      .attr("fill", d => d.color);
-    
-    // Add labels
-    svg.selectAll("text.bar-label")
-      .data(data)
-      .join("text")
-      .attr("class", "bar-label")
-      .attr("x", d => x(d.sentiment)! + x.bandwidth() / 2)
-      .attr("y", d => y(d.count) - 5)
-      .attr("text-anchor", "middle")
-      .text(d => d.count > 0 ? `${d.count} (${((d.count / total) * 100).toFixed(0)}%)` : '')
-      .attr("fill", "#4b5563")
-      .attr("font-size", "12px");
-    
-    // Add x-axis
+    // Add X axis
     svg.append("g")
       .attr("transform", `translate(0,${height - margin.bottom})`)
       .call(d3.axisBottom(x));
     
-    // Add y-axis
+    // Add Y axis
     svg.append("g")
       .attr("transform", `translate(${margin.left},0)`)
-      .call(d3.axisLeft(y));
+      .call(d3.axisLeft(y).ticks(5, "%"));
+    
+    // Add bars
+    svg.selectAll("rect")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("x", d => x(d.name)!)
+      .attr("y", d => y(d.value))
+      .attr("width", x.bandwidth())
+      .attr("height", d => height - margin.bottom - y(d.value))
+      .attr("fill", d => d.name === 'Positive' ? '#4CAF50' : d.name === 'Negative' ? '#F44336' : '#2196F3');
   };
   
-  // Draw sentiment timeline chart (for multiple entries)
-  const drawTimelineChart = () => {
-    const width = timelineChartRef.current?.clientWidth || 400;
-    const height = 200;
-    const margin = { top: 20, right: 30, bottom: 40, left: 40 };
+  const renderRadarChart = () => {
+    const svg = d3.select(radarChartRef.current);
+    svg.selectAll("*").remove();
     
-    // Clear previous SVG
-    d3.select(timelineChartRef.current).selectAll("*").remove();
+    const width = 300;
+    const height = 300;
+    const margin = 60;
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const radius = Math.min(width, height) / 2 - margin;
     
-    if (analyzedResults.length <= 1) {
-      d3.select(timelineChartRef.current)
-        .append("div")
-        .attr("class", "text-center text-gray-500 text-sm mt-4")
-        .text("Add more entries to see sentiment trends over time");
-      return;
-    }
+    const emotions = [
+      { name: 'Joy', value: analysis.emotions.joy },
+      { name: 'Anger', value: analysis.emotions.anger },
+      { name: 'Fear', value: analysis.emotions.fear },
+      { name: 'Surprise', value: analysis.emotions.surprise }
+    ];
     
-    // Create SVG
-    const svg = d3.select(timelineChartRef.current)
-      .append("svg")
-      .attr("width", width)
-      .attr("height", height);
+    const angleSlice = (Math.PI * 2) / emotions.length;
     
-    // Timeline data - convert sentiment to numeric score
-    const timelineData = analyzedResults.map((result, index) => {
-      let score = 0;
-      if (result.sentiment === 'positive') score = result.score;
-      else if (result.sentiment === 'negative') score = -result.score;
+    // Create the straight lines radiating outward from the center
+    emotions.forEach((_, i) => {
+      const angle = i * angleSlice;
+      svg.append("line")
+        .attr("x1", centerX)
+        .attr("y1", centerY)
+        .attr("x2", centerX + radius * Math.cos(angle - Math.PI / 2))
+        .attr("y2", centerY + radius * Math.sin(angle - Math.PI / 2))
+        .attr("stroke", "rgba(200, 200, 200, 0.5)")
+        .attr("stroke-width", 1);
       
-      return {
-        index,
-        score,
-        sentiment: result.sentiment
-      };
+      // Add emotion labels
+      svg.append("text")
+        .attr("x", centerX + (radius + 10) * Math.cos(angle - Math.PI / 2))
+        .attr("y", centerY + (radius + 10) * Math.sin(angle - Math.PI / 2))
+        .attr("text-anchor", "middle")
+        .attr("font-size", "12px")
+        .text(emotions[i].name);
     });
     
-    // Set up scales
-    const x = d3.scaleLinear()
-      .domain([0, timelineData.length - 1])
-      .range([margin.left, width - margin.right]);
+    // Create the concentric circles
+    [0.2, 0.4, 0.6, 0.8, 1].forEach(d => {
+      svg.append("circle")
+        .attr("cx", centerX)
+        .attr("cy", centerY)
+        .attr("r", radius * d)
+        .attr("fill", "none")
+        .attr("stroke", "rgba(200, 200, 200, 0.5)")
+        .attr("stroke-width", 1);
+    });
     
-    const y = d3.scaleLinear()
-      .domain([-1, 1])
-      .range([height - margin.bottom, margin.top]);
+    // Create the path connecting the data points
+    const lineGenerator = d3.lineRadial<any>()
+      .angle((d, i) => i * angleSlice)
+      .radius(d => radius * d.value)
+      .curve(d3.curveLinearClosed);
     
-    // Define line generator
-    const line = d3.line<any>()
-      .x(d => x(d.index))
-      .y(d => y(d.score))
-      .curve(d3.curveMonotoneX);
-    
-    // Add neutral line
-    svg.append("line")
-      .attr("x1", margin.left)
-      .attr("y1", y(0))
-      .attr("x2", width - margin.right)
-      .attr("y2", y(0))
-      .attr("stroke", "#9ca3af")
-      .attr("stroke-dasharray", "3,3")
-      .attr("stroke-width", 1);
-    
-    // Draw line
     svg.append("path")
-      .datum(timelineData)
-      .attr("fill", "none")
-      .attr("stroke", "#3b82f6")
-      .attr("stroke-width", 2)
-      .attr("d", line);
-    
-    // Add points
-    svg.selectAll("circle")
-      .data(timelineData)
-      .join("circle")
-      .attr("cx", d => x(d.index))
-      .attr("cy", d => y(d.score))
-      .attr("r", 5)
-      .attr("fill", d => {
-        if (d.sentiment === 'positive') return '#16a34a';
-        if (d.sentiment === 'negative') return '#ef4444';
-        return '#3b82f6';
-      })
-      .attr("stroke", "#fff")
+      .datum(emotions)
+      .attr("transform", `translate(${centerX}, ${centerY})`)
+      .attr("d", lineGenerator)
+      .attr("fill", "rgba(70, 130, 180, 0.5)")
+      .attr("stroke", "rgba(70, 130, 180, 0.9)")
       .attr("stroke-width", 2);
     
-    // Add x-axis
-    svg.append("g")
-      .attr("transform", `translate(0,${height - margin.bottom})`)
-      .call(d3.axisBottom(x).ticks(timelineData.length).tickFormat((d: any) => `#${d+1}`));
-    
-    // Add y-axis labels
-    svg.append("text")
-      .attr("x", margin.left - 10)
-      .attr("y", margin.top)
-      .attr("text-anchor", "end")
-      .attr("fill", "#16a34a")
-      .attr("font-size", "12px")
-      .text("Positive");
-    
-    svg.append("text")
-      .attr("x", margin.left - 10)
-      .attr("y", height - margin.bottom)
-      .attr("text-anchor", "end")
-      .attr("fill", "#ef4444")
-      .attr("font-size", "12px")
-      .text("Negative");
+    // Add data points
+    emotions.forEach((d, i) => {
+      const angle = i * angleSlice - Math.PI / 2;
+      svg.append("circle")
+        .attr("cx", centerX + radius * d.value * Math.cos(angle))
+        .attr("cy", centerY + radius * d.value * Math.sin(angle))
+        .attr("r", 5)
+        .attr("fill", "rgba(70, 130, 180, 0.9)");
+    });
   };
   
-  // Analyze sentiment with simulated algorithm
-  const analyzeSentiment = (text: string) => {
-    // In a real app, this would call a sentiment analysis API or model
-    // Here we're using a simple rule-based simulation for demo purposes
+  const renderWordCloud = () => {
+    const svg = d3.select(wordCloudRef.current);
+    svg.selectAll("*").remove();
     
-    const positiveWords = ['good', 'great', 'excellent', 'amazing', 'wonderful', 'love', 'best', 'fantastic', 'happy', 'improved'];
-    const negativeWords = ['bad', 'terrible', 'awful', 'horrible', 'poor', 'hate', 'worst', 'disappointing', 'disappointed', 'broken'];
+    const width = 300;
+    const height = 200;
+    const centerX = width / 2;
+    const centerY = height / 2;
     
-    const lowerText = text.toLowerCase();
+    // Only show words that appear more than the threshold times
+    const words = analysis.keywords
+      .filter((d: any) => d.count >= threshold * 10)
+      .map((d: any) => ({
+        text: d.word,
+        size: 10 + (d.count * 3),
+        sentiment: d.word in analysis.score ? 'positive' : 
+                   d.word in analysis.score ? 'negative' : 'neutral'
+      }));
     
-    let positiveScore = 0;
-    let negativeScore = 0;
-    
-    // Count positive and negative words
-    positiveWords.forEach(word => {
-      const regex = new RegExp(`\\b${word}\\b`, 'gi');
-      const matches = lowerText.match(regex);
-      if (matches) positiveScore += matches.length;
-    });
-    
-    negativeWords.forEach(word => {
-      const regex = new RegExp(`\\b${word}\\b`, 'gi');
-      const matches = lowerText.match(regex);
-      if (matches) negativeScore += matches.length;
-    });
-    
-    // Apply model bias based on selected model
-    if (modelType === 'transformer') {
-      positiveScore *= 1.2; // Transformer models tend to be more accurate at detecting positive sentiment
-    } else if (modelType === 'naive-bayes') {
-      negativeScore *= 1.1; // Naive Bayes can be more sensitive to negative words
-    }
-    
-    // Calculate overall score
-    const total = positiveScore + negativeScore;
-    let score = 0.5; // Default neutral
-    let sentiment = 'neutral';
-    
-    if (total > 0) {
-      score = positiveScore / total;
+    // Create a simple word cloud layout
+    const placeWords = () => {
+      const result = [];
+      const angleStep = (2 * Math.PI) / words.length;
+      const radiusScale = d3.scaleLinear()
+        .domain([d3.min(words, d => d.size) || 10, d3.max(words, d => d.size) || 20])
+        .range([height / 4, height / 2 - 20]);
       
-      // Apply confidence threshold
-      if (score > 0.5 + (confidenceThreshold / 2)) {
-        sentiment = 'positive';
-      } else if (score < 0.5 - (confidenceThreshold / 2)) {
-        sentiment = 'negative';
+      for (let i = 0; i < words.length; i++) {
+        const angle = i * angleStep;
+        const radius = radiusScale(words[i].size);
+        result.push({
+          ...words[i],
+          x: centerX + radius * Math.cos(angle),
+          y: centerY + radius * Math.sin(angle)
+        });
       }
-    }
-    
-    // Normalize score to 0-1
-    const normalizedScore = Math.min(Math.max(score, 0), 1);
-    
-    // Add some randomness to make it more realistic
-    const jitter = (Math.random() * 0.2) - 0.1;
-    const finalScore = Math.min(Math.max(normalizedScore + jitter, 0), 1);
-    
-    // Get key entities (simulated)
-    const words = text.split(/\s+/);
-    const entities = words
-      .filter(word => word.length > 4 && !['about', 'above', 'after', 'again'].includes(word.toLowerCase()))
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 3);
-    
-    return {
-      text,
-      sentiment,
-      score: finalScore,
-      entities,
-      timestamp: new Date().toISOString()
+      
+      return result;
     };
-  };
-  
-  // Handle analysis button click
-  const handleAnalyze = () => {
-    if (!textInput.trim()) return;
     
-    const result = analyzeSentiment(textInput);
-    setAnalyzedResults([...analyzedResults, result]);
-    setTextInput('');
-  };
-  
-  // Handle sample text selection
-  const handleSampleSelect = (text: string) => {
-    setTextInput(text);
-  };
-  
-  // Clear all results
-  const handleClear = () => {
-    setAnalyzedResults([]);
+    const placedWords = placeWords();
+    
+    // Add the words
+    svg.selectAll("text")
+      .data(placedWords)
+      .enter()
+      .append("text")
+      .attr("x", d => d.x)
+      .attr("y", d => d.y)
+      .attr("text-anchor", "middle")
+      .attr("font-size", d => `${d.size}px`)
+      .attr("fill", d => d.sentiment === 'positive' ? '#4CAF50' : 
+                       d.sentiment === 'negative' ? '#F44336' : '#2196F3')
+      .text(d => d.text);
   };
   
   return (
-    <div className="space-y-6">
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
-        <h3 className="text-lg font-semibold mb-4">Sentiment Analysis Input</h3>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <Card className="p-4 overflow-hidden">
+        <h3 className="text-lg font-bold mb-4">Text Analysis</h3>
         
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
-              Enter text to analyze:
-            </label>
-            <textarea
-              value={textInput}
-              onChange={(e) => setTextInput(e.target.value)}
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-              rows={3}
-              placeholder="Enter text for sentiment analysis..."
-            />
-          </div>
-          
-          <div className="flex flex-wrap gap-2">
-            <label className="text-sm text-gray-600 dark:text-gray-400 mr-2">
-              Sample texts:
-            </label>
-            {sampleTexts.map((text, index) => (
-              <button
-                key={index}
-                onClick={() => handleSampleSelect(text)}
-                className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600"
-              >
-                Sample {index + 1}
-              </button>
-            ))}
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
-                Model Type
-              </label>
-              <select
-                value={modelType}
-                onChange={(e) => setModelType(e.target.value)}
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-              >
-                <option value="transformer">Transformer</option>
-                <option value="naive-bayes">Naive Bayes</option>
-                <option value="rnn">Recurrent Neural Network</option>
-              </select>
-            </div>
-            
-            <div>
-              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
-                Confidence Threshold: {confidenceThreshold.toFixed(2)}
-              </label>
-              <input 
-                type="range" 
-                min="0" 
-                max="1" 
-                step="0.01"
-                value={confidenceThreshold}
-                onChange={e => setConfidenceThreshold(parseFloat(e.target.value))}
-                className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer" 
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
-                Language
-              </label>
-              <select
-                value={language}
-                onChange={(e) => setLanguage(e.target.value)}
-                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-              >
-                <option value="english">English</option>
-                <option value="spanish">Spanish</option>
-                <option value="french">French</option>
-              </select>
-            </div>
-          </div>
-          
-          <div className="flex justify-center space-x-3">
-            <button
-              onClick={handleAnalyze}
-              disabled={!textInput.trim()}
-              className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-600 disabled:opacity-50"
-            >
-              Analyze Sentiment
-            </button>
-            
-            {analyzedResults.length > 0 && (
-              <button
-                onClick={handleClear}
-                className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600"
-              >
-                Clear Results
-              </button>
-            )}
-          </div>
+        <Tabs value={sampleMode} onValueChange={(v) => setSampleMode(v as any)}>
+          <TabsList className="mb-4">
+            <TabsTrigger value="manual">Custom Text</TabsTrigger>
+            <TabsTrigger value="sample1">Positive Sample</TabsTrigger>
+            <TabsTrigger value="sample2">Negative Sample</TabsTrigger>
+            <TabsTrigger value="sample3">Neutral Sample</TabsTrigger>
+          </TabsList>
+        </Tabs>
+        
+        <Textarea 
+          value={text}
+          onChange={e => {
+            setText(e.target.value);
+            setSampleMode('manual');
+          }}
+          placeholder="Enter text to analyze sentiment..."
+          className="mb-4 min-h-[150px]"
+        />
+        
+        <div className="flex items-center space-x-4 mb-4">
+          <Label htmlFor="threshold">Keyword Threshold: {threshold.toFixed(2)}</Label>
+          <Slider 
+            id="threshold"
+            min={0.01}
+            max={0.5}
+            step={0.01}
+            value={[threshold]}
+            onValueChange={([value]) => setThreshold(value)}
+            className="w-full"
+          />
         </div>
-      </div>
+        
+        {analysis && (
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <div className={`w-4 h-4 rounded-full ${
+                analysis.sentiment === 'positive' ? 'bg-green-500' : 
+                analysis.sentiment === 'negative' ? 'bg-red-500' : 'bg-blue-500'
+              }`}></div>
+              <span className="font-medium">
+                Overall Sentiment: {analysis.sentiment.charAt(0).toUpperCase() + analysis.sentiment.slice(1)}
+              </span>
+            </div>
+            
+            <div className="text-sm text-muted-foreground">
+              <p>Positive Score: {(analysis.score.positive * 100).toFixed(1)}%</p>
+              <p>Negative Score: {(analysis.score.negative * 100).toFixed(1)}%</p>
+              <p>Neutral Score: {(analysis.score.neutral * 100).toFixed(1)}%</p>
+            </div>
+          </div>
+        )}
+      </Card>
       
-      {analyzedResults.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
-            <h3 className="text-lg font-semibold mb-4">Sentiment Distribution</h3>
-            <div ref={sentimentChartRef} className="h-[300px] w-full"></div>
+      <Card className="p-4">
+        <h3 className="text-lg font-bold mb-4">Sentiment Visualization</h3>
+        
+        {!analysis && (
+          <div className="flex items-center justify-center h-[200px] text-muted-foreground">
+            Enter text to see visualization
           </div>
-          
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
-            <h3 className="text-lg font-semibold mb-4">Sentiment Timeline</h3>
-            <div ref={timelineChartRef} className="h-[200px] w-full"></div>
-            <div className="text-sm text-gray-500 mt-2 text-center">
-              Timeline shows sentiment score change across multiple entries
-            </div>
-          </div>
-        </div>
-      )}
-      
-      {analyzedResults.length > 0 && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
-          <h3 className="text-lg font-semibold mb-4">Analysis Results</h3>
-          
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead>
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">#</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Text</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Sentiment</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Score</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Key Entities</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                {analyzedResults.map((result, index) => (
-                  <tr key={index}>
-                    <td className="px-4 py-3 whitespace-nowrap text-sm">{index + 1}</td>
-                    <td className="px-4 py-3 text-sm max-w-xs truncate">{result.text}</td>
-                    <td className="px-4 py-3 whitespace-nowrap text-sm">
-                      <span className={`px-2 py-1 rounded-full text-xs ${
-                        result.sentiment === 'positive' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-                        result.sentiment === 'negative' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' :
-                        'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-                      }`}>
-                        {result.sentiment.charAt(0).toUpperCase() + result.sentiment.slice(1)}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap text-sm">
-                      {result.score.toFixed(2)}
-                    </td>
-                    <td className="px-4 py-3 text-sm">
-                      <div className="flex flex-wrap gap-1">
-                        {result.entities.map((entity: string, i: number) => (
-                          <span key={i} className="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">
-                            {entity}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
+        )}
+        
+        {analysis && (
+          <>
+            <Tabs value={visualizationMode} onValueChange={(v) => setVisualizationMode(v as any)}>
+              <TabsList className="mb-4">
+                <TabsTrigger value="bar">Sentiment</TabsTrigger>
+                <TabsTrigger value="radar">Emotions</TabsTrigger>
+                <TabsTrigger value="words">Keywords</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="bar" className="flex justify-center">
+                <svg ref={barChartRef} width="300" height="200"></svg>
+              </TabsContent>
+              
+              <TabsContent value="radar" className="flex justify-center">
+                <svg ref={radarChartRef} width="300" height="300"></svg>
+              </TabsContent>
+              
+              <TabsContent value="words" className="flex justify-center">
+                <svg ref={wordCloudRef} width="300" height="200"></svg>
+              </TabsContent>
+            </Tabs>
+          </>
+        )}
+      </Card>
     </div>
   );
 }

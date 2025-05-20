@@ -1,374 +1,465 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import * as tf from '@tensorflow/tfjs';
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
-// Neural Network Visualizer Playground Component
-export default function NeuralNetworkPlayground({ config }: { config: any }) {
-  const [learningRate, setLearningRate] = useState(config?.learningRate || 0.01);
-  const [hiddenNeurons, setHiddenNeurons] = useState(config?.neurons || 8);
-  const [activationFunction, setActivationFunction] = useState(config?.activationFunction || 'relu');
-  const [epochs, setEpochs] = useState(config?.epochs || 100);
+interface NeuralNetworkVisualizerProps {
+  onChange?: (values: any) => void;
+}
+
+export default function NeuralNetworkVisualizer({ onChange }: NeuralNetworkVisualizerProps) {
+  // Network architecture state
+  const [layers, setLayers] = useState([4, 6, 6, 2]);
+  const [learningRate, setLearningRate] = useState(0.03);
+  const [epochs, setEpochs] = useState(100);
   const [isTraining, setIsTraining] = useState(false);
-  const [accuracy, setAccuracy] = useState(0);
+  const [showActivations, setShowActivations] = useState(true);
+  const [showWeights, setShowWeights] = useState(true);
+  const [dataset, setDataset] = useState<Array<{x: number, y: number, isClass1: boolean}>>([]);
+  const [loss, setLoss] = useState<number[]>([]);
+  const [currentEpoch, setCurrentEpoch] = useState(0);
+  const [model, setModel] = useState<tf.Sequential | null>(null);
   
-  const networkRef = useRef<HTMLDivElement>(null);
-  const decisionBoundaryRef = useRef<HTMLDivElement>(null);
+  // SVG Container refs
+  const networkRef = useRef<SVGSVGElement>(null);
+  const plotRef = useRef<SVGSVGElement>(null);
+  const lossPlotRef = useRef<SVGSVGElement>(null);
   
-  // Effect to handle config changes
+  // Initialize network
   useEffect(() => {
-    if (config) {
-      setLearningRate(config.learningRate || learningRate);
-      setHiddenNeurons(config.neurons || hiddenNeurons);
-      setActivationFunction(config.activationFunction || activationFunction);
-      setEpochs(config.epochs || epochs);
-    }
-  }, [config]);
-  
-  // Effect for network visualization
+    createModel();
+  }, [layers]);
+
+  // Render visualization
   useEffect(() => {
     if (networkRef.current) {
-      drawNetwork();
+      renderNetwork();
     }
-  }, [hiddenNeurons, activationFunction]);
-  
-  // Effect for decision boundary visualization
-  useEffect(() => {
-    if (decisionBoundaryRef.current) {
-      drawDecisionBoundary();
+    if (plotRef.current && dataset.length > 0) {
+      renderDataset();
     }
-  }, [learningRate, hiddenNeurons, activationFunction, accuracy]);
+    if (lossPlotRef.current && loss.length > 0) {
+      renderLossPlot();
+    }
+  }, [layers, dataset, loss, showActivations, showWeights]);
   
-  // Draw neural network structure
-  const drawNetwork = () => {
-    const width = networkRef.current?.clientWidth || 400;
-    const height = 300;
+  const createModel = () => {
+    if (model) {
+      model.dispose();
+    }
     
-    // Clear previous SVG
-    d3.select(networkRef.current).selectAll("*").remove();
+    const newModel = tf.sequential();
     
-    // Create SVG
-    const svg = d3.select(networkRef.current)
-      .append("svg")
-      .attr("width", width)
-      .attr("height", height);
+    // Add layers
+    newModel.add(tf.layers.dense({
+      inputShape: [2],
+      units: layers[0],
+      activation: 'relu'
+    }));
     
-    // Define layers
-    const layers = [
-      { name: "Input", neurons: 2 },
-      { name: "Hidden", neurons: hiddenNeurons },
-      { name: "Output", neurons: 1 }
-    ];
+    // Add hidden layers
+    for (let i = 1; i < layers.length - 1; i++) {
+      newModel.add(tf.layers.dense({
+        units: layers[i],
+        activation: 'relu'
+      }));
+    }
     
-    // Calculate positions
-    const layerSpacing = width / (layers.length + 1);
+    // Add output layer
+    newModel.add(tf.layers.dense({
+      units: layers[layers.length - 1],
+      activation: 'softmax'
+    }));
     
-    // Draw neurons for each layer
-    layers.forEach((layer, layerIndex) => {
-      const x = layerSpacing * (layerIndex + 1);
-      const neuronSpacing = height / (layer.neurons + 1);
-      
-      // Draw layer label
-      svg.append("text")
-        .attr("x", x)
-        .attr("y", 20)
-        .attr("text-anchor", "middle")
-        .attr("fill", "#666")
-        .text(layer.name + (layerIndex === 1 ? ` (${activationFunction})` : ""));
-      
-      // Draw neurons
-      for (let i = 0; i < layer.neurons; i++) {
-        const y = neuronSpacing * (i + 1);
-        
-        // Draw neuron circle
-        svg.append("circle")
-          .attr("cx", x)
-          .attr("cy", y + 30)
-          .attr("r", 12)
-          .attr("fill", layerIndex === 1 ? "#4f46e5" : "#64748b")
-          .attr("stroke", "#fff")
-          .attr("stroke-width", 2);
-        
-        // Draw connections to previous layer
-        if (layerIndex > 0) {
-          const prevLayer = layers[layerIndex - 1];
-          const prevX = layerSpacing * layerIndex;
-          const prevNeuronSpacing = height / (prevLayer.neurons + 1);
-          
-          for (let j = 0; j < prevLayer.neurons; j++) {
-            const prevY = prevNeuronSpacing * (j + 1);
-            
-            svg.append("line")
-              .attr("x1", prevX)
-              .attr("y1", prevY + 30)
-              .attr("x2", x)
-              .attr("y2", y + 30)
-              .attr("stroke", "#ddd")
-              .attr("stroke-width", 1.5)
-              .attr("stroke-opacity", 0.6);
+    newModel.compile({
+      optimizer: tf.train.adam(learningRate),
+      loss: 'categoricalCrossentropy',
+      metrics: ['accuracy']
+    });
+    
+    setModel(newModel);
+    setLoss([]);
+    
+    // If we have onChange prop, call it
+    if (onChange) {
+      onChange({
+        layers,
+        learningRate,
+        epochs
+      });
+    }
+  };
+  
+  const trainModel = async () => {
+    if (!model || dataset.length < 10) {
+      alert("Please add at least 10 data points before training.");
+      return;
+    }
+    
+    setIsTraining(true);
+    setLoss([]);
+    setCurrentEpoch(0);
+    
+    // Prepare training data
+    const xs = tf.tensor2d(dataset.map(d => [d.x, d.y]));
+    const ys = tf.tensor2d(dataset.map(d => d.isClass1 ? [1, 0] : [0, 1]));
+    
+    // Train model
+    await model.fit(xs, ys, {
+      epochs: epochs,
+      callbacks: {
+        onEpochEnd: (epoch, logs) => {
+          if (logs && logs.loss) {
+            setLoss(prev => [...prev, logs.loss]);
+            setCurrentEpoch(epoch + 1);
           }
         }
       }
     });
+    
+    setIsTraining(false);
+    
+    // Cleanup tensors
+    xs.dispose();
+    ys.dispose();
   };
   
-  // Draw decision boundary visualization
-  const drawDecisionBoundary = () => {
-    const width = decisionBoundaryRef.current?.clientWidth || 400;
+  const clearData = () => {
+    setDataset([]);
+    setLoss([]);
+  };
+  
+  const addDataPoint = (e: React.MouseEvent<SVGSVGElement>) => {
+    if (isTraining) return;
+    
+    const svg = plotRef.current;
+    if (!svg) return;
+    
+    const rect = svg.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = 1 - (e.clientY - rect.top) / rect.height;
+    
+    // Determine which class based on right or left mouse button
+    const isClass1 = e.button === 0;
+    
+    setDataset([...dataset, { x, y, isClass1 }]);
+  };
+  
+  const renderNetwork = () => {
+    const svg = d3.select(networkRef.current);
+    svg.selectAll("*").remove();
+    
+    const width = 600;
+    const height = 400;
+    
+    // Calculate node positions
+    const layerSpacing = width / (layers.length + 1);
+    const layerPositions: number[][] = [];
+    
+    for (let i = 0; i < layers.length; i++) {
+      const layerSize = layers[i];
+      const nodeSpacing = height / (layerSize + 1);
+      
+      const layerNodes: number[] = [];
+      for (let j = 0; j < layerSize; j++) {
+        layerNodes.push(nodeSpacing * (j + 1));
+      }
+      
+      layerPositions.push(layerNodes);
+    }
+    
+    // Draw connections between layers
+    for (let i = 0; i < layers.length - 1; i++) {
+      const sourceLayer = layerPositions[i];
+      const targetLayer = layerPositions[i + 1];
+      
+      for (let s = 0; s < sourceLayer.length; s++) {
+        for (let t = 0; t < targetLayer.length; t++) {
+          svg.append("line")
+            .attr("x1", layerSpacing * (i + 1))
+            .attr("y1", sourceLayer[s])
+            .attr("x2", layerSpacing * (i + 2))
+            .attr("y2", targetLayer[t])
+            .attr("stroke", showWeights ? "rgba(120, 120, 220, 0.4)" : "rgba(180, 180, 220, 0.2)")
+            .attr("stroke-width", 1);
+        }
+      }
+    }
+    
+    // Draw nodes
+    for (let i = 0; i < layers.length; i++) {
+      const layer = layerPositions[i];
+      
+      layer.forEach(y => {
+        svg.append("circle")
+          .attr("cx", layerSpacing * (i + 1))
+          .attr("cy", y)
+          .attr("r", 10)
+          .attr("fill", showActivations ? "rgba(70, 130, 180, 0.8)" : "rgba(70, 130, 180, 0.4)")
+          .attr("stroke", "white")
+          .attr("stroke-width", 2);
+      });
+    }
+  };
+  
+  const renderDataset = () => {
+    const svg = d3.select(plotRef.current);
+    svg.selectAll("*").remove();
+    
+    const width = 300;
     const height = 300;
     
-    // Clear previous SVG
-    d3.select(decisionBoundaryRef.current).selectAll("*").remove();
-    
-    // Create SVG
-    const svg = d3.select(decisionBoundaryRef.current)
-      .append("svg")
-      .attr("width", width)
-      .attr("height", height);
-    
-    // Draw gridlines
-    const gridSize = 20;
-    for (let i = 0; i <= width; i += gridSize) {
-      svg.append("line")
-        .attr("x1", i)
-        .attr("y1", 0)
-        .attr("x2", i)
-        .attr("y2", height)
-        .attr("stroke", "#f1f5f9")
+    // Plot points
+    dataset.forEach(point => {
+      svg.append("circle")
+        .attr("cx", point.x * width)
+        .attr("cy", (1 - point.y) * height)
+        .attr("r", 5)
+        .attr("fill", point.isClass1 ? "rgba(65, 105, 225, 0.7)" : "rgba(220, 20, 60, 0.7)")
+        .attr("stroke", "white")
         .attr("stroke-width", 1);
-    }
+    });
     
-    for (let i = 0; i <= height; i += gridSize) {
-      svg.append("line")
-        .attr("x1", 0)
-        .attr("y1", i)
-        .attr("x2", width)
-        .attr("y2", i)
-        .attr("stroke", "#f1f5f9")
-        .attr("stroke-width", 1);
-    }
-    
-    // Draw axes
-    svg.append("line")
-      .attr("x1", 0)
-      .attr("y1", height / 2)
-      .attr("x2", width)
-      .attr("y2", height / 2)
-      .attr("stroke", "#94a3b8")
-      .attr("stroke-width", 2);
+    // If model is trained, add decision boundary
+    if (model && !isTraining && dataset.length > 0) {
+      const gridSize = 50;
+      const stepX = 1.0 / gridSize;
+      const stepY = 1.0 / gridSize;
       
-    svg.append("line")
-      .attr("x1", width / 2)
-      .attr("y1", 0)
-      .attr("x2", width / 2)
-      .attr("y2", height)
-      .attr("stroke", "#94a3b8")
-      .attr("stroke-width", 2);
-    
-    // Simulated decision boundary based on parameters
-    // In a real app, this would be the actual model's decision boundary
-    const curviness = hiddenNeurons / 10;
-    const slope = learningRate * 50;
-    
-    // Draw decision boundary line/curve
-    const line = d3.line()
-      .x(d => d[0])
-      .y(d => d[1])
-      .curve(d3.curveBasis);
-    
-    const curvePoints = [];
-    for (let x = 0; x <= width; x += 10) {
-      // Create a curved decision boundary that changes with parameters
-      // This is a simplified visualization - real boundary would come from model
-      const centerX = width / 2;
-      const centerY = height / 2;
-      const distFromCenter = x - centerX;
+      const points = [];
       
-      // Different curve shapes based on activation function
-      let y;
-      if (activationFunction === 'relu') {
-        y = centerY - (slope * distFromCenter) - Math.sign(distFromCenter) * curviness * Math.pow(Math.abs(distFromCenter / 50), 2);
-      } else if (activationFunction === 'sigmoid') {
-        y = centerY - (height / 3) * Math.tanh(slope * distFromCenter / 100);
-      } else {
-        y = centerY - slope * Math.sin(distFromCenter / (25 / curviness));
+      for (let x = 0; x < 1; x += stepX) {
+        for (let y = 0; y < 1; y += stepY) {
+          points.push([x, y]);
+        }
       }
       
-      curvePoints.push([x, y]);
+      // Run prediction on grid points
+      tf.tidy(() => {
+        const predInput = tf.tensor2d(points);
+        const pred = model!.predict(predInput) as tf.Tensor;
+        const predArray = pred.arraySync() as number[][];
+        
+        for (let i = 0; i < points.length; i++) {
+          const [x, y] = points[i];
+          const confidence = predArray[i][0];
+          
+          svg.append("rect")
+            .attr("x", x * width)
+            .attr("y", (1 - y) * height - stepY * height)
+            .attr("width", stepX * width)
+            .attr("height", stepY * height)
+            .attr("fill", `rgba(${confidence > 0.5 ? "65, 105, 225" : "220, 20, 60"}, ${Math.abs(confidence - 0.5) * 0.5})`);
+        }
+      });
     }
     
-    svg.append("path")
-      .datum(curvePoints)
-      .attr("fill", "none")
-      .attr("stroke", "#4f46e5")
-      .attr("stroke-width", 3)
-      .attr("d", line);
-    
-    // Draw data points (simulated)
-    const numPoints = 50;
-    const points = [];
-    
-    for (let i = 0; i < numPoints; i++) {
-      const x = Math.random() * width;
-      const y = Math.random() * height;
-      
-      // Determine point class based on the curve
-      const pointIndex = Math.floor(x / 10);
-      const boundaryY = pointIndex < curvePoints.length ? curvePoints[pointIndex][1] : height / 2;
-      const isClass1 = y < boundaryY;
-      
-      points.push({ x, y, isClass1 });
-    }
-    
-    // Draw the points
-    svg.selectAll("circle.datapoint")
-      .data(points)
-      .enter()
-      .append("circle")
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y)
-      .attr("r", 5)
-      .attr("fill", d => d.isClass1 ? "#4f46e5" : "#f97316")
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 1.5);
-    
-    // Update accuracy based on how well the curve separates the points
-    // In a real app, this would come from the model's evaluation
-    const classificationSuccess = points.filter(p => {
-      const pointIndex = Math.floor(p.x / 10);
-      const boundaryY = pointIndex < curvePoints.length ? curvePoints[pointIndex][1] : height / 2;
-      return (p.isClass1 && p.y < boundaryY) || (!p.isClass1 && p.y >= boundaryY);
-    }).length;
-    
-    const newAccuracy = (classificationSuccess / numPoints) * 100;
-    setAccuracy(newAccuracy);
+    // Re-render data points on top
+    dataset.forEach(point => {
+      svg.append("circle")
+        .attr("cx", point.x * width)
+        .attr("cy", (1 - point.y) * height)
+        .attr("r", 5)
+        .attr("fill", point.isClass1 ? "rgba(65, 105, 225, 0.9)" : "rgba(220, 20, 60, 0.9)")
+        .attr("stroke", "white")
+        .attr("stroke-width", 1);
+    });
   };
   
-  // Handle training button click
-  const handleTrain = () => {
-    setIsTraining(true);
+  const renderLossPlot = () => {
+    const svg = d3.select(lossPlotRef.current);
+    svg.selectAll("*").remove();
     
-    // Simulate training process
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += 10;
-      if (progress > epochs) {
-        clearInterval(interval);
-        setIsTraining(false);
-        
-        // Update visualizations after training
-        drawNetwork();
-        drawDecisionBoundary();
-      }
-    }, 100);
+    const width = 300;
+    const height = 100;
+    
+    // Create X scale
+    const xScale = d3.scaleLinear()
+      .domain([0, loss.length - 1])
+      .range([0, width]);
+    
+    // Create Y scale
+    const yScale = d3.scaleLinear()
+      .domain([0, Math.max(...loss) * 1.1])
+      .range([height, 0]);
+    
+    // Create line generator
+    const line = d3.line<number>()
+      .x((_, i) => xScale(i))
+      .y(d => yScale(d))
+      .curve(d3.curveMonotoneX);
+    
+    // Draw line
+    svg.append("path")
+      .datum(loss)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 2)
+      .attr("d", line);
+      
+    // Add X axis
+    svg.append("g")
+      .attr("transform", `translate(0, ${height})`)
+      .call(d3.axisBottom(xScale).ticks(5))
+      .selectAll("text")
+      .style("font-size", "8px");
+    
+    // Add Y axis
+    svg.append("g")
+      .call(d3.axisLeft(yScale).ticks(5))
+      .selectAll("text")
+      .style("font-size", "8px");
+      
+    // Add title
+    svg.append("text")
+      .attr("x", width / 2)
+      .attr("y", 10)
+      .attr("text-anchor", "middle")
+      .style("font-size", "10px")
+      .text("Training Loss");
   };
   
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-4">
-          <h3 className="text-lg font-semibold mb-4">Network Architecture</h3>
-          <div ref={networkRef} className="h-[300px] w-full"></div>
-        </div>
-        
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-4">
-          <h3 className="text-lg font-semibold mb-4">Decision Boundary</h3>
-          <div ref={decisionBoundaryRef} className="h-[300px] w-full"></div>
-          <div className="mt-2 text-center text-sm text-gray-500">
-            Model Accuracy: {accuracy.toFixed(1)}%
-          </div>
-        </div>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
-              Learning Rate: {learningRate}
-            </label>
-            <input 
-              type="range" 
-              min="0.001" 
-              max="0.1" 
-              step="0.001"
-              value={learningRate}
-              onChange={e => setLearningRate(parseFloat(e.target.value))}
-              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer" 
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <Card className="p-4 overflow-hidden">
+        <h3 className="text-lg font-bold mb-4">Neural Network Architecture</h3>
+        <div className="flex flex-col space-y-4 mb-4">
+          <div className="flex items-center space-x-4">
+            <Label htmlFor="learning-rate">Learning Rate: {learningRate}</Label>
+            <Slider 
+              id="learning-rate"
+              min={0.001}
+              max={0.1}
+              step={0.001}
+              value={[learningRate]}
+              onValueChange={([value]) => setLearningRate(value)}
+              disabled={isTraining}
+              className="w-full"
             />
           </div>
           
-          <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
-              Hidden Neurons: {hiddenNeurons}
-            </label>
-            <input 
-              type="range" 
-              min="1" 
-              max="20" 
-              step="1"
-              value={hiddenNeurons}
-              onChange={e => setHiddenNeurons(parseInt(e.target.value))}
-              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer" 
+          <div className="flex items-center space-x-4">
+            <Label htmlFor="epochs">Epochs: {epochs}</Label>
+            <Slider 
+              id="epochs"
+              min={10}
+              max={500}
+              step={10}
+              value={[epochs]}
+              onValueChange={([value]) => setEpochs(value)}
+              disabled={isTraining}
+              className="w-full"
+            />
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <Label htmlFor="show-activations">Show Activations</Label>
+            <Switch 
+              id="show-activations" 
+              checked={showActivations} 
+              onCheckedChange={setShowActivations} 
+            />
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <Label htmlFor="show-weights">Show Weights</Label>
+            <Switch 
+              id="show-weights" 
+              checked={showWeights} 
+              onCheckedChange={setShowWeights} 
             />
           </div>
         </div>
         
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
-              Activation Function
-            </label>
-            <select
-              value={activationFunction}
-              onChange={e => setActivationFunction(e.target.value)}
-              className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+        <div className="flex flex-col items-center">
+          <svg 
+            ref={networkRef} 
+            width="100%" 
+            height="300" 
+            viewBox="0 0 600 400" 
+            preserveAspectRatio="xMidYMid meet"
+          />
+          
+          <div className="flex space-x-2 mt-4">
+            <Button 
+              size="sm"
+              onClick={createModel}
+              disabled={isTraining}
             >
-              <option value="relu">ReLU</option>
-              <option value="sigmoid">Sigmoid</option>
-              <option value="tanh">Tanh</option>
-            </select>
-          </div>
-          
-          <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
-              Training Epochs: {epochs}
-            </label>
-            <input 
-              type="range" 
-              min="10" 
-              max="1000" 
-              step="10"
-              value={epochs}
-              onChange={e => setEpochs(parseInt(e.target.value))}
-              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer" 
-            />
+              Reset Model
+            </Button>
           </div>
         </div>
-      </div>
+      </Card>
       
-      <div className="flex justify-center">
-        <button
-          onClick={handleTrain}
-          disabled={isTraining}
-          className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-600 flex items-center gap-2 disabled:opacity-50"
-        >
-          {isTraining ? (
-            <>
-              <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Training...
-            </>
-          ) : (
-            <>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-              </svg>
-              Train Model
-            </>
-          )}
-        </button>
-      </div>
+      <Card className="p-4">
+        <h3 className="text-lg font-bold mb-4">Training Data & Visualization</h3>
+        <Tabs defaultValue="data">
+          <TabsList className="mb-4">
+            <TabsTrigger value="data">Data</TabsTrigger>
+            <TabsTrigger value="loss">Loss</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="data" className="space-y-4">
+            <div className="text-center mb-2">
+              <p className="text-sm text-muted-foreground">
+                Click to add points (left: class A, right: class B)
+              </p>
+            </div>
+            
+            <div className="flex justify-center">
+              <svg 
+                ref={plotRef} 
+                width="300" 
+                height="300" 
+                className="border border-gray-200 dark:border-gray-700"
+                onMouseDown={addDataPoint}
+              />
+            </div>
+            
+            <div className="flex justify-between">
+              <Button 
+                size="sm" 
+                variant="outline"
+                onClick={clearData}
+                disabled={isTraining}
+              >
+                Clear Data
+              </Button>
+              
+              <Button 
+                size="sm"
+                variant={dataset.length < 10 ? "outline" : "default"}
+                onClick={trainModel}
+                disabled={isTraining || dataset.length < 10}
+              >
+                {isTraining ? `Training (${currentEpoch}/${epochs})` : 'Train Model'}
+              </Button>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="loss">
+            <div className="flex justify-center mb-4">
+              <svg 
+                ref={lossPlotRef} 
+                width="300" 
+                height="100" 
+              />
+            </div>
+            
+            {loss.length > 0 && (
+              <div className="text-center">
+                <p className="text-sm">Final loss: {loss[loss.length - 1].toFixed(4)}</p>
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
+      </Card>
     </div>
   );
 }
