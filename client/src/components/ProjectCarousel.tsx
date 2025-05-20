@@ -9,7 +9,6 @@ interface ProjectCarouselProps {
   setCurrentPage: (page: number) => void;
   projectsPerPage: number;
   handleProjectSelect: (project: ProjectType) => void;
-  handleVideoPreview: (project: ProjectType) => void;
 }
 
 export function ProjectCarousel({
@@ -17,8 +16,7 @@ export function ProjectCarousel({
   currentPage,
   setCurrentPage,
   projectsPerPage,
-  handleProjectSelect,
-  handleVideoPreview
+  handleProjectSelect
 }: ProjectCarouselProps) {
   const totalPages = Math.ceil(projects.length / projectsPerPage);
   
@@ -65,7 +63,6 @@ export function ProjectCarousel({
               project={project}
               index={index}
               onSelect={handleProjectSelect}
-              onVideoPreview={handleVideoPreview}
             />
           ))}
           
