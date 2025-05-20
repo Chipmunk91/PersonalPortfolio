@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRoute, Link, useLocation } from 'wouter';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { markdownBlogPosts, getMarkdownContentById, parseFrontMatter } from '@/lib/mdBlogLoader';
+import { blogPosts, getBlogPostContent, parseFrontMatter } from '@/lib/blogLoader';
 import { BlogPostType } from '@/lib/types';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { 
@@ -37,18 +37,17 @@ export default function MarkdownBlog() {
   useEffect(() => {
     if (params && params.id) {
       const id = parseInt(params.id);
-      const foundPost = markdownBlogPosts.find(p => p.id === id);
+      const foundPost = blogPosts.find(p => p.id === id);
       
       if (foundPost) {
         setPost(foundPost);
         
         // Get post content
-        const rawContent = getMarkdownContentById(id);
-        const { content } = parseFrontMatter(rawContent);
+        const content = getBlogPostContent(id);
         setContent(content);
         
         // Get related posts (same category, excluding current post)
-        const related = markdownBlogPosts
+        const related = blogPosts
           .filter(p => p.id !== id && p.category === foundPost.category)
           .slice(0, 3);
         setRelatedPosts(related);
@@ -225,12 +224,12 @@ export default function MarkdownBlog() {
   
   // Blog listing view
   // Get categories for filter buttons
-  const categories = ["all", ...Array.from(new Set(markdownBlogPosts.map(post => post.category)))];
+  const categories = ["all", ...Array.from(new Set(blogPosts.map(post => post.category)))];
   
   // Filter posts by category
   const filteredPosts = selectedCategory === "all" 
-    ? markdownBlogPosts 
-    : markdownBlogPosts.filter(post => post.category === selectedCategory);
+    ? blogPosts 
+    : blogPosts.filter(post => post.category === selectedCategory);
   
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
