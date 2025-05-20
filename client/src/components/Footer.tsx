@@ -20,10 +20,10 @@ export function Footer() {
             <div>
               <h4 className="font-medium mb-3">Navigation</h4>
               <ul className="space-y-2">
-                <li><a href="#about" className="text-gray-400 hover:text-white transition-colors">About</a></li>
-                <li><a href="#projects" className="text-gray-400 hover:text-white transition-colors">Projects</a></li>
-                <li><a href="#blog" className="text-gray-400 hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#contact" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                <li><Link href="/about" onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">About</Link></li>
+                <li><Link href="/projects" onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">Projects</Link></li>
+                <li><Link href="/blog" onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">Blog</Link></li>
+                <li><Link href="/contact" onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">Contact</Link></li>
               </ul>
             </div>
             
@@ -41,16 +41,16 @@ export function Footer() {
         <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-gray-500 mb-4 sm:mb-0">&copy; {new Date().getFullYear()} Hiroshi Tanaka. All rights reserved.</p>
           <div className="flex gap-4">
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors">
               <Linkedin className="h-5 w-5" />
             </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-sky-400 transition-colors">
               <Twitter className="h-5 w-5" />
             </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
               <Github className="h-5 w-5" />
             </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <a href="https://medium.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-green-400 transition-colors">
               <FaMedium className="h-5 w-5" />
             </a>
           </div>
