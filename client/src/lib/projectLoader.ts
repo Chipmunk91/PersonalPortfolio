@@ -1,10 +1,10 @@
 import { ProjectType } from './types';
 
 // Import project index files
-const projectIndices = import.meta.glob('../content/projects/*/index.json', { eager: true });
-const projectPapers = import.meta.glob('../content/projects/*/paper.md', { as: 'raw', eager: true });
-const projectVideos = import.meta.glob('../content/projects/*/video.json', { eager: true });
-const projectPlaygrounds = import.meta.glob('../content/projects/*/playground.json', { eager: true });
+const projectIndices = import.meta.glob('../content/project/*/index.json', { eager: true });
+const projectPapers = import.meta.glob('../content/project/*/paper.md', { query: '?raw', import: 'default', eager: true });
+const projectVideos = import.meta.glob('../content/project/*/video.json', { eager: true });
+const projectPlaygrounds = import.meta.glob('../content/project/*/playground/index.tsx', { eager: true });
 
 // Parse project data from the project directories
 export const projects: ProjectType[] = Object.entries(projectIndices).map(([path, content]) => {
@@ -30,7 +30,7 @@ export const projects: ProjectType[] = Object.entries(projectIndices).map(([path
 
 // Function to get paper content for a project
 export function getProjectPaper(dirName: string): string | null {
-  const paperPath = `../content/projects/${dirName}/paper.md`;
+  const paperPath = `../content/project/${dirName}/paper.md`;
   
   // Find the paper in the imported papers
   for (const [path, content] of Object.entries(projectPapers)) {
@@ -44,7 +44,7 @@ export function getProjectPaper(dirName: string): string | null {
 
 // Function to get video data for a project
 export function getProjectVideo(dirName: string): any | null {
-  const videoPath = `../content/projects/${dirName}/video.json`;
+  const videoPath = `../content/project/${dirName}/video.json`;
   
   // Find the video in the imported videos
   for (const [path, content] of Object.entries(projectVideos)) {
@@ -58,7 +58,7 @@ export function getProjectVideo(dirName: string): any | null {
 
 // Function to get playground data for a project
 export function getProjectPlayground(dirName: string): any | null {
-  const playgroundPath = `../content/projects/${dirName}/playground.json`;
+  const playgroundPath = `../content/project/${dirName}/playground/index.tsx`;
   
   // Find the playground in the imported playgrounds
   for (const [path, content] of Object.entries(projectPlaygrounds)) {
