@@ -139,10 +139,10 @@ export function BlogSection() {
                 variant="default"
                 className="inline-flex items-center gap-2 px-6 py-3 h-auto rounded-full"
                 onClick={() => {
-                  window.location.href = "/blog/markdown";
+                  window.location.href = "/blog";
                 }}
               >
-                <span>View Markdown Blog</span>
+                <span>View All Articles</span>
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>

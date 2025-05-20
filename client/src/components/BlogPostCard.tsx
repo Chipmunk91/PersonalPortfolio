@@ -24,6 +24,7 @@ export function BlogPostCard({ post, index }: BlogPostCardProps) {
   };
 
   const navigateToBlogPost = () => {
+    window.scrollTo(0, 0);
     setLocation(`/blog/${post.id}`);
   };
 
