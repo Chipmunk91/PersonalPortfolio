@@ -5,6 +5,7 @@ import { Footer } from '@/components/Footer';
 import { blogPosts, getBlogPostContent } from '@/lib/blogLoader';
 import { BlogPostType } from '@/lib/types';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
+import { BlogCard } from '@/components/BlogCard';
 import { 
   ChevronLeft, 
   Calendar, 
