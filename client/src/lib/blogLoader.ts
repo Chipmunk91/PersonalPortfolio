@@ -31,18 +31,25 @@ export function parseFrontMatter(markdown: string): {
 }
 
 // Import markdown files from the content/blog directory
-// Note: In a production environment, this would use a file system API to read all files in the directory
-// For this demo, we'll manually import some files to simulate the automatic loading
-import post1Content from '../content/blog/01-building-intuitive-ai-interfaces.md?raw';
-import post2Content from '../content/blog/02-future-of-ai-explainability.md?raw';
-import post3Content from '../content/blog/03-how-to-write-blog-posts-in-markdown.md?raw';
+// Note: In a production environment, this would use Node.js file system API to read all files in the directory
+// For this demo, we'll use Vite's import.meta.glob to dynamically import all markdown files
+const blogImports = import.meta.glob('../content/blog/*.md', { query: '?raw', import: 'default', eager: true });
 
-// List of markdown file contents
-const markdownFiles = [
-  { id: 1, content: post1Content },
-  { id: 2, content: post2Content },
-  { id: 3, content: post3Content },
-];
+// Convert the imported files into an array with proper ID extraction from filenames
+const markdownFiles = Object.entries(blogImports).map(([path, content]) => {
+  // Extract the ID from the filename pattern (e.g., 01-filename.md -> 1)
+  const filename = path.split('/').pop() || '';
+  const idMatch = filename.match(/^(\d+)/);
+  const id = idMatch ? parseInt(idMatch[1]) : 0;
+  
+  return { 
+    id, 
+    content: content as string,
+    path
+  };
+})
+// Sort by ID
+.sort((a, b) => a.id - b.id);
 
 // Parse blog posts from markdown files
 export const blogPosts: BlogPostType[] = markdownFiles.map(file => {
