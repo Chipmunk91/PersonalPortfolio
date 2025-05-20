@@ -88,19 +88,19 @@ export function ProjectCard({ project, index, onSelect, onVideoPreview }: Projec
           </div>
         </div>
         
-        <div className="p-6">
+        <div className="p-6 flex flex-col h-[280px]">
           <div className="flex justify-between items-start mb-4">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white">{project.title}</h3>
-            <span className={`px-2 py-1 text-xs rounded-full ${getCategoryColor(project.categories[0])}`}>
+            <span className={`px-2 py-1 text-xs rounded-full ${getCategoryColor(project.categories[0].toLowerCase())}`}>
               {project.categories[0].charAt(0).toUpperCase() + project.categories[0].slice(1)}
             </span>
           </div>
           
-          <p className="text-gray-600 dark:text-gray-400 mb-4">
+          <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
             {project.description}
           </p>
           
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mb-4 flex-1">
             {project.technologies.map((tech, i) => (
               <span key={i} className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs rounded-full">
                 {tech}
@@ -108,7 +108,7 @@ export function ProjectCard({ project, index, onSelect, onVideoPreview }: Projec
             ))}
           </div>
           
-          <div className="flex flex-wrap gap-4 items-center justify-between">
+          <div className="flex flex-wrap gap-4 items-center justify-between mt-auto">
             <a 
               href={project.demoUrl} 
               target="_blank"

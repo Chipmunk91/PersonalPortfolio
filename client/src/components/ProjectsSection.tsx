@@ -23,8 +23,17 @@ export function ProjectsSection() {
   const [currentPage, setCurrentPage] = useState(0);
   const projectsPerPage = 3;
   
+  // Extract all unique categories from projects
+  const allCategories = Array.from(
+    new Set(
+      projects.flatMap(project => 
+        project.categories.map(cat => cat.toLowerCase())
+      )
+    )
+  );
+  
   const filteredProjects = projects.filter(project => 
-    filter === 'all' || project.categories.includes(filter)
+    filter === 'all' || project.categories.some(cat => cat.toLowerCase() === filter.toLowerCase())
   );
   
   // Select the first project by default when component mounts
@@ -126,36 +135,21 @@ export function ProjectsSection() {
           >
             All Projects
           </Button>
-          <Button
-            variant={filter === 'visualization' ? 'default' : 'outline'}
-            className="rounded-full"
-            onClick={() => {
-              setFilter('visualization');
-              setCurrentPage(0); // Reset to first page when changing filter
-            }}
-          >
-            Visualization
-          </Button>
-          <Button
-            variant={filter === 'ai' ? 'default' : 'outline'}
-            className="rounded-full"
-            onClick={() => {
-              setFilter('ai');
-              setCurrentPage(0); // Reset to first page when changing filter
-            }}
-          >
-            AI/ML
-          </Button>
-          <Button
-            variant={filter === 'interactive' ? 'default' : 'outline'}
-            className="rounded-full"
-            onClick={() => {
-              setFilter('interactive');
-              setCurrentPage(0); // Reset to first page when changing filter
-            }}
-          >
-            Interactive
-          </Button>
+          
+          {/* Generate filter buttons for each unique category */}
+          {allCategories.map(category => (
+            <Button
+              key={category}
+              variant={filter === category ? 'default' : 'outline'}
+              className="rounded-full"
+              onClick={() => {
+                setFilter(category);
+                setCurrentPage(0); // Reset to first page when changing filter
+              }}
+            >
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </Button>
+          ))}
         </motion.div>
         
         {/* Project Carousel */}
