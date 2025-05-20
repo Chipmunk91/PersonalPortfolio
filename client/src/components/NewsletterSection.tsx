@@ -11,7 +11,7 @@ interface NewsletterSectionProps {
 
 export function NewsletterSection({ 
   title = "Subscribe to my newsletter",
-  description = "Get the latest insights, articles, and resources delivered to your inbox." 
+  description = "Get the latest articles, tutorials, and resources on AI visualization and interpretability delivered straight to your inbox." 
 }: NewsletterSectionProps) {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,80 +31,76 @@ export function NewsletterSection({
 
   return (
     <motion.div 
-      className="mt-24 mb-12 bg-gradient-to-r from-primary-600 to-primary-800 rounded-xl overflow-hidden shadow-xl"
+      className="mt-24 mb-12 bg-gray-900 dark:bg-gray-900 rounded-xl overflow-hidden shadow-xl"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
-      <div className="px-6 py-12 md:p-12">
-        <div className="flex flex-col md:flex-row items-center">
-          <div className="md:w-1/2 mb-8 md:mb-0">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              {title}
-            </h3>
-            <p className="text-primary-100 mb-6">
-              {description}
-            </p>
-            
-            <div className="bg-white/10 p-6 rounded-xl border border-white/20">
-              <h4 className="text-white font-bold mb-3">Newsletter benefits:</h4>
-              <ul className="space-y-2 text-primary-100">
-                <BenefitItem text="Early access to new articles and tools" />
-                <BenefitItem text="Exclusive resources not published on the blog" />
-                <BenefitItem text="Tips and techniques from industry experts" />
-                <BenefitItem text="Opportunities to join private workshops" />
-              </ul>
-            </div>
+      <div className="p-6 md:p-8">
+        <h3 className="text-2xl font-bold text-gray-100 dark:text-white mb-4">
+          {title}
+        </h3>
+        <p className="text-gray-400 dark:text-gray-400 mb-6">
+          {description}
+        </p>
+        
+        <div className="flex flex-col md:flex-row items-start gap-6">
+          <div className="md:w-1/2 bg-black dark:bg-black p-6 rounded-lg">
+            <h4 className="text-gray-100 dark:text-gray-100 font-bold mb-4">Newsletter benefits:</h4>
+            <ul className="space-y-2 text-gray-300 dark:text-gray-300">
+              <BenefitItem text="Early access to new articles and tools" />
+              <BenefitItem text="Exclusive resources not published on the blog" />
+              <BenefitItem text="Tips and techniques from industry experts" />
+              <BenefitItem text="Opportunities to join private workshops" />
+            </ul>
           </div>
           
-          <div className="md:w-1/2 md:pl-12">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
-              {isSubmitted ? (
-                <div className="text-center py-8">
-                  <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Check className="w-8 h-8 text-primary-600" />
-                  </div>
-                  <h4 className="text-xl font-bold mb-2">Thanks for subscribing!</h4>
-                  <p className="text-gray-600 dark:text-gray-400">
-                    You'll receive your first newsletter soon.
-                  </p>
+          <div className="md:w-1/2 bg-black dark:bg-black p-6 rounded-lg">
+            {isSubmitted ? (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Check className="w-8 h-8 text-primary-600" />
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit}>
-                  <h4 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">
-                    Join the newsletter
-                  </h4>
-                  
-                  <div className="mb-4">
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Email address
-                    </label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="you@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="w-full"
-                    />
-                  </div>
-                  
-                  <Button 
-                    type="submit" 
-                    className="w-full"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? 'Subscribing...' : 'Subscribe'}
-                  </Button>
-                  
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-3">
-                    We respect your privacy. Unsubscribe at any time.
-                  </p>
-                </form>
-              )}
-            </div>
+                <h4 className="text-xl font-bold mb-2 text-gray-100 dark:text-white">Thanks for subscribing!</h4>
+                <p className="text-gray-400 dark:text-gray-400">
+                  You'll receive your first newsletter soon.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <h4 className="text-lg font-bold mb-4 text-gray-100 dark:text-white">
+                  Join the newsletter
+                </h4>
+                
+                <div className="mb-4">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 dark:text-gray-300 mb-1">
+                    Email address
+                  </label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="w-full bg-gray-800 dark:bg-gray-800 border-gray-700 dark:border-gray-700"
+                  />
+                </div>
+                
+                <Button 
+                  type="submit" 
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+                </Button>
+                
+                <p className="text-xs text-gray-400 dark:text-gray-400 mt-3">
+                  We respect your privacy. Unsubscribe at any time.
+                </p>
+              </form>
+            )}
           </div>
         </div>
       </div>
