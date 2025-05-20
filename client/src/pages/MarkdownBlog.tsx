@@ -34,10 +34,8 @@ export default function MarkdownBlog() {
   const [searchQuery, setSearchQuery] = useState("");
   const postsPerPage = 6;
 
+  // One-time effect for initial route
   useEffect(() => {
-    // Reset scroll position when component mounts or when params change
-    window.scrollTo(0, 0);
-    
     if (params && params.id) {
       const id = parseInt(params.id);
       const foundPost = blogPosts.find(p => p.id === id);
@@ -54,11 +52,6 @@ export default function MarkdownBlog() {
           .filter(p => p.id !== id && p.category === foundPost.category)
           .slice(0, 3);
         setRelatedPosts(related);
-        
-        // Add a slight delay to ensure content is loaded before allowing scrolling
-        setTimeout(() => {
-          document.body.style.overflow = 'auto';
-        }, 100);
       }
     }
   }, [params]);
@@ -195,7 +188,6 @@ export default function MarkdownBlog() {
                   >
                     <div 
                     onClick={() => {
-                      window.scrollTo(0, 0);
                       setLocation(`/blog/${relatedPost.id}`);
                     }}
                     className="block cursor-pointer"
@@ -319,7 +311,6 @@ export default function MarkdownBlog() {
             <div 
               key={post.id}
               onClick={() => {
-                window.scrollTo(0, 0);
                 setLocation(`/blog/${post.id}`);
               }}
               className="cursor-pointer bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
