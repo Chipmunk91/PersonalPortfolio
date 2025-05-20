@@ -1,5 +1,4 @@
 import { TimelineItemType, SkillType, ProjectType } from './types';
-import { markdownBlogPosts as blogPosts } from './mdBlogLoader';
 
 // Timeline data
 export const timelineItems: TimelineItemType[] = [
