@@ -144,7 +144,7 @@ export default function Blog() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white dark:bg-gray-700 rounded-xl shadow-md p-6 md:p-10 mb-8"
+            className="bg-white dark:bg-gray-900 rounded-xl shadow-md p-6 md:p-10 mb-8"
           >
             <MarkdownRenderer markdown={content} />
           </motion.div>
@@ -188,7 +188,7 @@ export default function Blog() {
                 {relatedPosts.map((relatedPost) => (
                   <div 
                     key={relatedPost.id}
-                    className="bg-white dark:bg-gray-700 rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-300"
+                    className="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-300"
                   >
                     <div 
                       onClick={() => {
