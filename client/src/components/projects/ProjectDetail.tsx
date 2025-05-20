@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { projects } from '@/lib/data';
+import { projects, getProjectById } from '@/lib/projectLoader';
 import { ProjectType } from '@/lib/types';
 import { ArrowLeft, Github, ExternalLink, Calendar, Code } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
