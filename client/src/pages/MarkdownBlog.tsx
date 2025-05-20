@@ -31,7 +31,7 @@ export default function MarkdownBlog() {
   // Blog listing states
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [showAllPosts, setShowAllPosts] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const postsPerPage = 6;
 
   useEffect(() => {
@@ -226,17 +226,24 @@ export default function MarkdownBlog() {
   // Get categories for filter buttons
   const categories = ["all", ...Array.from(new Set(blogPosts.map(post => post.category)))];
   
-  // Filter posts by category
-  const filteredPosts = selectedCategory === "all" 
-    ? blogPosts 
-    : blogPosts.filter(post => post.category === selectedCategory);
+  // Filter posts by category and search query
+  const filteredPosts = blogPosts
+    .filter(post => selectedCategory === "all" || post.category === selectedCategory)
+    .filter(post => {
+      if (!searchQuery) return true;
+      const query = searchQuery.toLowerCase();
+      return (
+        post.title.toLowerCase().includes(query) ||
+        post.excerpt.toLowerCase().includes(query) ||
+        post.author.toLowerCase().includes(query) ||
+        post.category.toLowerCase().includes(query)
+      );
+    });
   
-  // Get current posts
+  // Get current posts for pagination
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = showAllPosts 
-    ? filteredPosts 
-    : filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
   
   // Calculate total pages
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
@@ -251,25 +258,55 @@ export default function MarkdownBlog() {
           Thoughts, tutorials, and deep dives into data visualization, AI interpretability, and interactive tools.
         </p>
         
-        {/* Category Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => {
-                setSelectedCategory(category);
+        {/* Search and Filter Bar */}
+        <div className="mb-10">
+          {/* Search Input */}
+          <div className="relative max-w-md mx-auto mb-6">
+            <input
+              type="text"
+              placeholder="Search articles..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
                 setCurrentPage(1);
-                setShowAllPosts(false);
               }}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                selectedCategory === category
-                  ? 'bg-primary text-white'
-                  : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
-              }`}
+              className="w-full px-4 py-2 pl-10 pr-4 border rounded-full focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+            <svg
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-            </button>
-          ))}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+          
+          {/* Category Filter Buttons */}
+          <div className="flex flex-wrap justify-center gap-3">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => {
+                  setSelectedCategory(category);
+                  setCurrentPage(1);
+                }}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  selectedCategory === category
+                    ? 'bg-primary text-white'
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
+                }`}
+              >
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </button>
+            ))}
+          </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -309,51 +346,26 @@ export default function MarkdownBlog() {
           ))}
         </div>
         
-        {/* Pagination or See More Posts Button */}
-        <div className="flex justify-center mt-12">
-          {!showAllPosts ? (
-            <div className="flex flex-col items-center space-y-4">
-              {totalPages > 1 && (
-                <div className="flex space-x-2 mb-4">
-                  {Array.from({ length: totalPages }).map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentPage(index + 1)}
-                      className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                        currentPage === index + 1
-                          ? 'bg-primary text-white'
-                          : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
-                      }`}
-                    >
-                      {index + 1}
-                    </button>
-                  ))}
-                </div>
-              )}
-              {filteredPosts.length > postsPerPage && (
-                <button 
-                  onClick={() => setShowAllPosts(true)}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-white hover:bg-primary-600 transition-colors"
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-12">
+            <div className="flex space-x-2">
+              {Array.from({ length: totalPages }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPage(index + 1)}
+                  className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                    currentPage === index + 1
+                      ? 'bg-primary text-white'
+                      : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
+                  }`}
                 >
-                  See all posts
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+                  {index + 1}
                 </button>
-              )}
+              ))}
             </div>
-          ) : (
-            <button 
-              onClick={() => setShowAllPosts(false)}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-            >
-              Show less
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-              </svg>
-            </button>
-          )}
-        </div>
+          </div>
+        )}
         
         {/* Newsletter Subscription */}
         <div className="mt-16 bg-gradient-to-r from-primary-600 to-primary-800 rounded-xl overflow-hidden shadow-xl">
