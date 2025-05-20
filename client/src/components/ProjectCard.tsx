@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { ExternalLink, Github, FileText, X, PlayCircle } from 'lucide-react';
+import { ExternalLink, Github, FileText, PlayCircle } from 'lucide-react';
 import { ProjectType } from '@/lib/types';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Link, useLocation } from 'wouter';
+import { useLocation } from 'wouter';
+import { getProjectVideo } from '@/lib/projectLoader';
 import {
   Dialog,
   DialogContent,
@@ -11,19 +12,18 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-  DialogClose,
 } from "@/components/ui/dialog";
 
 interface ProjectCardProps {
   project: ProjectType;
   index: number;
   onSelect?: (project: ProjectType) => void;
-  onVideoPreview?: (project: ProjectType) => void;
 }
 
-export function ProjectCard({ project, index, onSelect, onVideoPreview }: ProjectCardProps) {
+export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
   const [showTheory, setShowTheory] = useState(false);
-  const [location, setLocation] = useLocation();
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [location] = useLocation();
   
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -54,10 +54,7 @@ export function ProjectCard({ project, index, onSelect, onVideoPreview }: Projec
   // Handle image click for video preview
   const handleImageClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    
-    if (onVideoPreview) {
-      onVideoPreview(project);
-    }
+    setShowVideoModal(true);
   };
 
   return (
@@ -224,6 +221,54 @@ function tSNE(data, perplexity = 30, iterations = 1000) {
           
           <DialogFooter className="mt-6">
             <Button onClick={() => setShowTheory(false)} className="px-6">Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Video Preview Modal */}
+      <Dialog open={showVideoModal} onOpenChange={setShowVideoModal}>
+        <DialogContent className="max-w-4xl">
+          <DialogHeader>
+            <DialogTitle>{project.title} - Video Preview</DialogTitle>
+            <DialogDescription>
+              Watch a demonstration of the project in action
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="aspect-video bg-black rounded-md overflow-hidden">
+            {project.dirName && (() => {
+              const videoData = getProjectVideo(project.dirName);
+              if (videoData) {
+                return (
+                  <iframe 
+                    className="w-full h-full"
+                    src={videoData.embedUrl} 
+                    title={`${project.title} Demo`}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                );
+              } else {
+                return (
+                  <div className="flex items-center justify-center h-full text-white">
+                    <PlayCircle size={48} className="opacity-50" />
+                    <p className="ml-2">Video preview not available</p>
+                  </div>
+                );
+              }
+            })()}
+          </div>
+          
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowVideoModal(false)}>
+              Close
+            </Button>
+            <Button asChild>
+              <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                View Live Demo
+              </a>
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
