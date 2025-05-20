@@ -1,7 +1,5 @@
 import { TimelineItemType, SkillType, ProjectType } from './types';
-
-// Import blog posts from the dedicated content directory
-import { blogPosts } from '@/content/blog-posts';
+import { markdownBlogPosts as blogPosts } from './mdBlogLoader';
 
 // Timeline data
 export const timelineItems: TimelineItemType[] = [
@@ -132,9 +130,5 @@ export const projects: ProjectType[] = [
   }
 ];
 
-// Blog posts are now imported from @/content/blog-posts
-// See the individual files in client/src/content/blog-posts/ for blog content
-// This makes it easier to add new posts by creating a single file with both metadata and content
-
-// Re-export the blog posts from the content directory
-export { blogPosts } from '@/content/blog-posts';
+// Export blog posts for use throughout the app
+export { blogPosts };
