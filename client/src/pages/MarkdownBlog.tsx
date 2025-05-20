@@ -337,10 +337,11 @@ export default function MarkdownBlog() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: 0.1 * (index % 3) }}
+                whileHover={{ y: -5, transition: { duration: 0.2 }, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)" }}
                 onClick={() => {
                   setLocation(`/blog/${post.id}`);
                 }}
-                className="cursor-pointer bg-white dark:bg-gray-900 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                className="cursor-pointer bg-white dark:bg-gray-900 rounded-xl shadow-md overflow-hidden"
               >
                 <div className="relative">
                   <img 
