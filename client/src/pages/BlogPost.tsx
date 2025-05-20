@@ -1,14 +1,9 @@
-import { useEffect, useState, lazy, Suspense } from 'react';
+import { useEffect, useState } from 'react';
 import { useRoute, useLocation } from 'wouter';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { blogPosts } from '@/content/blog-posts';
+import { markdownBlogPosts as blogPosts } from '@/lib/mdBlogLoader';
 import { BlogPostType } from '@/lib/types';
-
-// Import blog post content components
-const Post1Content = lazy(() => import('@/content/blog-posts/01-building-intuitive-ai-interfaces'));
-const Post2Content = lazy(() => import('@/content/blog-posts/02-future-of-ai-explainability'));
-const Post3Content = lazy(() => import('@/content/blog-posts/03-how-to-add-new-blog-posts'));
 import { 
   ChevronLeft, 
   Calendar, 
@@ -125,53 +120,44 @@ export default function BlogPost() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <Suspense fallback={<div className="text-center py-8">Loading article content...</div>}>
-                {/* Render the appropriate content component based on post ID */}
-                {post.id === 1 ? (
-                  <Post1Content />
-                ) : post.id === 2 ? (
-                  <Post2Content />
-                ) : post.id === 3 ? (
-                  <Post3Content />
-                ) : (
-                  // Default content for posts that don't have a specific component yet
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <p className="lead text-xl">
-                      {post.excerpt}
+              <div className="prose prose-lg dark:prose-invert max-w-none">
+                <h1 className="text-3xl font-bold mt-0 mb-4">{post.title}</h1>
+                
+                <p className="lead text-xl mb-6">
+                  {post.excerpt}
+                </p>
+                
+                <div className="my-8">
+                  <h2>This blog post is now available in our Markdown blog section</h2>
+                  <p>
+                    We've moved to a new Markdown-based blog system that makes it easier to write and 
+                    manage content. You can find this post and more in our Markdown blog section.
+                  </p>
+                  
+                  <div className="bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500 p-4 my-6">
+                    <h3 className="text-blue-800 dark:text-blue-200 font-medium mb-2">Markdown Blog System</h3>
+                    <p className="text-blue-700 dark:text-blue-300">
+                      Check out our new Markdown-based blog with simplified content management:
                     </p>
-                    
-                    <h2>Introduction</h2>
-                    <p>
-                      This is a placeholder for blog post #{post.id}: "{post.title}".
-                    </p>
-                    
-                    <div className="bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 p-4 my-6">
-                      <h3 className="text-yellow-800 dark:text-yellow-200 font-medium mb-2">How to add content for this post</h3>
-                      <p className="text-yellow-700 dark:text-yellow-300">
-                        To create content for this blog post:
-                      </p>
-                      <ol className="list-decimal ml-5 text-yellow-700 dark:text-yellow-300">
-                        <li>Create a new file in <code>client/src/content/blog-posts/</code> with format <code>XX-your-post-title.tsx</code></li>
-                        <li>Include both metadata and content in that file (see existing posts as examples)</li>
-                        <li>Import and register it in <code>client/src/content/blog-posts/index.ts</code></li>
-                        <li>Add it to the conditional rendering in <code>BlogPost.tsx</code></li>
-                      </ol>
+                    <div className="mt-4">
+                      <a 
+                        href="/blog/markdown" 
+                        className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90"
+                      >
+                        Visit Markdown Blog
+                      </a>
                     </div>
-                    
-                    <h2>Sample Content Structure</h2>
-                    <p>
-                      Your blog post content should include sections like:
-                    </p>
-                    
-                    <ul>
-                      <li>Introduction - Explain what the article is about</li>
-                      <li>Main sections - Divide content into logical sections</li>
-                      <li>Code examples or visual elements where relevant</li>
-                      <li>Conclusion - Summarize key points</li>
-                    </ul>
                   </div>
-                )}
-              </Suspense>
+                  
+                  <p>Benefits of our new Markdown blog system:</p>
+                  <ul>
+                    <li>Simple content creation with Markdown syntax</li>
+                    <li>Frontmatter metadata for titles, excerpts, etc.</li>
+                    <li>No coding knowledge required to add new posts</li>
+                    <li>Beautiful rendering with proper formatting</li>
+                  </ul>
+                </div>
+              </div>
             </motion.div>
           </div>
           

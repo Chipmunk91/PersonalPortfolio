@@ -123,17 +123,29 @@ export function BlogSection() {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           {!showAllArticles ? (
-            <Button
-              variant="outline"
-              className="inline-flex items-center gap-2 px-6 py-3 h-auto rounded-full"
-              onClick={() => {
-                setShowAllArticles(true);
-                setCurrentPage(1);
-              }}
-            >
-              <span>View All Articles</span>
-              <ChevronRight className="h-4 w-4" />
-            </Button>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button
+                variant="outline"
+                className="inline-flex items-center gap-2 px-6 py-3 h-auto rounded-full"
+                onClick={() => {
+                  setShowAllArticles(true);
+                  setCurrentPage(1);
+                }}
+              >
+                <span>View All Articles</span>
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="default"
+                className="inline-flex items-center gap-2 px-6 py-3 h-auto rounded-full"
+                onClick={() => {
+                  window.location.href = "/blog/markdown";
+                }}
+              >
+                <span>View Markdown Blog</span>
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           ) : (
             <div className="flex flex-col items-center space-y-4">
               <div className="flex justify-center gap-2 flex-wrap">
