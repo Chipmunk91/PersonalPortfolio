@@ -159,16 +159,68 @@ export default function Blog() {
             <div className="flex items-center gap-4">
               <span className="text-gray-700 dark:text-gray-300 font-medium">Share this post:</span>
               <div className="flex gap-2">
-                <Button variant="outline" size="icon" className="rounded-full">
+                <Button 
+                  variant="outline" 
+                  size="icon" 
+                  className="rounded-full hover:bg-sky-50 hover:text-sky-500 hover:border-sky-200"
+                  onClick={() => {
+                    const url = window.location.href;
+                    const text = `Check out this post: ${post.title}`;
+                    window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
+                  }}
+                >
                   <Twitter className="h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="icon" className="rounded-full">
+                <Button 
+                  variant="outline" 
+                  size="icon" 
+                  className="rounded-full hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200"
+                  onClick={() => {
+                    const url = window.location.href;
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+                  }}
+                >
                   <Facebook className="h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="icon" className="rounded-full">
+                <Button 
+                  variant="outline" 
+                  size="icon" 
+                  className="rounded-full hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200"
+                  onClick={() => {
+                    const url = window.location.href;
+                    const title = post.title;
+                    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`, '_blank');
+                  }}
+                >
                   <Linkedin className="h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="icon" className="rounded-full">
+                <Button 
+                  variant="outline" 
+                  size="icon" 
+                  className="rounded-full hover:bg-green-50 hover:text-green-600 hover:border-green-200"
+                  onClick={() => {
+                    const url = window.location.href;
+                    const body = `Check out this post: ${post.title}\n${url}`;
+                    window.open(`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(body)}`, '_blank');
+                  }}
+                >
+                  <Mail className="h-4 w-4" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="icon" 
+                  className="rounded-full hover:bg-gray-100 hover:text-gray-700"
+                  onClick={() => {
+                    // Copy link to clipboard
+                    navigator.clipboard.writeText(window.location.href)
+                      .then(() => {
+                        alert('Link copied to clipboard!');
+                      })
+                      .catch(err => {
+                        console.error('Failed to copy link: ', err);
+                      });
+                  }}
+                >
                   <Share2 className="h-4 w-4" />
                 </Button>
               </div>
