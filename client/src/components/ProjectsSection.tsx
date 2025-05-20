@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ProjectCard } from './ProjectCard';
-import { projects } from '@/lib/data';
+import { projects, getProjectPaper, getProjectPlayground, getProjectVideo } from '@/lib/projectLoader';
 import { ProjectType } from '@/lib/types';
 import { motion } from 'framer-motion';
 import { Sliders, BarChart3, Layers, Github, PlayCircle, ChevronLeft, ChevronRight } from 'lucide-react';

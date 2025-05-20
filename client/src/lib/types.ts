@@ -21,6 +21,7 @@ export interface ProjectType {
   technologies: string[];
   demoUrl: string;
   githubUrl: string;
+  dirName?: string;
 }
 
 // Blog post type
