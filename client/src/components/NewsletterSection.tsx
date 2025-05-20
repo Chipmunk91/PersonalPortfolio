@@ -28,16 +28,14 @@ export function NewsletterSection({
     setError(null);
     
     try {
-      // Call the newsletter subscribe API
-      const response = await apiRequest('/api/newsletter/subscribe', {
+      // Make a direct fetch request instead of using apiRequest
+      const response = await fetch('/api/newsletter/subscribe', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           email,
           name: name || undefined // Only send name if provided
-        }),
+        })
       });
       
       const data = await response.json();
