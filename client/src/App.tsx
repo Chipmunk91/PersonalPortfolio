@@ -28,11 +28,8 @@ function Router() {
       <Route path="/playground" component={Playground} />
       <Route path="/playground/:id" component={Playground} />
       <Route path="/theory" component={Theory}/>
-      <Route path="/blog" component={Blog}/>
-      <Route path="/blog/all" component={AllBlogPosts}/>
-      <Route path="/blog/markdown/:id" component={MarkdownBlog}/>
-      <Route path="/blog/markdown" component={MarkdownBlog}/>
-      <Route path="/blog/:id" component={BlogPost}/>
+      <Route path="/blog" component={MarkdownBlog}/>
+      <Route path="/blog/:id" component={MarkdownBlog}/>
       <Route path="/contact" component={Contact}/>
       <Route path="/privacy-policy" component={PrivacyPolicy}/>
       <Route path="/terms-of-service" component={TermsOfService}/>

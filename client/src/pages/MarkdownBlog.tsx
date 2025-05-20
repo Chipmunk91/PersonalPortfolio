@@ -57,41 +57,42 @@ export default function MarkdownBlog() {
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Navbar />
         <div className="container mx-auto px-4 py-12">
-          <h1 className="text-4xl font-bold mb-8 text-center">Markdown Blog</h1>
+          <h1 className="text-4xl font-bold mb-8 text-center">Blog & Insights</h1>
           <p className="text-center mb-12 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            This blog section demonstrates how to use Markdown files for content.
-            Each blog post is a single .md file with frontmatter for metadata.
+            Thoughts, tutorials, and deep dives into data visualization, AI interpretability, and interactive tools.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {markdownBlogPosts.map((post) => (
-              <Link key={post.id} href={`/blog/markdown/${post.id}`}>
-                <a className="block bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                  <img 
-                    src={post.imageUrl} 
-                    alt={post.title} 
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs font-medium">
-                        {post.category}
-                      </span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {post.readTime} min read
-                      </span>
-                    </div>
-                    <h2 className="text-xl font-bold mb-2 line-clamp-2">{post.title}</h2>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
-                      {post.excerpt}
-                    </p>
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-gray-500 dark:text-gray-400">{post.date}</span>
-                      <span className="text-gray-500 dark:text-gray-400">{post.author}</span>
-                    </div>
+              <div 
+                key={post.id}
+                onClick={() => setLocation(`/blog/${post.id}`)}
+                className="cursor-pointer bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+              >
+                <img 
+                  src={post.imageUrl} 
+                  alt={post.title} 
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs font-medium">
+                      {post.category}
+                    </span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                      {post.readTime} min read
+                    </span>
                   </div>
-                </a>
-              </Link>
+                  <h2 className="text-xl font-bold mb-2 line-clamp-2">{post.title}</h2>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-gray-500 dark:text-gray-400">{post.date}</span>
+                    <span className="text-gray-500 dark:text-gray-400">{post.author}</span>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -108,8 +109,8 @@ export default function MarkdownBlog() {
           <div className="text-center">
             <h1 className="text-3xl font-bold">Blog Post Not Found</h1>
             <p className="mt-4 mb-8">The blog post you're looking for doesn't exist or has been removed.</p>
-            <Button onClick={() => setLocation('/blog/markdown')}>
-              <ChevronLeft className="mr-2 h-4 w-4" /> Back to Markdown Blog
+            <Button onClick={() => setLocation('/blog')}>
+              <ChevronLeft className="mr-2 h-4 w-4" /> Back to Blog
             </Button>
           </div>
         </div>
@@ -132,11 +133,11 @@ export default function MarkdownBlog() {
         >
           <Button
             variant="ghost"
-            onClick={() => setLocation('/blog/markdown')}
+            onClick={() => setLocation('/blog')}
             className="group flex items-center text-sm font-medium"
           >
             <ChevronLeft className="mr-1 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            Back to Markdown Blog
+            Back to Blog
           </Button>
         </motion.div>
         
@@ -228,24 +229,25 @@ export default function MarkdownBlog() {
                   key={relatedPost.id}
                   className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-300"
                 >
-                  <Link href={`/blog/markdown/${relatedPost.id}`}>
-                    <a className="block">
-                      <img 
-                        src={relatedPost.imageUrl} 
-                        alt={relatedPost.title} 
-                        className="w-full h-36 object-cover"
-                      />
-                      <div className="p-4">
-                        <span className="inline-block px-2 py-1 text-xs font-semibold bg-primary/10 text-primary rounded-full mb-2">
-                          {relatedPost.category}
-                        </span>
-                        <h3 className="font-bold text-lg mb-2 line-clamp-2">{relatedPost.title}</h3>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">
-                          {relatedPost.excerpt}
-                        </p>
-                      </div>
-                    </a>
-                  </Link>
+                  <div 
+                  onClick={() => window.location.href = `/blog/markdown/${relatedPost.id}`}
+                  className="block cursor-pointer"
+                >
+                  <img 
+                    src={relatedPost.imageUrl} 
+                    alt={relatedPost.title} 
+                    className="w-full h-36 object-cover"
+                  />
+                  <div className="p-4">
+                    <span className="inline-block px-2 py-1 text-xs font-semibold bg-primary/10 text-primary rounded-full mb-2">
+                      {relatedPost.category}
+                    </span>
+                    <h3 className="font-bold text-lg mb-2 line-clamp-2">{relatedPost.title}</h3>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">
+                      {relatedPost.excerpt}
+                    </p>
+                  </div>
+                </div>
                 </div>
               ))}
             </div>
