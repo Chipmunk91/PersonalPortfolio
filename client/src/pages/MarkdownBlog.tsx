@@ -53,6 +53,17 @@ export default function MarkdownBlog() {
 
   // If no ID provided in route, show blog post listing
   if (!params || !params.id) {
+    const [currentPage, setCurrentPage] = useState(1);
+    const postsPerPage = 6;
+    
+    // Get current posts
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = markdownBlogPosts.slice(indexOfFirstPost, indexOfLastPost);
+    
+    // Calculate total pages
+    const totalPages = Math.ceil(markdownBlogPosts.length / postsPerPage);
+    
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <Navbar />
@@ -63,7 +74,7 @@ export default function MarkdownBlog() {
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {markdownBlogPosts.map((post) => (
+            {currentPosts.map((post) => (
               <div 
                 key={post.id}
                 onClick={() => {
@@ -97,6 +108,77 @@ export default function MarkdownBlog() {
                 </div>
               </div>
             ))}
+          </div>
+          
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-center mt-12">
+              <div className="flex space-x-2">
+                {Array.from({ length: totalPages }).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentPage(index + 1)}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      currentPage === index + 1
+                        ? 'bg-primary text-white'
+                        : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
+                    }`}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {/* Newsletter Subscription */}
+          <div className="mt-16 bg-gradient-to-r from-primary-600 to-primary-800 rounded-xl overflow-hidden shadow-xl">
+            <div className="px-6 py-12 md:p-12">
+              <div className="flex flex-col md:flex-row items-center">
+                <div className="md:w-1/2 mb-8 md:mb-0">
+                  <h3 className="text-2xl font-bold text-white mb-4">
+                    Subscribe to my newsletter
+                  </h3>
+                  <p className="text-primary-100 mb-6">
+                    Get the latest articles, tutorials, and resources on AI
+                    visualization and interpretability delivered straight to your
+                    inbox.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <input
+                      type="email"
+                      placeholder="Your email address"
+                      className="flex-1 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white h-12"
+                    />
+                    <button
+                      className="px-6 py-3 
+                      border border-primary-600
+                      bg-white 
+                      text-primary-600 
+                      dark:bg-gray-800 
+                      dark:text-white 
+                      font-medium rounded-lg 
+                      hover:bg-gray-100 
+                      dark:hover:bg-gray-700 
+                      transition-colors h-12 
+                      dark:border-gray-700"
+                    >
+                      Subscribe
+                    </button>
+                  </div>
+                  <p className="text-xs text-primary-200 mt-3">
+                    I respect your privacy. Unsubscribe at any time.
+                  </p>
+                </div>
+                <div className="md:w-1/2 md:pl-12 flex justify-center">
+                  <div className="animate-bounce">
+                    <svg className="h-24 w-24 text-white opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <Footer />
