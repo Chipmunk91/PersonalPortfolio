@@ -1,4 +1,4 @@
-import { users, subscribers, type User, type InsertUser, type Subscriber, type InsertSubscriber } from "@shared/schema";
+import { users, subscribers, contactMessages, type User, type InsertUser, type Subscriber, type InsertSubscriber, type ContactMessage, type InsertContactMessage } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 import { randomBytes } from "crypto";
@@ -17,19 +17,29 @@ export interface IStorage {
   confirmSubscriber(token: string): Promise<boolean>;
   unsubscribeByToken(token: string): Promise<boolean>;
   getAllSubscribers(): Promise<Subscriber[]>;
+  
+  // Contact message methods
+  createContactMessage(contactMessage: InsertContactMessage): Promise<ContactMessage>;
+  getContactMessage(id: number): Promise<ContactMessage | undefined>;
+  getAllContactMessages(): Promise<ContactMessage[]>;
+  markContactMessageAsRead(id: number): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private subscribers: Map<number, Subscriber>;
+  private contactMessages: Map<number, ContactMessage>;
   currentId: number;
   subscriberId: number;
+  contactMessageId: number;
 
   constructor() {
     this.users = new Map();
     this.subscribers = new Map();
+    this.contactMessages = new Map();
     this.currentId = 1;
     this.subscriberId = 1;
+    this.contactMessageId = 1;
   }
 
   async getUser(id: number): Promise<User | undefined> {
@@ -116,6 +126,51 @@ export class MemStorage implements IStorage {
 
   async getAllSubscribers(): Promise<Subscriber[]> {
     return Array.from(this.subscribers.values());
+  }
+  
+  // Contact message methods
+  async createContactMessage(insertContactMessage: InsertContactMessage): Promise<ContactMessage> {
+    const id = this.contactMessageId++;
+    const now = new Date();
+    
+    const contactMessage: ContactMessage = {
+      id,
+      name: insertContactMessage.name,
+      email: insertContactMessage.email,
+      inquiryType: insertContactMessage.inquiryType,
+      message: insertContactMessage.message,
+      budget: insertContactMessage.budget || null,
+      timeline: insertContactMessage.timeline || null,
+      eventDate: insertContactMessage.eventDate || null,
+      createdAt: now,
+      read: false
+    };
+    
+    this.contactMessages.set(id, contactMessage);
+    return contactMessage;
+  }
+  
+  async getContactMessage(id: number): Promise<ContactMessage | undefined> {
+    return this.contactMessages.get(id);
+  }
+  
+  async getAllContactMessages(): Promise<ContactMessage[]> {
+    return Array.from(this.contactMessages.values());
+  }
+  
+  async markContactMessageAsRead(id: number): Promise<boolean> {
+    const message = this.contactMessages.get(id);
+    if (!message) {
+      return false;
+    }
+    
+    const updatedMessage = {
+      ...message,
+      read: true
+    };
+    
+    this.contactMessages.set(id, updatedMessage);
+    return true;
   }
 }
 
@@ -225,6 +280,58 @@ export class DatabaseStorage implements IStorage {
     } catch (error) {
       console.error("Error getting all subscribers:", error);
       return [];
+    }
+  }
+  
+  // Contact message methods
+  async createContactMessage(insertContactMessage: InsertContactMessage): Promise<ContactMessage> {
+    try {
+      const [contactMessage] = await db.insert(contactMessages)
+        .values(insertContactMessage)
+        .returning();
+      
+      return contactMessage;
+    } catch (error) {
+      console.error("Error creating contact message:", error);
+      throw error;
+    }
+  }
+  
+  async getContactMessage(id: number): Promise<ContactMessage | undefined> {
+    try {
+      const [contactMessage] = await db.select()
+        .from(contactMessages)
+        .where(eq(contactMessages.id, id));
+      
+      return contactMessage;
+    } catch (error) {
+      console.error("Error getting contact message:", error);
+      throw error;
+    }
+  }
+  
+  async getAllContactMessages(): Promise<ContactMessage[]> {
+    try {
+      return await db.select()
+        .from(contactMessages)
+        .orderBy(contactMessages.createdAt);
+    } catch (error) {
+      console.error("Error getting all contact messages:", error);
+      return [];
+    }
+  }
+  
+  async markContactMessageAsRead(id: number): Promise<boolean> {
+    try {
+      const [updated] = await db.update(contactMessages)
+        .set({ read: true })
+        .where(eq(contactMessages.id, id))
+        .returning();
+      
+      return !!updated;
+    } catch (error) {
+      console.error("Error marking message as read:", error);
+      return false;
     }
   }
 }
