@@ -351,7 +351,7 @@ export function ContactSection() {
                       href="https://linkedin.com" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all"
+                      className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300"
                       aria-label="LinkedIn Profile"
                     >
                       <Linkedin className="h-5 w-5" />
@@ -360,7 +360,7 @@ export function ContactSection() {
                       href="https://twitter.com" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all"
+                      className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:bg-sky-100 dark:hover:bg-sky-900/30 hover:text-sky-500 dark:hover:text-sky-400 transition-all duration-300"
                       aria-label="Twitter Profile"
                     >
                       <Twitter className="h-5 w-5" />
@@ -369,7 +369,7 @@ export function ContactSection() {
                       href="https://github.com" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all"
+                      className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-all duration-300"
                       aria-label="GitHub Profile"
                     >
                       <Github className="h-5 w-5" />
@@ -378,7 +378,7 @@ export function ContactSection() {
                       href="https://medium.com" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all"
+                      className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-green-900/30 hover:text-green-600 dark:hover:text-green-400 transition-all duration-300"
                       aria-label="Medium Blog"
                     >
                       <FaMedium className="h-5 w-5" />
