@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { Sliders, BarChart3, Layers, ArrowLeft, Github } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
-import { projects } from '@/lib/data';
+import { projects, getProjectPlayground, getProjectPaper } from '@/lib/projectLoader';
 import { ProjectType } from '@/lib/types';
 
 // Different playground control types based on project categories
