@@ -230,7 +230,10 @@ export default function MarkdownBlog() {
                   className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-300"
                 >
                   <div 
-                  onClick={() => window.location.href = `/blog/markdown/${relatedPost.id}`}
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                    setLocation(`/blog/${relatedPost.id}`);
+                  }}
                   className="block cursor-pointer"
                 >
                   <img 
