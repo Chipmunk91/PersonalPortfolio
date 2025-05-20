@@ -12,30 +12,36 @@ export function MarkdownRenderer({ markdown }: MarkdownRendererProps) {
       <ReactMarkdown 
         remarkPlugins={[remarkGfm]}
         components={{
+          // Custom styling for headings
+          h1: ({children}) => (
+            <h1 className="text-3xl font-bold mt-8 mb-4">{children}</h1>
+          ),
+          h2: ({children}) => (
+            <h2 className="text-2xl font-bold mt-6 mb-3">{children}</h2>
+          ),
+          h3: ({children}) => (
+            <h3 className="text-xl font-bold mt-4 mb-2">{children}</h3>
+          ),
           // Custom styling for code blocks
-          code: ({ node, inline, className, children, ...props }) => {
+          code: ({className, children}) => {
             const match = /language-(\w+)/.exec(className || '');
-            return !inline && match ? (
+            return match ? (
               <pre className="p-4 bg-gray-100 dark:bg-gray-800 rounded-md overflow-x-auto">
-                <code className={className} {...props}>
-                  {children}
-                </code>
+                <code className={className}>{children}</code>
               </pre>
             ) : (
-              <code className={className} {...props}>
-                {children}
-              </code>
+              <code className={className}>{children}</code>
             );
           },
-          // Custom link styling
-          a: ({ node, children, ...props }) => (
-            <a className="text-primary hover:underline" {...props}>
+          // Custom styling for links
+          a: ({children, href}) => (
+            <a href={href} className="text-primary hover:underline">
               {children}
             </a>
           ),
-          // Custom image styling
-          img: ({ node, ...props }) => (
-            <img className="rounded-lg my-6 max-w-full" {...props} />
+          // Custom styling for images
+          img: ({src, alt}) => (
+            <img src={src} alt={alt} className="rounded-lg my-6 max-w-full" />
           )
         }}
       >

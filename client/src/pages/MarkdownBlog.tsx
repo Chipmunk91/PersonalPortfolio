@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRoute, Link, useLocation } from 'wouter';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { getMdBlogPostById, getBlogPostContentById } from '@/lib/mdBlogLoader';
+import { markdownBlogPosts, getMarkdownContentById, parseFrontMatter } from '@/lib/mdBlogLoader';
 import { BlogPostType } from '@/lib/types';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { 
@@ -18,11 +18,10 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { mdBlogPosts } from '@/lib/mdBlogLoader';
 
-export default function MarkdownBlogPost() {
+export default function MarkdownBlog() {
   const [, setLocation] = useLocation();
-  const [, params] = useRoute<{ id: string }>('/blog/md/:id');
+  const [, params] = useRoute<{ id: string }>('/blog/markdown/:id');
   const [post, setPost] = useState<BlogPostType | undefined>(undefined);
   const [content, setContent] = useState<string>('');
   const [relatedPosts, setRelatedPosts] = useState<BlogPostType[]>([]);
@@ -30,17 +29,18 @@ export default function MarkdownBlogPost() {
   useEffect(() => {
     if (params && params.id) {
       const id = parseInt(params.id);
-      const foundPost = getMdBlogPostById(id);
+      const foundPost = markdownBlogPosts.find(p => p.id === id);
       
       if (foundPost) {
         setPost(foundPost);
         
         // Get post content
-        const postContent = getBlogPostContentById(id);
-        setContent(postContent);
+        const rawContent = getMarkdownContentById(id);
+        const { content } = parseFrontMatter(rawContent);
+        setContent(content);
         
         // Get related posts (same category, excluding current post)
-        const related = mdBlogPosts
+        const related = markdownBlogPosts
           .filter(p => p.id !== id && p.category === foundPost.category)
           .slice(0, 3);
         setRelatedPosts(related);
@@ -51,6 +51,55 @@ export default function MarkdownBlogPost() {
     window.scrollTo(0, 0);
   }, [params]);
 
+  // If no ID provided in route, show blog post listing
+  if (!params || !params.id) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <Navbar />
+        <div className="container mx-auto px-4 py-12">
+          <h1 className="text-4xl font-bold mb-8 text-center">Markdown Blog</h1>
+          <p className="text-center mb-12 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            This blog section demonstrates how to use Markdown files for content.
+            Each blog post is a single .md file with frontmatter for metadata.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {markdownBlogPosts.map((post) => (
+              <Link key={post.id} href={`/blog/markdown/${post.id}`}>
+                <a className="block bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <img 
+                    src={post.imageUrl} 
+                    alt={post.title} 
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-6">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs font-medium">
+                        {post.category}
+                      </span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        {post.readTime} min read
+                      </span>
+                    </div>
+                    <h2 className="text-xl font-bold mb-2 line-clamp-2">{post.title}</h2>
+                    <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-gray-500 dark:text-gray-400">{post.date}</span>
+                      <span className="text-gray-500 dark:text-gray-400">{post.author}</span>
+                    </div>
+                  </div>
+                </a>
+              </Link>
+            ))}
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   if (!post) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -59,8 +108,8 @@ export default function MarkdownBlogPost() {
           <div className="text-center">
             <h1 className="text-3xl font-bold">Blog Post Not Found</h1>
             <p className="mt-4 mb-8">The blog post you're looking for doesn't exist or has been removed.</p>
-            <Button onClick={() => setLocation('/blog')}>
-              <ChevronLeft className="mr-2 h-4 w-4" /> Back to Blog
+            <Button onClick={() => setLocation('/blog/markdown')}>
+              <ChevronLeft className="mr-2 h-4 w-4" /> Back to Markdown Blog
             </Button>
           </div>
         </div>
@@ -83,11 +132,11 @@ export default function MarkdownBlogPost() {
         >
           <Button
             variant="ghost"
-            onClick={() => setLocation('/blog')}
+            onClick={() => setLocation('/blog/markdown')}
             className="group flex items-center text-sm font-medium"
           >
             <ChevronLeft className="mr-1 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            Back to Blog
+            Back to Markdown Blog
           </Button>
         </motion.div>
         
@@ -179,8 +228,8 @@ export default function MarkdownBlogPost() {
                   key={relatedPost.id}
                   className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-300"
                 >
-                  <Link href={`/blog/md/${relatedPost.id}`}>
-                    <a className="block" onClick={() => window.scrollTo(0, 0)}>
+                  <Link href={`/blog/markdown/${relatedPost.id}`}>
+                    <a className="block">
                       <img 
                         src={relatedPost.imageUrl} 
                         alt={relatedPost.title} 
