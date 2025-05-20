@@ -3,6 +3,12 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertSubscriberSchema, insertContactMessageSchema } from "@shared/schema";
 import { z } from "zod";
+import { 
+  createCalendarClient, 
+  getCalendarCredentials,
+  getAvailableTimeslots,
+  createCalendarEvent 
+} from "./calendar";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Newsletter subscription endpoint
@@ -217,6 +223,95 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(500).json({
         success: false,
         message: "Server error updating message"
+      });
+    }
+  });
+
+  // Calendar API Endpoints
+  
+  // Get available timeslots for scheduling
+  app.get("/api/calendar/available", async (req: Request, res: Response) => {
+    try {
+      const { date } = req.query;
+      
+      if (!date || typeof date !== 'string') {
+        return res.status(400).json({
+          success: false,
+          message: "Date parameter is required (YYYY-MM-DD format)"
+        });
+      }
+      
+      // Create calendar client with credentials
+      const credentials = getCalendarCredentials();
+      const calendar = createCalendarClient(credentials);
+      
+      // Get available timeslots for the selected date
+      const availableSlots = await getAvailableTimeslots(calendar, date);
+      
+      return res.status(200).json({
+        success: true,
+        availableSlots
+      });
+    } catch (error) {
+      console.error("Error fetching available slots:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Server error fetching available slots"
+      });
+    }
+  });
+  
+  // Book a calendar slot
+  app.post("/api/calendar/book", async (req: Request, res: Response) => {
+    try {
+      const { startTime, name, email, topic } = req.body;
+      
+      // Validation
+      if (!startTime || !name || !email || !topic) {
+        return res.status(400).json({
+          success: false,
+          message: "Missing required fields (startTime, name, email, topic)"
+        });
+      }
+      
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid email address"
+        });
+      }
+      
+      // Parse start time and calculate end time (30 min meeting)
+      const start = new Date(startTime);
+      const end = new Date(start);
+      end.setMinutes(end.getMinutes() + 30);
+      
+      // Create calendar client with credentials
+      const credentials = getCalendarCredentials();
+      const calendar = createCalendarClient(credentials);
+      
+      // Create the calendar event
+      const eventId = await createCalendarEvent(
+        calendar,
+        start.toISOString(),
+        end.toISOString(),
+        `Meeting with ${name}`,
+        `Topic: ${topic}`,
+        email
+      );
+      
+      return res.status(201).json({
+        success: true,
+        message: "Meeting scheduled successfully",
+        eventId
+      });
+    } catch (error) {
+      console.error("Error booking calendar slot:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Server error scheduling meeting"
       });
     }
   });
