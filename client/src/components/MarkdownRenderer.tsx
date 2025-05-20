@@ -12,7 +12,7 @@ export function MarkdownRenderer({ markdown }: MarkdownRendererProps) {
       <ReactMarkdown 
         remarkPlugins={[remarkGfm]}
         components={{
-          // Add custom styling to code blocks
+          // Custom styling for code blocks
           code: ({ node, inline, className, children, ...props }) => {
             const match = /language-(\w+)/.exec(className || '');
             return !inline && match ? (
@@ -27,20 +27,14 @@ export function MarkdownRenderer({ markdown }: MarkdownRendererProps) {
               </code>
             );
           },
-          // Style headings appropriately
-          h1: ({ node, className, children, ...props }) => (
-            <h1 className="text-3xl font-bold mt-8 mb-4" {...props}>
-              {children}
-            </h1>
-          ),
-          // Style links
-          a: ({ node, className, children, ...props }) => (
+          // Custom link styling
+          a: ({ node, children, ...props }) => (
             <a className="text-primary hover:underline" {...props}>
               {children}
             </a>
           ),
-          // Style images
-          img: ({ node, className, ...props }) => (
+          // Custom image styling
+          img: ({ node, ...props }) => (
             <img className="rounded-lg my-6 max-w-full" {...props} />
           )
         }}

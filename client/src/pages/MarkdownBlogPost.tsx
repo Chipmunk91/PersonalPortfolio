@@ -1,0 +1,210 @@
+import { useEffect, useState } from 'react';
+import { useRoute, Link, useLocation } from 'wouter';
+import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
+import { getMdBlogPostById, getBlogPostContentById } from '@/lib/mdBlogLoader';
+import { BlogPostType } from '@/lib/types';
+import { MarkdownRenderer } from '@/components/MarkdownRenderer';
+import { 
+  ChevronLeft, 
+  Calendar, 
+  Clock, 
+  User, 
+  Tag,
+  Share2,
+  Twitter,
+  Facebook,
+  Linkedin
+} from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { mdBlogPosts } from '@/lib/mdBlogLoader';
+
+export default function MarkdownBlogPost() {
+  const [, setLocation] = useLocation();
+  const [, params] = useRoute<{ id: string }>('/blog/md/:id');
+  const [post, setPost] = useState<BlogPostType | undefined>(undefined);
+  const [content, setContent] = useState<string>('');
+  const [relatedPosts, setRelatedPosts] = useState<BlogPostType[]>([]);
+
+  useEffect(() => {
+    if (params && params.id) {
+      const id = parseInt(params.id);
+      const foundPost = getMdBlogPostById(id);
+      
+      if (foundPost) {
+        setPost(foundPost);
+        
+        // Get post content
+        const postContent = getBlogPostContentById(id);
+        setContent(postContent);
+        
+        // Get related posts (same category, excluding current post)
+        const related = mdBlogPosts
+          .filter(p => p.id !== id && p.category === foundPost.category)
+          .slice(0, 3);
+        setRelatedPosts(related);
+      }
+    }
+    
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+  }, [params]);
+
+  if (!post) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <Navbar />
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold">Blog Post Not Found</h1>
+            <p className="mt-4 mb-8">The blog post you're looking for doesn't exist or has been removed.</p>
+            <Button onClick={() => setLocation('/blog')}>
+              <ChevronLeft className="mr-2 h-4 w-4" /> Back to Blog
+            </Button>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <Navbar />
+      
+      <div className="container mx-auto px-4 py-12 max-w-4xl">
+        {/* Back Button */}
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="mb-8"
+        >
+          <Button
+            variant="ghost"
+            onClick={() => setLocation('/blog')}
+            className="group flex items-center text-sm font-medium"
+          >
+            <ChevronLeft className="mr-1 h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            Back to Blog
+          </Button>
+        </motion.div>
+        
+        {/* Blog Post Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-8"
+        >
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">{post.title}</h1>
+          
+          <div className="flex flex-wrap items-center text-sm text-gray-600 dark:text-gray-400 gap-4 mb-6">
+            <div className="flex items-center">
+              <Calendar className="h-4 w-4 mr-2" />
+              {post.date}
+            </div>
+            <div className="flex items-center">
+              <Clock className="h-4 w-4 mr-2" />
+              {post.readTime} min read
+            </div>
+            <div className="flex items-center">
+              <User className="h-4 w-4 mr-2" />
+              {post.author}
+            </div>
+            <div className="flex items-center">
+              <Tag className="h-4 w-4 mr-2" />
+              <span className="capitalize">{post.category}</span>
+            </div>
+          </div>
+          
+          <div className="rounded-xl overflow-hidden mb-8">
+            <img 
+              src={post.imageUrl} 
+              alt={post.title} 
+              className="w-full h-auto object-cover"
+            />
+          </div>
+        </motion.div>
+        
+        {/* Blog Post Content */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 md:p-10 mb-8"
+        >
+          <MarkdownRenderer markdown={content} />
+        </motion.div>
+        
+        {/* Share Section */}
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <div className="flex items-center gap-4">
+            <span className="text-gray-700 dark:text-gray-300 font-medium">Share this post:</span>
+            <div className="flex gap-2">
+              <Button variant="outline" size="icon" className="rounded-full">
+                <Twitter className="h-4 w-4" />
+              </Button>
+              <Button variant="outline" size="icon" className="rounded-full">
+                <Facebook className="h-4 w-4" />
+              </Button>
+              <Button variant="outline" size="icon" className="rounded-full">
+                <Linkedin className="h-4 w-4" />
+              </Button>
+              <Button variant="outline" size="icon" className="rounded-full">
+                <Share2 className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+        
+        {/* Related Posts */}
+        {relatedPosts.length > 0 && (
+          <motion.div 
+            className="mb-16"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <h2 className="text-2xl font-bold mb-6">Related Posts</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {relatedPosts.map((relatedPost) => (
+                <div 
+                  key={relatedPost.id}
+                  className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-300"
+                >
+                  <Link href={`/blog/md/${relatedPost.id}`}>
+                    <a className="block" onClick={() => window.scrollTo(0, 0)}>
+                      <img 
+                        src={relatedPost.imageUrl} 
+                        alt={relatedPost.title} 
+                        className="w-full h-36 object-cover"
+                      />
+                      <div className="p-4">
+                        <span className="inline-block px-2 py-1 text-xs font-semibold bg-primary/10 text-primary rounded-full mb-2">
+                          {relatedPost.category}
+                        </span>
+                        <h3 className="font-bold text-lg mb-2 line-clamp-2">{relatedPost.title}</h3>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">
+                          {relatedPost.excerpt}
+                        </p>
+                      </div>
+                    </a>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </div>
+      
+      <Footer />
+    </div>
+  );
+}

@@ -7,7 +7,6 @@ import { BlogPostType } from '@/lib/types';
 // Import metadata from each blog post
 import { metadata as post1Metadata } from './01-building-intuitive-ai-interfaces';
 import { metadata as post2Metadata } from './02-future-of-ai-explainability';
-import { metadata as post3Metadata } from './03-how-to-add-new-blog-posts';
 
 // Add additional blog posts by:
 // 1. Creating a new file following the pattern XX-blog-post-name.tsx
@@ -20,7 +19,6 @@ import { metadata as post3Metadata } from './03-how-to-add-new-blog-posts';
 const blogPostsWithIds: BlogPostType[] = [
   { id: 1, ...post1Metadata },
   { id: 2, ...post2Metadata },
-  { id: 3, ...post3Metadata },
   // Add more posts here as you create them
   // Example: { id: 4, ...post4Metadata },
 ];

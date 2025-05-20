@@ -12,6 +12,7 @@ import Playground from "@/pages/Playground";
 import Theory from "@/pages/Theory";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
+import MarkdownBlogPost from "@/pages/MarkdownBlogPost";
 import AllBlogPosts from "@/pages/AllBlogPosts";
 import Contact from "@/pages/Contact";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
@@ -30,6 +31,7 @@ function Router() {
       <Route path="/blog" component={Blog}/>
       <Route path="/blog/all" component={AllBlogPosts}/>
       <Route path="/blog/:id" component={BlogPost}/>
+      <Route path="/blog/md/:id" component={MarkdownBlogPost}/>
       <Route path="/contact" component={Contact}/>
       <Route path="/privacy-policy" component={PrivacyPolicy}/>
       <Route path="/terms-of-service" component={TermsOfService}/>
