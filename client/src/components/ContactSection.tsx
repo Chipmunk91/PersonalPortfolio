@@ -280,12 +280,43 @@ export function ContactSection() {
             {/* Contact Info and Booking */}
             <div className="lg:w-2/5">
               <motion.div 
+                className="bg-white dark:bg-gray-900 rounded-xl shadow-xl p-6 md:p-8 mb-6"
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
-                <ScheduleCallForm />
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Book a Call</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4">
+                  Schedule a 30-minute call to discuss your project or collaboration opportunity.
+                </p>
+                
+                <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4">
+                  <div className="text-center py-8">
+                    <svg className="h-12 w-12 text-primary-500 mx-auto mb-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2"/>
+                      <path d="M16 2V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M8 2V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M3 10H21" stroke="currentColor" strokeWidth="2"/>
+                      <path d="M8 14H8.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M12 14H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M16 14H16.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M8 18H8.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M12 18H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <path d="M16 18H16.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                    <p className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Available for meetings</p>
+                    <Button 
+                      className="mt-2" 
+                      onClick={() => window.open('https://calendly.com', '_blank')}
+                    >
+                      Schedule a Call
+                    </Button>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">
+                      (Currently linked to a placeholder Calendly page)
+                    </p>
+                  </div>
+                </div>
                 
                 <div className="space-y-4 mt-6">
                   <div className="flex items-start">
