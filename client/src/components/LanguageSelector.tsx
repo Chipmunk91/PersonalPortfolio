@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useLanguage, Language, LanguageOption } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
+import { useLanguage, Language } from '@/contexts/LanguageContext';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,15 +23,13 @@ export function LanguageSelector() {
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="flex items-center gap-1 px-2"
+        <button 
+          className="flex items-center focus:outline-none text-gray-800 dark:text-white hover:text-primary-500 hover:dark:text-primary-400 transition-colors"
           aria-label="Select language"
         >
-          <Globe className="h-4 w-4" />
-          <span className="hidden md:inline-block text-sm ml-1">{currentLanguage.flag}</span>
-        </Button>
+          <Globe className="h-4 w-4 mr-1.5" />
+          <span className="text-base font-medium">{currentLanguage.flag} US</span>
+        </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         {languages.map((lang) => (
