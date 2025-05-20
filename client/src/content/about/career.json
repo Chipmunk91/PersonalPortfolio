@@ -1,0 +1,28 @@
+{
+  "timeline": [
+    {
+      "title": "Lead Data Visualization Engineer",
+      "company": "AI Interpretability Lab",
+      "period": "2021 - Present",
+      "description": "Leading a team of engineers to build interactive tools for explaining complex AI models to non-technical stakeholders."
+    },
+    {
+      "title": "Senior Data Scientist",
+      "company": "TechViz Solutions",
+      "period": "2018 - 2021",
+      "description": "Developed custom visualization frameworks for financial and healthcare clients, resulting in 40% improved data interpretation."
+    },
+    {
+      "title": "UX Researcher",
+      "company": "DataInsight Co.",
+      "period": "2016 - 2018",
+      "description": "Conducted user research to improve data dashboard usability and created interactive visualization prototypes."
+    },
+    {
+      "title": "Junior Developer",
+      "company": "Creative Tech Labs",
+      "period": "2014 - 2016",
+      "description": "Built web applications focused on data presentation and interactive content visualization."
+    }
+  ]
+}
