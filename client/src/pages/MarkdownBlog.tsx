@@ -247,7 +247,7 @@ export default function MarkdownBlog() {
   
   // Render blog listing
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       <Navbar />
       <div className="container mx-auto px-4 pt-24 pb-12">
         <h1 className="text-4xl font-bold mb-8 text-center">Blog & Insights</h1>
@@ -313,7 +313,7 @@ export default function MarkdownBlog() {
               onClick={() => {
                 setLocation(`/blog/${post.id}`);
               }}
-              className="cursor-pointer bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+              className="cursor-pointer bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow border-t-4 border-primary"
             >
               <img 
                 src={post.imageUrl} 
@@ -371,7 +371,7 @@ export default function MarkdownBlog() {
                 <h3 className="text-2xl font-bold text-white mb-4">
                   Subscribe to my newsletter
                 </h3>
-                <p className="text-primary-100 mb-6">
+                <p className="text-white mb-6">
                   Get the latest articles, tutorials, and resources on AI
                   visualization and interpretability delivered straight to your
                   inbox.
@@ -384,27 +384,22 @@ export default function MarkdownBlog() {
                   />
                   <button
                     className="px-6 py-3 
-                    border border-primary-600
                     bg-white 
-                    text-primary-600 
-                    dark:bg-gray-800 
-                    dark:text-white 
+                    text-primary-700
                     font-medium rounded-lg 
-                    hover:bg-gray-100 
-                    dark:hover:bg-gray-700 
-                    transition-colors h-12 
-                    dark:border-gray-700"
+                    hover:bg-gray-100
+                    transition-colors h-12"
                   >
                     Subscribe
                   </button>
                 </div>
-                <p className="text-xs text-primary-200 mt-3">
+                <p className="text-xs text-white mt-3">
                   I respect your privacy. Unsubscribe at any time.
                 </p>
               </div>
               <div className="md:w-1/2 md:pl-12 flex justify-center">
                 <div className="animate-bounce">
-                  <svg className="h-24 w-24 text-white opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="h-24 w-24 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
