@@ -35,6 +35,9 @@ export default function MarkdownBlog() {
   const postsPerPage = 6;
 
   useEffect(() => {
+    // Reset scroll position when component mounts or when params change
+    window.scrollTo(0, 0);
+    
     if (params && params.id) {
       const id = parseInt(params.id);
       const foundPost = blogPosts.find(p => p.id === id);
@@ -51,11 +54,13 @@ export default function MarkdownBlog() {
           .filter(p => p.id !== id && p.category === foundPost.category)
           .slice(0, 3);
         setRelatedPosts(related);
+        
+        // Add a slight delay to ensure content is loaded before allowing scrolling
+        setTimeout(() => {
+          document.body.style.overflow = 'auto';
+        }, 100);
       }
     }
-    
-    // Scroll to top when component mounts
-    window.scrollTo(0, 0);
   }, [params]);
 
   // If viewing a specific blog post
