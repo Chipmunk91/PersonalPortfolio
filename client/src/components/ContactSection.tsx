@@ -347,16 +347,40 @@ export function ContactSection() {
                 <div className="mt-8">
                   <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">Connect with me</p>
                   <div className="flex gap-3">
-                    <a href="#" className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
+                    <a 
+                      href="https://linkedin.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all"
+                      aria-label="LinkedIn Profile"
+                    >
                       <Linkedin className="h-5 w-5" />
                     </a>
-                    <a href="#" className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
+                    <a 
+                      href="https://twitter.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all"
+                      aria-label="Twitter Profile"
+                    >
                       <Twitter className="h-5 w-5" />
                     </a>
-                    <a href="#" className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
+                    <a 
+                      href="https://github.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all"
+                      aria-label="GitHub Profile"
+                    >
                       <Github className="h-5 w-5" />
                     </a>
-                    <a href="#" className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
+                    <a 
+                      href="https://medium.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-3 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-600 dark:hover:text-primary-400 transition-all"
+                      aria-label="Medium Blog"
+                    >
                       <FaMedium className="h-5 w-5" />
                     </a>
                   </div>
