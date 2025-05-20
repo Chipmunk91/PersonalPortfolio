@@ -33,11 +33,11 @@ export function ContactSection() {
   // Form state
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [inquiryType, setInquiryType] = useState<string>('');
+  const [inquiryType, setInquiryType] = useState('');
   const [message, setMessage] = useState('');
-  const [budget, setBudget] = useState<string>('');
-  const [timeline, setTimeline] = useState<string>('');
-  const [eventDate, setEventDate] = useState<string>('');
+  const [budget, setBudget] = useState('');
+  const [timeline, setTimeline] = useState('');
+  const [eventDate, setEventDate] = useState('');
   
   // Form submission state
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
@@ -68,7 +68,7 @@ export function ContactSection() {
         message,
         ...(inquiryType === 'project' ? { budget } : {}),
         ...(inquiryType === 'collaboration' ? { timeline } : {}),
-        ...(inquiryType === 'speaking' ? { eventDate: eventDate ? new Date(eventDate) : undefined } : {})
+        ...(inquiryType === 'speaking' ? { eventDate: eventDate ? new Date(eventDate).toISOString() : null } : {})
       };
       
       // Send the form data to the server
