@@ -6,6 +6,8 @@ import { blogPosts, getBlogPostContent } from '@/lib/blogLoader';
 import { BlogPostType } from '@/lib/types';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { BlogCard } from '@/components/BlogCard';
+import { BlogFilterSection } from '@/components/BlogFilterSection';
+import { NewsletterSection } from '@/components/NewsletterSection';
 import { 
   ChevronLeft, 
   Calendar, 
@@ -267,61 +269,15 @@ export default function MarkdownBlog() {
           </motion.div>
         
           {/* Search and Filter Bar */}
-          <div className="mb-10">
-            {/* Search Input */}
-            <div className="relative max-w-md mx-auto mb-6">
-              <input
-                type="text"
-                placeholder="Search articles..."
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setCurrentPage(1);
-                }}
-                className="w-full px-4 py-2 pl-10 pr-4 border rounded-full focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              <svg
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div>
-            
-            {/* Category Filter Buttons */}
-            <motion.div 
-              className="flex flex-wrap justify-center gap-3"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => {
-                    setSelectedCategory(category);
-                    setCurrentPage(1);
-                  }}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    selectedCategory === category
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
-                  }`}
-                >
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
-                </button>
-              ))}
-            </motion.div>
-          </div>
+          {/* Blog Filter Section */}
+          <BlogFilterSection 
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            categories={categories}
+            setCurrentPage={setCurrentPage}
+          />
           
           {/* Blog Post Cards */}
           <motion.div 
@@ -357,74 +313,11 @@ export default function MarkdownBlog() {
             </div>
           )}
           
-          {/* Newsletter Section - Styled like Interactive Playground */}
-          <motion.div 
-            className="mt-24 mb-12 bg-gradient-to-r from-primary-600 to-primary-800 rounded-xl overflow-hidden shadow-xl"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="px-6 py-12 md:p-12">
-              <div className="flex flex-col md:flex-row items-center">
-                <div className="md:w-1/2 mb-8 md:mb-0">
-                  <h3 className="text-2xl font-bold text-white mb-4">
-                    Subscribe to my newsletter
-                  </h3>
-                  <p className="text-primary-100 mb-6">
-                    Get the latest articles, tutorials, and resources on AI
-                    visualization and interpretability delivered straight to your
-                    inbox.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <input
-                      type="email"
-                      placeholder="Your email address"
-                      className="flex-1 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-white h-12"
-                    />
-                    <Button className="h-12 px-6 bg-white hover:bg-gray-100 text-primary-600 border border-transparent">
-                      <Mail className="h-4 w-4 mr-2" />
-                      Subscribe
-                    </Button>
-                  </div>
-                  <p className="text-xs text-primary-200 mt-3">
-                    I respect your privacy. Unsubscribe at any time.
-                  </p>
-                </div>
-                <div className="md:w-1/2 md:pl-12">
-                  <div className="bg-white/10 p-6 rounded-xl border border-white/20">
-                    <h4 className="text-white font-bold mb-3">Newsletter benefits:</h4>
-                    <ul className="space-y-2 text-primary-100">
-                      <li className="flex items-center">
-                        <svg className="h-5 w-5 mr-2 text-primary-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        Early access to new articles and tools
-                      </li>
-                      <li className="flex items-center">
-                        <svg className="h-5 w-5 mr-2 text-primary-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        Exclusive resources not published on the blog
-                      </li>
-                      <li className="flex items-center">
-                        <svg className="h-5 w-5 mr-2 text-primary-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        Tips and techniques from industry experts
-                      </li>
-                      <li className="flex items-center">
-                        <svg className="h-5 w-5 mr-2 text-primary-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        Opportunities to join private workshops
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+          {/* Newsletter Section */}
+          <NewsletterSection 
+            title="Subscribe to my newsletter"
+            description="Get the latest articles, tutorials, and resources on AI visualization and interpretability delivered straight to your inbox."
+          />
         </div>
       </section>
       <Footer />
