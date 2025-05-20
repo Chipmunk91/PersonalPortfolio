@@ -129,5 +129,4 @@ export const projects: ProjectType[] = [
   }
 ];
 
-// Export blog posts for use throughout the app
-export { blogPosts };
+// Blog posts are now exported directly from blogLoader.ts
