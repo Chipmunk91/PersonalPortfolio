@@ -13,6 +13,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { Card } from "@/components/ui/card";
 
 export function ProjectsSection() {
   const [filter, setFilter] = useState<string>('all');
@@ -43,25 +44,11 @@ export function ProjectsSection() {
     }
   }, []);
 
-  // When a project is selected, update the playground configuration
+  // When a project is selected, reset the playground configuration
   useEffect(() => {
     if (selectedProject) {
-      // Default configurations based on project type
-      if (selectedProject.categories.includes('ai')) {
-        setPlaygroundConfig({
-          model: 'gpt-3.5',
-          temperature: 0.7,
-          maxLength: 100,
-          prompt: 'Generate a creative story about...'
-        });
-      } else {
-        setPlaygroundConfig({
-          nodes: 50,
-          strength: 5,
-          speed: 3,
-          type: 'Force-Directed Graph'
-        });
-      }
+      // Reset playground config when a new project is selected
+      setPlaygroundConfig({});
     }
   }, [selectedProject]);
   
