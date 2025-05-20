@@ -16,13 +16,102 @@ import {
   Clock, 
   Linkedin, 
   Twitter, 
-  Github
+  Github,
+  AlertCircle,
+  Loader2,
+  CheckCircle2
 } from 'lucide-react';
 import { FaMedium } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { useToast } from '@/hooks/use-toast';
+
+type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 export function ContactSection() {
+  const { toast } = useToast();
+  
+  // Form state
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [inquiryType, setInquiryType] = useState<string>('');
+  const [message, setMessage] = useState('');
+  const [budget, setBudget] = useState<string>('');
+  const [timeline, setTimeline] = useState<string>('');
+  const [eventDate, setEventDate] = useState<string>('');
+  
+  // Form submission state
+  const [formStatus, setFormStatus] = useState<FormStatus>('idle');
+  const [error, setError] = useState<string | null>(null);
+  
+  const resetForm = () => {
+    setName('');
+    setEmail('');
+    setInquiryType('');
+    setMessage('');
+    setBudget('');
+    setTimeline('');
+    setEventDate('');
+    setError(null);
+  };
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus('submitting');
+    setError(null);
+    
+    try {
+      // Prepare the form data
+      const formData = {
+        name,
+        email,
+        inquiryType,
+        message,
+        ...(inquiryType === 'project' ? { budget } : {}),
+        ...(inquiryType === 'collaboration' ? { timeline } : {}),
+        ...(inquiryType === 'speaking' ? { eventDate: eventDate ? new Date(eventDate) : undefined } : {})
+      };
+      
+      // Send the form data to the server
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to send message');
+      }
+      
+      // Form submitted successfully
+      setFormStatus('success');
+      resetForm();
+      
+      toast({
+        title: "Message sent successfully!",
+        description: "Thank you for reaching out. I'll get back to you soon.",
+      });
+      
+      // Reset success state after a delay
+      setTimeout(() => {
+        setFormStatus('idle');
+      }, 5000);
+      
+    } catch (err) {
+      setFormStatus('error');
+      const errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
+      setError(errorMessage);
+      
+      toast({
+        variant: "destructive",
+        title: "Failed to send message",
+        description: errorMessage,
+      });
+    }
+  };
   
   return (
     <section id="contact" className="py-20 bg-gray-50 dark:bg-gray-800">
@@ -52,72 +141,139 @@ export function ContactSection() {
             >
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Send me a message</h3>
               
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="firstName">First Name</Label>
-                    <Input id="firstName" className="w-full" />
+              {formStatus === 'success' ? (
+                <div className="text-center py-10">
+                  <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle2 className="w-8 h-8 text-green-600 dark:text-green-400" />
                   </div>
+                  <h4 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">Message Sent!</h4>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">
+                    Thank you for reaching out. I'll get back to you as soon as possible.
+                  </p>
+                  <Button onClick={() => setFormStatus('idle')}>
+                    Send Another Message
+                  </Button>
+                </div>
+              ) : (
+                <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="space-y-2">
-                    <Label htmlFor="lastName">Last Name</Label>
-                    <Input id="lastName" className="w-full" />
+                    <Label htmlFor="name">Full Name</Label>
+                    <Input 
+                      id="name" 
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                      className="w-full" 
+                    />
                   </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" className="w-full" />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="inquiry-type">What are you looking for?</Label>
-                  <Select onValueChange={setInquiryType}>
-                    <SelectTrigger id="inquiry-type">
-                      <SelectValue placeholder="Select an option" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="collaboration">Collaboration</SelectItem>
-                      <SelectItem value="consulting">Consulting</SelectItem>
-                      <SelectItem value="speaking">Speaking Opportunity</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                {/* Conditional fields based on selection */}
-                {inquiryType === 'collaboration' && (
+                  
                   <div className="space-y-2">
-                    <Label htmlFor="timeline">Project Timeline</Label>
-                    <Select>
-                      <SelectTrigger id="timeline">
-                        <SelectValue placeholder="Select timeline" />
+                    <Label htmlFor="email">Email</Label>
+                    <Input 
+                      id="email" 
+                      type="email" 
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="w-full" 
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="inquiry-type">What are you looking for?</Label>
+                    <Select value={inquiryType} onValueChange={setInquiryType}>
+                      <SelectTrigger id="inquiry-type">
+                        <SelectValue placeholder="Select an option" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="less-than-1">Less than 1 month</SelectItem>
-                        <SelectItem value="1-3">1-3 months</SelectItem>
-                        <SelectItem value="3-6">3-6 months</SelectItem>
-                        <SelectItem value="6+">6+ months</SelectItem>
+                        <SelectItem value="project">Project/Hiring</SelectItem>
+                        <SelectItem value="collaboration">Collaboration</SelectItem>
+                        <SelectItem value="speaking">Speaking Opportunity</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
-                )}
                 
-                {inquiryType === 'speaking' && (
+                  {inquiryType === 'project' && (
+                    <div className="space-y-2">
+                      <Label htmlFor="budget">Project Budget</Label>
+                      <Select value={budget} onValueChange={setBudget}>
+                        <SelectTrigger id="budget">
+                          <SelectValue placeholder="Select budget range" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="under-5k">Under $5,000</SelectItem>
+                          <SelectItem value="5k-10k">$5,000 - $10,000</SelectItem>
+                          <SelectItem value="10k-20k">$10,000 - $20,000</SelectItem>
+                          <SelectItem value="20k+">$20,000+</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+                  
+                  {inquiryType === 'collaboration' && (
+                    <div className="space-y-2">
+                      <Label htmlFor="timeline">Project Timeline</Label>
+                      <Select value={timeline} onValueChange={setTimeline}>
+                        <SelectTrigger id="timeline">
+                          <SelectValue placeholder="Select timeline" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="less-than-1">Less than 1 month</SelectItem>
+                          <SelectItem value="1-3">1-3 months</SelectItem>
+                          <SelectItem value="3-6">3-6 months</SelectItem>
+                          <SelectItem value="6+">6+ months</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+                  
+                  {inquiryType === 'speaking' && (
+                    <div className="space-y-2">
+                      <Label htmlFor="eventDate">Event Date</Label>
+                      <Input 
+                        id="eventDate" 
+                        type="date" 
+                        value={eventDate}
+                        onChange={(e) => setEventDate(e.target.value)}
+                        className="w-full" 
+                      />
+                    </div>
+                  )}
+                  
                   <div className="space-y-2">
-                    <Label htmlFor="eventDate">Event Date</Label>
-                    <Input id="eventDate" type="date" className="w-full" />
+                    <Label htmlFor="message">Message</Label>
+                    <Textarea 
+                      id="message" 
+                      rows={4} 
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      required
+                      className="w-full" 
+                    />
                   </div>
-                )}
-                
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message</Label>
-                  <Textarea id="message" rows={4} className="w-full" />
-                </div>
-                
-                <Button type="submit" className="w-full">
-                  Send Message
-                </Button>
-              </form>
+                  
+                  {error && (
+                    <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-red-600 dark:text-red-400 text-sm flex items-start">
+                      <AlertCircle className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
+                      <span>{error}</span>
+                    </div>
+                  )}
+                  
+                  <Button 
+                    type="submit" 
+                    className="w-full"
+                    disabled={formStatus === 'submitting'}
+                  >
+                    {formStatus === 'submitting' ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : 'Send Message'}
+                  </Button>
+                </form>
+              )}
             </motion.div>
             
             {/* Contact Info and Booking */}
@@ -148,53 +304,32 @@ export function ContactSection() {
                       <path d="M12 18H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                       <path d="M16 18H16.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                     </svg>
-                    <p className="text-gray-600 dark:text-gray-400">Calendly integration would appear here</p>
+                    <p className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Available for meetings</p>
+                    <Button className="mt-2">Schedule a Call</Button>
                   </div>
                 </div>
                 
-                <Button className="w-full">
-                  Schedule Now
-                </Button>
-              </motion.div>
-              
-              <motion.div 
-                className="bg-white dark:bg-gray-900 rounded-xl shadow-xl p-6 md:p-8"
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              >
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Contact Information</h3>
-                
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-primary-100 dark:bg-primary-900 p-3 rounded-full">
-                      <Mail className="h-5 w-5 text-primary-500 dark:text-primary-400" />
-                    </div>
+                <div className="space-y-4 mt-6">
+                  <div className="flex items-start">
+                    <Mail className="h-5 w-5 text-primary-500 mt-1 mr-3" />
                     <div>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Email</p>
-                      <a href="mailto:contact@hiroshi.dev" className="text-gray-900 dark:text-white hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
-                        contact@hiroshi.dev
-                      </a>
+                      <h4 className="text-sm font-medium text-gray-900 dark:text-white">Email</h4>
+                      <p className="text-gray-600 dark:text-gray-400">contact@example.com</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-3">
-                    <div className="bg-primary-100 dark:bg-primary-900 p-3 rounded-full">
-                      <MapPin className="h-5 w-5 text-primary-500 dark:text-primary-400" />
-                    </div>
+                  <div className="flex items-start">
+                    <MapPin className="h-5 w-5 text-primary-500 mt-1 mr-3" />
                     <div>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Location</p>
-                      <p className="text-gray-900 dark:text-white">Tokyo, Japan / Remote</p>
+                      <h4 className="text-sm font-medium text-gray-900 dark:text-white">Location</h4>
+                      <p className="text-gray-600 dark:text-gray-400">Tokyo, Japan</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-3">
-                    <div className="bg-primary-100 dark:bg-primary-900 p-3 rounded-full">
-                      <Clock className="h-5 w-5 text-primary-500 dark:text-primary-400" />
-                    </div>
+                  <div className="flex items-start">
+                    <Clock className="h-5 w-5 text-primary-500 mt-1 mr-3" />
                     <div>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Working Hours</p>
+                      <h4 className="text-sm font-medium text-gray-900 dark:text-white">Working Hours</h4>
                       <p className="text-gray-900 dark:text-white">Mon-Fri: 9:00 AM - 6:00 PM JST</p>
                     </div>
                   </div>
