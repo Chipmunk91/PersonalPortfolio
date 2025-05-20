@@ -177,25 +177,19 @@ export default function Blog() {
           
           {/* Related Posts */}
           {relatedPosts.length > 0 && (
-            <motion.div 
-              className="mb-16"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
+            <div className="mb-16">
               <h2 className="text-2xl font-bold mb-6">Related Posts</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {relatedPosts.map((relatedPost) => (
                   <div 
                     key={relatedPost.id}
-                    className="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden hover:shadow-md transition-shadow duration-300"
+                    className="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                    onClick={() => {
+                      window.scrollTo(0, 0);
+                      setLocation(`/blog/${relatedPost.id}`);
+                    }}
                   >
-                    <div 
-                      onClick={() => {
-                        setLocation(`/blog/${relatedPost.id}`);
-                      }}
-                      className="block cursor-pointer"
-                    >
+                    <div className="cursor-pointer">
                       <img 
                         src={relatedPost.imageUrl} 
                         alt={relatedPost.title} 
@@ -214,7 +208,7 @@ export default function Blog() {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           )}
         </div>
         
