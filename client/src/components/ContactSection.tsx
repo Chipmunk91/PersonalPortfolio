@@ -149,18 +149,18 @@ export function ContactSection() {
                   <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
                     <CheckCircle2 className="w-8 h-8 text-green-600 dark:text-green-400" />
                   </div>
-                  <h4 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">Message Sent!</h4>
+                  <h4 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">{t('success.title')}</h4>
                   <p className="text-gray-600 dark:text-gray-400 mb-6">
-                    Thank you for reaching out. I'll get back to you as soon as possible.
+                    {t('success.message')}
                   </p>
                   <Button onClick={() => setFormStatus('idle')}>
-                    Send Another Message
+                    {t('success.sendAnother')}
                   </Button>
                 </div>
               ) : (
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="space-y-2">
-                    <Label htmlFor="name">Full Name</Label>
+                    <Label htmlFor="name">{t('form.fullName')}</Label>
                     <Input 
                       id="name" 
                       value={name}
@@ -171,7 +171,7 @@ export function ContactSection() {
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email">{t('form.email')}</Label>
                     <Input 
                       id="email" 
                       type="email" 
@@ -183,32 +183,32 @@ export function ContactSection() {
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="inquiry-type">What are you looking for?</Label>
+                    <Label htmlFor="inquiry-type">{t('form.inquiryType')}</Label>
                     <Select value={inquiryType} onValueChange={setInquiryType}>
                       <SelectTrigger id="inquiry-type">
-                        <SelectValue placeholder="Select an option" />
+                        <SelectValue placeholder={t('form.selectOption')} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="project">Project/Hiring</SelectItem>
-                        <SelectItem value="collaboration">Collaboration</SelectItem>
-                        <SelectItem value="speaking">Speaking Opportunity</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
+                        <SelectItem value="project">{t('form.project')}</SelectItem>
+                        <SelectItem value="collaboration">{t('form.collaboration')}</SelectItem>
+                        <SelectItem value="speaking">{t('form.speaking')}</SelectItem>
+                        <SelectItem value="other">{t('form.other')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                 
                   {inquiryType === 'project' && (
                     <div className="space-y-2">
-                      <Label htmlFor="budget">Project Budget</Label>
+                      <Label htmlFor="budget">{t('form.budget.label')}</Label>
                       <Select value={budget} onValueChange={setBudget}>
                         <SelectTrigger id="budget">
-                          <SelectValue placeholder="Select budget range" />
+                          <SelectValue placeholder={t('form.budget.placeholder')} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="under-5k">Under $5,000</SelectItem>
-                          <SelectItem value="5k-10k">$5,000 - $10,000</SelectItem>
-                          <SelectItem value="10k-20k">$10,000 - $20,000</SelectItem>
-                          <SelectItem value="20k+">$20,000+</SelectItem>
+                          <SelectItem value="under-5k">{t('form.budget.under5k')}</SelectItem>
+                          <SelectItem value="5k-10k">{t('form.budget.5k10k')}</SelectItem>
+                          <SelectItem value="10k-20k">{t('form.budget.10k20k')}</SelectItem>
+                          <SelectItem value="20k+">{t('form.budget.20kPlus')}</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -216,16 +216,16 @@ export function ContactSection() {
                   
                   {inquiryType === 'collaboration' && (
                     <div className="space-y-2">
-                      <Label htmlFor="timeline">Project Timeline</Label>
+                      <Label htmlFor="timeline">{t('form.timeline.label')}</Label>
                       <Select value={timeline} onValueChange={setTimeline}>
                         <SelectTrigger id="timeline">
-                          <SelectValue placeholder="Select timeline" />
+                          <SelectValue placeholder={t('form.timeline.placeholder')} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="less-than-1">Less than 1 month</SelectItem>
-                          <SelectItem value="1-3">1-3 months</SelectItem>
-                          <SelectItem value="3-6">3-6 months</SelectItem>
-                          <SelectItem value="6+">6+ months</SelectItem>
+                          <SelectItem value="less-than-1">{t('form.timeline.lessThan1')}</SelectItem>
+                          <SelectItem value="1-3">{t('form.timeline.1to3')}</SelectItem>
+                          <SelectItem value="3-6">{t('form.timeline.3to6')}</SelectItem>
+                          <SelectItem value="6+">{t('form.timeline.6Plus')}</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -233,7 +233,7 @@ export function ContactSection() {
                   
                   {inquiryType === 'speaking' && (
                     <div className="space-y-2">
-                      <Label htmlFor="eventDate">Event Date</Label>
+                      <Label htmlFor="eventDate">{t('form.eventDate')}</Label>
                       <Input 
                         id="eventDate" 
                         type="date" 
@@ -245,7 +245,7 @@ export function ContactSection() {
                   )}
                   
                   <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
+                    <Label htmlFor="message">{t('form.message')}</Label>
                     <Textarea 
                       id="message" 
                       rows={4} 
@@ -271,9 +271,9 @@ export function ContactSection() {
                     {formStatus === 'submitting' ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Sending...
+                        {t('form.sending')}
                       </>
-                    ) : 'Send Message'}
+                    ) : t('form.submit')}
                   </Button>
                 </form>
               )}
