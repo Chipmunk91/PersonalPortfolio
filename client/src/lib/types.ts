@@ -24,25 +24,14 @@ export interface ProjectType {
   dirName?: string;
 }
 
-// Blog post translations interface
-export interface BlogPostTranslation {
-  title: string;
-  excerpt: string;
-  content?: string;
-}
-
 // Blog post type
 export interface BlogPostType {
   id: number;
+  title: string;
+  excerpt: string;
   imageUrl: string;
   category: string;
   readTime: number;
   author: string;
   date: string;
-  translations: {
-    [key: string]: BlogPostTranslation; // key is language code: 'en', 'ko', 'ja'
-  };
-  // Keep original title and excerpt fields for backward compatibility and default display
-  title: string;
-  excerpt: string;
 }
