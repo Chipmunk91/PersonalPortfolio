@@ -67,22 +67,28 @@ export const blogPosts: BlogPostType[] = markdownFiles.map(file => {
     category: frontMatter.category,
     readTime: parseInt(frontMatter.readTime),
     author: frontMatter.author,
-    date: frontMatter.date
+    date: frontMatter.date,
+    language: file.language
   };
 });
 
-// Get blog post content by ID
-export function getBlogPostContent(id: number): string {
-  const file = markdownFiles.find(file => file.id === id);
+// Get blog post content by ID and language
+export function getBlogPostContent(id: number, language: string = 'en'): string {
+  const file = markdownFiles.find(file => file.id === id && file.language === language);
   if (!file) return '';
   
   const { content } = parseFrontMatter(file.content);
   return content;
 }
 
-// Get blog post by ID
-export function getBlogPostById(id: number): BlogPostType | undefined {
-  return blogPosts.find(post => post.id === id);
+// Get blog post by ID and language
+export function getBlogPostById(id: number, language: string = 'en'): BlogPostType | undefined {
+  return blogPosts.find(post => post.id === id && post.language === language);
+}
+
+// Get all blog posts for a specific language
+export function getBlogPostsByLanguage(language: string = 'en'): BlogPostType[] {
+  return blogPosts.filter(post => post.language === language);
 }
 
 // In a real production environment, you would implement a function like this:

@@ -34,4 +34,5 @@ export interface BlogPostType {
   readTime: number;
   author: string;
   date: string;
+  language?: string;
 }
