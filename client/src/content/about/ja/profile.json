@@ -1,0 +1,29 @@
+{
+  "name": "田中 博",
+  "title": "データサイエンティスト & ビジュアライゼーション専門家",
+  "profileImage": "https://images.unsplash.com/photo-1543269664-56d93c1b41a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=800",
+  "bio": "私はAIシステムをより解釈しやすく、アクセスしやすくするインタラクティブなツールの作成を専門とするデータサイエンティストおよびビジュアライゼーション専門家です。AI、データビジュアライゼーション、UXデザインの交差点で8年以上の経験を持ち、組織が複雑なデータを直感的な視覚体験に変換するのを支援しています。",
+  "videoIntro": {
+    "title": "簡単な紹介",
+    "description": "AIビジュアライゼーションの分野での私の仕事と専門知識についての30秒の簡単な紹介",
+    "videoUrl": "#"
+  },
+  "socialLinks": [
+    {
+      "platform": "linkedin",
+      "url": "https://linkedin.com/in/username"
+    },
+    {
+      "platform": "twitter",
+      "url": "https://twitter.com/username"
+    },
+    {
+      "platform": "github",
+      "url": "https://github.com/username"
+    },
+    {
+      "platform": "medium",
+      "url": "https://medium.com/@username"
+    }
+  ]
+}
