@@ -1,0 +1,41 @@
+{
+  "title": "뉴스레터 구독하기",
+  "description": "AI 시각화 및 해석 가능성에 관한 최신 기사, 튜토리얼 및 리소스를 받아보세요.",
+  "benefits": {
+    "title": "뉴스레터 혜택:",
+    "items": {
+      "earlyAccess": "새로운 기사 및 도구에 조기 접근",
+      "exclusiveResources": "블로그에 게시되지 않은 독점 자료",
+      "expertTips": "업계 전문가의 팁과 기술",
+      "workshops": "개인 워크샵 참여 기회"
+    }
+  },
+  "form": {
+    "title": "뉴스레터 구독하기",
+    "nameLabel": "이름 (선택사항)",
+    "namePlaceholder": "당신의 이름",
+    "emailLabel": "이메일 주소",
+    "emailPlaceholder": "you@example.com",
+    "submit": "구독하기",
+    "subscribing": "구독 중...",
+    "privacyNotice": "개인정보를 존중합니다. 언제든지 구독을 취소할 수 있습니다."
+  },
+  "success": {
+    "title": "구독해 주셔서 감사합니다!",
+    "message": "곧 첫 번째 뉴스레터를 받아보실 수 있습니다.",
+    "subscribeAnother": "다른 이메일 구독하기"
+  },
+  "errors": {
+    "failed": "구독에 실패했습니다",
+    "generic": "문제가 발생했습니다. 다시 시도해 주세요."
+  },
+  "toast": {
+    "success": {
+      "title": "성공적으로 구독되었습니다!",
+      "description": "저희 뉴스레터를 구독해 주셔서 감사합니다."
+    },
+    "error": {
+      "title": "구독 실패"
+    }
+  }
+}

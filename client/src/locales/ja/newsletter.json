@@ -1,0 +1,41 @@
+{
+  "title": "ニュースレターを購読する",
+  "description": "AI可視化と解釈可能性に関する最新の記事、チュートリアル、リソースを直接あなたのメールボックスにお届けします。",
+  "benefits": {
+    "title": "ニュースレターの特典：",
+    "items": {
+      "earlyAccess": "新しい記事やツールへの早期アクセス",
+      "exclusiveResources": "ブログに掲載されていない限定コンテンツ",
+      "expertTips": "業界専門家からのヒントとテクニック",
+      "workshops": "プライベートワークショップに参加する機会"
+    }
+  },
+  "form": {
+    "title": "ニュースレターに登録する",
+    "nameLabel": "名前（任意）",
+    "namePlaceholder": "あなたの名前",
+    "emailLabel": "メールアドレス",
+    "emailPlaceholder": "you@example.com",
+    "submit": "購読する",
+    "subscribing": "登録中...",
+    "privacyNotice": "プライバシーを尊重します。いつでも購読解除できます。"
+  },
+  "success": {
+    "title": "購読ありがとうございます！",
+    "message": "まもなく最初のニュースレターが届きます。",
+    "subscribeAnother": "別のメールを登録する"
+  },
+  "errors": {
+    "failed": "購読に失敗しました",
+    "generic": "問題が発生しました。もう一度お試しください。"
+  },
+  "toast": {
+    "success": {
+      "title": "購読完了！",
+      "description": "ニュースレターの購読ありがとうございます。"
+    },
+    "error": {
+      "title": "購読に失敗しました"
+    }
+  }
+}

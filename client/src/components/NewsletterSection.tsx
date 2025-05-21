@@ -15,7 +15,7 @@ export function NewsletterSection({
   title,
   description
 }: NewsletterSectionProps) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('newsletter');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
