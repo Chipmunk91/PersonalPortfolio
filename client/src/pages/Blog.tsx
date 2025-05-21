@@ -320,20 +320,38 @@ export default function Blog() {
   }
   
   // Blog listing view
+  // Get the current language for search
+  const { language } = useLanguage();
+  
   // Get categories for filter buttons
-  const categories = ["all", ...Array.from(new Set(blogPosts.map(post => post.category)))];
+  const categories = ["all", ...Array.from(new Set(blogPosts.map(post => 
+    post.translations[language]?.category || post.category || 'uncategorized'
+  )))].filter(Boolean) as string[];
   
   // Filter posts by category and search query
   const filteredPosts = blogPosts
-    .filter(post => selectedCategory === "all" || post.category === selectedCategory)
+    .filter(post => {
+      if (selectedCategory === "all") return true;
+      
+      // Check category in translations or fallback
+      const postCategory = post.translations[language]?.category || post.category || '';
+      return postCategory === selectedCategory;
+    })
     .filter(post => {
       if (!searchQuery) return true;
       const query = searchQuery.toLowerCase();
+      
+      // Get translated or fallback content for searching
+      const title = (post.translations[language]?.title || post.title || '').toLowerCase();
+      const excerpt = (post.translations[language]?.excerpt || post.excerpt || '').toLowerCase();
+      const author = (post.translations[language]?.author || post.author || '').toLowerCase();
+      const category = (post.translations[language]?.category || post.category || '').toLowerCase();
+      
       return (
-        post.title.toLowerCase().includes(query) ||
-        post.excerpt.toLowerCase().includes(query) ||
-        post.author.toLowerCase().includes(query) ||
-        post.category.toLowerCase().includes(query)
+        title.includes(query) ||
+        excerpt.includes(query) ||
+        author.includes(query) ||
+        category.includes(query)
       );
     });
   
