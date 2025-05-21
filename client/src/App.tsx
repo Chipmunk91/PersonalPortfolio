@@ -40,8 +40,8 @@ import KoTermsOfService from "@/pages/ko/TermsOfService";
 import KoCookiePolicy from "@/pages/ko/CookiePolicy";
 import KoNotFound from "@/pages/ko/not-found";
 
-// Fallback NotFound
-import NotFound from "@/pages/not-found";
+// Fallback NotFound page
+import NotFound from "./pages/not-found";
 
 // Language Redirect Component 
 function LanguageRedirect() {
