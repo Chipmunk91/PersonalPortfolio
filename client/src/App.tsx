@@ -7,30 +7,38 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import { useTranslation } from "react-i18next";
 
-// English Pages (Other pages still using language-specific implementations)
+// English Pages
+import EnHome from "@/pages/en/Home";
+import EnAbout from "@/pages/en/About";
 import EnProjects from "@/pages/en/Projects";
 import EnBlog from "@/pages/en/Blog";
 import EnContact from "@/pages/en/Contact";
+import EnPrivacyPolicy from "@/pages/en/PrivacyPolicy";
+import EnTermsOfService from "@/pages/en/TermsOfService";
+import EnCookiePolicy from "@/pages/en/CookiePolicy";
 import EnNotFound from "@/pages/en/not-found";
 
-// Japanese Pages (Other pages still using language-specific implementations)
+// Japanese Pages
+import JaHome from "@/pages/ja/Home";
+import JaAbout from "@/pages/ja/About";
 import JaProjects from "@/pages/ja/Projects";
 import JaBlog from "@/pages/ja/Blog";
 import JaContact from "@/pages/ja/Contact";
+import JaPrivacyPolicy from "@/pages/ja/PrivacyPolicy";
+import JaTermsOfService from "@/pages/ja/TermsOfService";
+import JaCookiePolicy from "@/pages/ja/CookiePolicy";
 import JaNotFound from "@/pages/ja/not-found";
 
-// Korean Pages (Other pages still using language-specific implementations)
+// Korean Pages
+import KoHome from "@/pages/ko/Home";
+import KoAbout from "@/pages/ko/About";
 import KoProjects from "@/pages/ko/Projects";
 import KoBlog from "@/pages/ko/Blog";
 import KoContact from "@/pages/ko/Contact";
+import KoPrivacyPolicy from "@/pages/ko/PrivacyPolicy";
+import KoTermsOfService from "@/pages/ko/TermsOfService";
+import KoCookiePolicy from "@/pages/ko/CookiePolicy";
 import KoNotFound from "@/pages/ko/not-found";
-
-// Dynamic Localized Pages
-import HomePage from "@/pages/[lang]/Home";
-import AboutPage from "@/pages/[lang]/About";
-import PrivacyPolicyPage from "@/pages/[lang]/PrivacyPolicy";
-import TermsOfServicePage from "@/pages/[lang]/TermsOfService";
-import CookiePolicyPage from "@/pages/[lang]/CookiePolicy";
 
 // Fallback NotFound
 import NotFound from "@/pages/not-found";
@@ -67,32 +75,40 @@ function Router() {
       {/* Root redirects to language path */}
       <Route path="/" component={LanguageRedirect} />
       
-      {/* Dynamic Localized Pages */}
-      <Route path="/:lang" component={HomePage} />
-      <Route path="/:lang/about" component={AboutPage} />
-      <Route path="/:lang/privacy-policy" component={PrivacyPolicyPage} />
-      <Route path="/:lang/terms-of-service" component={TermsOfServicePage} />
-      <Route path="/:lang/cookie-policy" component={CookiePolicyPage} />
-      
-      {/* English Routes (still using language-specific implementations) */}
+      {/* English Routes */}
+      <Route path="/en" component={EnHome} />
+      <Route path="/en/about" component={EnAbout} />
       <Route path="/en/projects" component={EnProjects} />
       <Route path="/en/blog" component={EnBlog} />
       <Route path="/en/blog/:id" component={EnBlog} />
       <Route path="/en/contact" component={EnContact} />
+      <Route path="/en/privacy-policy" component={EnPrivacyPolicy} />
+      <Route path="/en/terms-of-service" component={EnTermsOfService} />
+      <Route path="/en/cookie-policy" component={EnCookiePolicy} />
       <Route path="/en/*" component={EnNotFound} />
       
-      {/* Japanese Routes (still using language-specific implementations) */}
+      {/* Japanese Routes */}
+      <Route path="/ja" component={JaHome} />
+      <Route path="/ja/about" component={JaAbout} />
       <Route path="/ja/projects" component={JaProjects} />
       <Route path="/ja/blog" component={JaBlog} />
       <Route path="/ja/blog/:id" component={JaBlog} />
       <Route path="/ja/contact" component={JaContact} />
+      <Route path="/ja/privacy-policy" component={JaPrivacyPolicy} />
+      <Route path="/ja/terms-of-service" component={JaTermsOfService} />
+      <Route path="/ja/cookie-policy" component={JaCookiePolicy} />
       <Route path="/ja/*" component={JaNotFound} />
       
-      {/* Korean Routes (still using language-specific implementations) */}
+      {/* Korean Routes */}
+      <Route path="/ko" component={KoHome} />
+      <Route path="/ko/about" component={KoAbout} />
       <Route path="/ko/projects" component={KoProjects} />
       <Route path="/ko/blog" component={KoBlog} />
       <Route path="/ko/blog/:id" component={KoBlog} />
       <Route path="/ko/contact" component={KoContact} />
+      <Route path="/ko/privacy-policy" component={KoPrivacyPolicy} />
+      <Route path="/ko/terms-of-service" component={KoTermsOfService} />
+      <Route path="/ko/cookie-policy" component={KoCookiePolicy} />
       <Route path="/ko/*" component={KoNotFound} />
       
       {/* 404 page for non-matched routes */}
