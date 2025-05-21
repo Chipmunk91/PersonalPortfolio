@@ -46,7 +46,7 @@ export function NewsletterSection({
       const data = await response.json();
       
       if (!response.ok) {
-        throw new Error(data.message || t('newsletter.errors.failed'));
+        throw new Error(data.message || t('errors.failed'));
       }
       
       setIsSubmitting(false);
@@ -55,17 +55,17 @@ export function NewsletterSection({
       setName('');
       
       toast({
-        title: t('newsletter.toast.success.title'),
-        description: t('newsletter.toast.success.description'),
+        title: t('toast.success.title'),
+        description: t('toast.success.description'),
       });
     } catch (err) {
       setIsSubmitting(false);
-      const errorMessage = err instanceof Error ? err.message : t('newsletter.errors.generic');
+      const errorMessage = err instanceof Error ? err.message : t('errors.generic');
       setError(errorMessage);
       
       toast({
         variant: "destructive",
-        title: t('newsletter.toast.error.title'),
+        title: t('toast.error.title'),
         description: errorMessage,
       });
     }
@@ -94,12 +94,12 @@ export function NewsletterSection({
         
         <div className="flex flex-col md:flex-row items-start gap-6">
           <div className="md:w-1/2 bg-white dark:bg-black p-6 rounded-lg shadow-md">
-            <h4 className="text-gray-800 dark:text-gray-100 font-bold mb-4">{t('newsletter.benefits.title')}</h4>
+            <h4 className="text-gray-800 dark:text-gray-100 font-bold mb-4">{t('benefits.title')}</h4>
             <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-              <BenefitItem text={t('newsletter.benefits.items.earlyAccess')} />
-              <BenefitItem text={t('newsletter.benefits.items.exclusiveResources')} />
-              <BenefitItem text={t('newsletter.benefits.items.expertTips')} />
-              <BenefitItem text={t('newsletter.benefits.items.workshops')} />
+              <BenefitItem text={t('benefits.items.earlyAccess')} />
+              <BenefitItem text={t('benefits.items.exclusiveResources')} />
+              <BenefitItem text={t('benefits.items.expertTips')} />
+              <BenefitItem text={t('benefits.items.workshops')} />
             </ul>
           </div>
           
@@ -109,32 +109,32 @@ export function NewsletterSection({
                 <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Check className="w-8 h-8 text-primary-600 dark:text-primary-300" />
                 </div>
-                <h4 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">{t('newsletter.success.title')}</h4>
+                <h4 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">{t('success.title')}</h4>
                 <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  {t('newsletter.success.message')}
+                  {t('success.message')}
                 </p>
                 <Button 
                   variant="outline" 
                   onClick={resetForm}
                   className="mx-auto"
                 >
-                  {t('newsletter.success.subscribeAnother')}
+                  {t('success.subscribeAnother')}
                 </Button>
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
                 <h4 className="text-lg font-bold mb-4 text-gray-800 dark:text-white">
-                  {t('newsletter.form.title')}
+                  {t('form.title')}
                 </h4>
                 
                 <div className="mb-4">
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    {t('newsletter.form.nameLabel')}
+                    {t('form.nameLabel')}
                   </label>
                   <Input
                     id="name"
                     type="text"
-                    placeholder={t('newsletter.form.namePlaceholder')}
+                    placeholder={t('form.namePlaceholder')}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700"
@@ -143,12 +143,12 @@ export function NewsletterSection({
                 
                 <div className="mb-4">
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    {t('newsletter.form.emailLabel')}
+                    {t('form.emailLabel')}
                   </label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder={t('newsletter.form.emailPlaceholder')}
+                    placeholder={t('form.emailPlaceholder')}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -171,13 +171,13 @@ export function NewsletterSection({
                   {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      {t('newsletter.form.subscribing')}
+                      {t('form.subscribing')}
                     </>
-                  ) : t('newsletter.form.submit')}
+                  ) : t('form.submit')}
                 </Button>
                 
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-3">
-                  {t('newsletter.form.privacyNotice')}
+                  {t('form.privacyNotice')}
                 </p>
               </form>
             )}

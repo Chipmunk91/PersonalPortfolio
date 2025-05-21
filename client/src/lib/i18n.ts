@@ -8,16 +8,22 @@ import enCommon from '../locales/en/common.json';
 import enBlog from '../locales/en/blog.json';
 import enProjects from '../locales/en/projects.json';
 import enContact from '../locales/en/contact.json';
+import enAbout from '../locales/en/about.json';
+import enNewsletter from '../locales/en/newsletter.json';
 
 import jaCommon from '../locales/ja/common.json';
 import jaBlog from '../locales/ja/blog.json';
 import jaProjects from '../locales/ja/projects.json';
 import jaContact from '../locales/ja/contact.json';
+import jaAbout from '../locales/ja/about.json';
+import jaNewsletter from '../locales/ja/newsletter.json';
 
 import koCommon from '../locales/ko/common.json';
 import koBlog from '../locales/ko/blog.json';
 import koProjects from '../locales/ko/projects.json';
 import koContact from '../locales/ko/contact.json';
+import koAbout from '../locales/ko/about.json';
+import koNewsletter from '../locales/ko/newsletter.json';
 
 // Define supported languages
 export const supportedLanguages = ['en', 'ja', 'ko'];
@@ -43,26 +49,32 @@ i18n
         common: enCommon,
         blog: enBlog,
         projects: enProjects,
-        contact: enContact
+        contact: enContact,
+        about: enAbout,
+        newsletter: enNewsletter
       },
       ja: {
         common: jaCommon,
         blog: jaBlog,
         projects: jaProjects,
-        contact: jaContact
+        contact: jaContact,
+        about: jaAbout,
+        newsletter: jaNewsletter
       },
       ko: {
         common: koCommon,
         blog: koBlog,
         projects: koProjects,
-        contact: koContact
+        contact: koContact,
+        about: koAbout,
+        newsletter: koNewsletter
       }
     },
     fallbackLng: 'en',
     debug: false,
     
     // Common namespaces across all pages
-    ns: ['common', 'blog', 'projects', 'contact'],
+    ns: ['common', 'blog', 'projects', 'contact', 'about', 'newsletter'],
     defaultNS: 'common',
     
     interpolation: {

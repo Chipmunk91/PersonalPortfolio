@@ -1,39 +1,75 @@
 {
-  "title": "Get In Touch",
-  "subtitle": "Have a question or interested in working together? Feel free to reach out.",
+  "title": "Get in Touch",
+  "subtitle": "Have a project in mind or want to collaborate? I'd love to hear from you.",
   "form": {
-    "name": "Your Name",
-    "email": "Your Email",
-    "subject": "Subject",
-    "message": "Your Message",
-    "budget": "Budget (USD)",
-    "timeline": "Timeline",
-    "inquiryType": "Inquiry Type",
-    "projectType": "Project Type",
+    "title": "Send me a message",
+    "fullName": "Full Name",
+    "email": "Email",
+    "inquiryType": "What are you looking for?",
+    "message": "Message",
     "submit": "Send Message",
-    "success": "Message sent successfully! I'll get back to you soon.",
-    "error": "Something went wrong. Please try again."
-  },
-  "inquiryTypes": {
-    "general": "General Inquiry",
-    "project": "Project Request",
+    "sending": "Sending...",
+    "selectOption": "Select an option",
+    "project": "Project/Hiring",
     "collaboration": "Collaboration",
-    "speaking": "Speaking Engagement"
+    "speaking": "Speaking Opportunity",
+    "other": "Other",
+    "budget": {
+      "label": "Project Budget",
+      "placeholder": "Select budget range",
+      "under5k": "Under $5,000",
+      "5k10k": "$5,000 - $10,000",
+      "10k20k": "$10,000 - $20,000",
+      "20kPlus": "$20,000+"
+    },
+    "timeline": {
+      "label": "Project Timeline",
+      "placeholder": "Select timeline",
+      "lessThan1": "Less than 1 month",
+      "1to3": "1-3 months",
+      "3to6": "3-6 months",
+      "6Plus": "6+ months"
+    },
+    "eventDate": "Event Date"
   },
-  "schedule": {
-    "title": "Schedule a Call",
-    "description": "Prefer to discuss over a call? Schedule a 30-minute consultation.",
+  "success": {
+    "title": "Message Sent!",
+    "message": "Thank you for reaching out. I'll get back to you as soon as possible.",
+    "sendAnother": "Send Another Message"
+  },
+  "bookCall": {
+    "title": "Book a Call",
+    "description": "Schedule a 30-minute call to discuss your project or collaboration opportunity.",
+    "availableText": "Available for meetings",
     "button": "Schedule a Call",
-    "selectDate": "Select a Date",
-    "selectTime": "Select a Time",
-    "yourDetails": "Your Details",
-    "confirmBooking": "Confirm Booking",
-    "success": "Your call has been scheduled. Looking forward to talking with you!",
-    "error": "Failed to schedule call. Please try again."
+    "placeholder": "(Currently linked to a placeholder Calendly page)"
   },
   "contactInfo": {
-    "address": "Tokyo, Japan",
-    "email": "hiroshi@example.com",
-    "phone": "+81 3-1234-5678"
+    "email": {
+      "label": "Email",
+      "value": "contact@example.com"
+    },
+    "location": {
+      "label": "Location",
+      "value": "Tokyo, Japan"
+    },
+    "workingHours": {
+      "label": "Working Hours",
+      "value": "Mon-Fri: 9:00 AM - 6:00 PM JST"
+    },
+    "connect": "Connect with me"
+  },
+  "errors": {
+    "failed": "Failed to send message",
+    "generic": "Something went wrong. Please try again."
+  },
+  "toast": {
+    "success": {
+      "title": "Message sent successfully!",
+      "description": "Thank you for reaching out. I'll get back to you soon."
+    },
+    "error": {
+      "title": "Failed to send message"
+    }
   }
 }
