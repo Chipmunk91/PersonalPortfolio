@@ -7,7 +7,7 @@ import { EmailCaptureModal } from "@/components/EmailCaptureModal";
 import { Button } from "@/components/ui/button";
 import { skills } from "@/lib/data";
 import { projects } from "@/lib/projectLoader";
-import { blogPosts } from "@/lib/blogLoader";
+import { getBlogPostsByLanguage } from "@/lib/blogLoader";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
