@@ -1,0 +1,59 @@
+Here’s a concise spec you can hand off to your Replit AI agent:
+
+1. **Enable i18n in your CMS**
+
+   * Install/activate the CMS’s localization plugin (e.g. Strapi i18n, Contentful Locales).
+
+2. **Define localized content models**
+
+   * For each page (PrivacyPolicy, About, Contact, etc.), create one “Page” content type with fields:
+
+     * `title` (Text, localized)
+     * `body` (Rich Text or Markdown, localized)
+     * any metadata (e.g. `lastUpdated`)
+
+3. **Build a CMS API wrapper**
+
+   * In `client/src/lib/cms.ts`, write a `fetchPage(pageSlug: string, locale: string)` function that calls your CMS REST/GraphQL endpoint with `?locale=` and returns `{ title, body, ... }`.
+
+4. **Collapse per-locale TSX into one dynamic template**
+
+   * Move `client/src/pages/en/PrivacyPolicy.tsx` and `…/ja/PrivacyPolicy.tsx` into a single file:
+
+     ```
+     client/src/pages/[lang]/PrivacyPolicy.tsx
+     ```
+   * Inside it, grab `lang` from Next’s router or parameters.
+
+5. **Implement static-generation methods**
+
+   * In that dynamic page, add `getStaticPaths` that returns `[{ params:{}, locale:'en' }, {…, locale:'ja' }]`.
+   * Add `getStaticProps({ locale })` to call `fetchPage('privacy-policy', locale)` and pass the result as `props.policy`.
+
+6. **Render CMS content**
+
+   * Replace all hard-coded headings and paragraphs with:
+
+     ```tsx
+     <h1>{policy.title}</h1>
+     <div dangerouslySetInnerHTML={{ __html: policy.body }} />
+     ```
+
+7. **Remove old per-language files**
+
+   * Delete `src/pages/en/*.tsx` and `src/pages/ja/*.tsx` once the dynamic template works.
+
+8. **Repeat for every page**
+
+   * Copy the above pattern for About, Contact, Blog, etc., using their own CMS content entries.
+
+9. **Test routes**
+
+   * Verify `/en/PrivacyPolicy` and `/ja/PrivacyPolicy` render correct languages.
+   * Check other pages under `/en/*` and `/ja/*`.
+
+10. **Optional: Shared UI strings**
+
+* Continue to manage button labels, form placeholders, nav items in your `src/locales/{lang}/common.json` via `react-i18next`.
+
+That prompt should give your Replit AI agent a clear, step-by-step roadmap for integrating your headless CMS and collapsing all per-language page code into a single dynamic template.

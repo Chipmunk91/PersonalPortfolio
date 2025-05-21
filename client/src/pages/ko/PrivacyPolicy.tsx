@@ -13,100 +13,93 @@ export default function KoreanPrivacyPolicy() {
     }
   }, [i18n]);
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+return (
+    <div className="min-h-screen">
       <Navbar />
-      <div className="container mx-auto px-4 py-16 max-w-4xl">
-        <h1 className="text-3xl font-bold mb-8">개인정보 처리방침</h1>
-        
-        <div className="prose dark:prose-invert max-w-none">
-          <p className="lead">
-            이 개인정보 처리방침은 당사 웹사이트를 방문할 때 개인정보를 어떻게 수집, 사용, 공개, 보호하는지 설명합니다. 이 개인정보 처리방침을 주의 깊게 읽어주시기 바랍니다. 당사는 언제든지 어떤 이유로든 이 개인정보 처리방침을 변경할 권리가 있습니다.
-          </p>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 pt-32">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Privacy Policy</h1>
 
-          <h2>개인정보 수집</h2>
-          <p>당사는 다음과 같은 다양한 방법으로 귀하에 관한 정보를 수집할 수 있습니다:</p>
-          <h3>개인 데이터</h3>
-          <p>
-            당사의 웹사이트를 사용하는 동안, 귀하에게 연락하거나 식별하는 데 사용할 수 있는 특정 개인 식별 정보를 제공하도록 요청할 수 있습니다. 이는 다음을 포함할 수 있으나 이에 국한되지 않습니다:
-          </p>
-          <ul>
-            <li>이메일 주소</li>
-            <li>이름과 성</li>
-            <li>전화번호</li>
-            <li>주소, 시/도, 우편번호, 도시</li>
-          </ul>
+          <div className="prose dark:prose-invert max-w-none">
+            <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
+              Last updated: May 19, 2025
+            </p>
 
-          <h3>파생 데이터</h3>
-          <p>
-            당사 웹사이트에 접속할 때 서버가 자동으로 수집하는 정보로, IP 주소, 브라우저 유형, 운영 체제, 접속 시간, 열람한 페이지 등이 포함됩니다.
-          </p>
+            <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Introduction</h2>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
+              This Privacy Policy explains how Hiroshi.dev ("we", "our", or "us") collects, uses, and protects your 
+              personal information when you visit our website. We respect your privacy and are committed to protecting 
+              your personal data.
+            </p>
 
-          <h3>콘테스트 및 경품 응모 데이터</h3>
-          <p>
-            콘테스트나 경품 행사에 참여하거나 설문조사에 응답할 때 제공할 수 있는 개인 정보 및 기타 정보입니다.
-          </p>
+            <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Information We Collect</h2>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
+              We may collect the following types of information when you visit our website:
+            </p>
+            <ul className="list-disc pl-6 mb-6 text-gray-700 dark:text-gray-300">
+              <li className="mb-2">
+                <strong>Contact Information:</strong> If you subscribe to our newsletter or contact us, we may collect your name and email address.
+              </li>
+              <li className="mb-2">
+                <strong>Usage Data:</strong> We collect information about how you interact with our website, including pages visited, time spent on pages, and other similar information.
+              </li>
+              <li className="mb-2">
+                <strong>Technical Data:</strong> We may collect your IP address, browser type and version, time zone setting, browser plug-in types and versions, operating system, and other technology information.
+              </li>
+            </ul>
 
-          <h2>개인정보 사용</h2>
-          <p>귀하에 관한 정확한 정보를 보유하면 원활하고 효율적이며 맞춤화된 경험을 제공할 수 있습니다. 구체적으로, 웹사이트를 통해 수집된 정보는 다음과 같은 목적으로 사용될 수 있습니다:</p>
-          <ul>
-            <li>계정 생성 및 관리</li>
-            <li>계정 또는 주문에 관한 이메일 전송</li>
-            <li>웹사이트와 관련된 구매, 주문, 결제 및 기타 거래 이행 및 관리</li>
-            <li>웹사이트의 효율성 및 운영 향상</li>
-            <li>웹사이트 경험을 개선하기 위한 사용 패턴 및 추세 모니터링 및 분석</li>
-            <li>웹사이트 업데이트 알림</li>
-            <li>사기 거래 예방, 도난 감시, 범죄 활동 방지</li>
-            <li>피드백 요청 및 웹사이트 사용에 관한 연락</li>
-            <li>분쟁 해결 및 문제 해결</li>
-          </ul>
+            <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">How We Use Your Information</h2>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
+              We use the information we collect for the following purposes:
+            </p>
+            <ul className="list-disc pl-6 mb-6 text-gray-700 dark:text-gray-300">
+              <li className="mb-2">To provide and maintain our website</li>
+              <li className="mb-2">To notify you about changes to our website or services</li>
+              <li className="mb-2">To send you our newsletter if you have subscribed</li>
+              <li className="mb-2">To respond to your inquiries and provide customer support</li>
+              <li className="mb-2">To analyze how users interact with our website to improve functionality and user experience</li>
+            </ul>
 
-          <h2>개인정보 공개</h2>
-          <p>당사는 특정 상황에서 귀하에 관해 수집한 정보를 공유할 수 있습니다. 귀하의 정보는 다음과 같이 공개될 수 있습니다:</p>
+            <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Data Security</h2>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
+              We implement appropriate security measures to protect your personal information against unauthorized access, 
+              alteration, disclosure, or destruction. However, please note that no method of transmission over the internet 
+              or electronic storage is 100% secure, and we cannot guarantee absolute security.
+            </p>
 
-          <h3>법률에 의하거나 권리 보호를 위해</h3>
-          <p>
-            당사 정책의 잠재적 위반을 조사하거나 해결하기 위해, 또는 타인의 권리, 재산, 안전을 보호하기 위해 귀하에 관한 정보 공개가 필요하다고 판단되는 경우, 적용 가능한 법률, 규칙 또는 규정에 의해 허용되거나 요구되는 범위 내에서 정보를 공유할 수 있습니다.
-          </p>
+            <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Third-Party Links</h2>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
+              Our website may contain links to third-party websites. We are not responsible for the privacy practices or 
+              content of these websites. We encourage you to read the privacy policies of any third-party websites you visit.
+            </p>
 
-          <h3>제3자 서비스 제공업체</h3>
-          <p>
-            결제 처리, 데이터 분석, 이메일 전송, 호스팅 서비스, 고객 서비스, 마케팅 지원 등 당사를 위해 또는 당사를 대신하여 서비스를 수행하는 제3자와 귀하의 정보를 공유할 수 있습니다.
-          </p>
+            <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Your Rights</h2>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
+              Depending on your location, you may have certain rights regarding your personal information, including:
+            </p>
+            <ul className="list-disc pl-6 mb-6 text-gray-700 dark:text-gray-300">
+              <li className="mb-2">The right to access your personal information</li>
+              <li className="mb-2">The right to rectify inaccurate personal information</li>
+              <li className="mb-2">The right to erase your personal information</li>
+              <li className="mb-2">The right to restrict processing of your personal information</li>
+              <li className="mb-2">The right to data portability</li>
+              <li className="mb-2">The right to object to the processing of your personal information</li>
+            </ul>
 
-          <h3>마케팅 커뮤니케이션</h3>
-          <p>
-            귀하의 동의가 있거나, 동의를 철회할 기회가 있는 경우, 마케팅 목적으로 제3자와 귀하의 정보를 공유할 수 있습니다.
-          </p>
+            <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Changes to This Privacy Policy</h2>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
+              We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new 
+              Privacy Policy on this page and updating the "Last updated" date at the top of this policy.
+            </p>
 
-          <h2>개인정보 보안</h2>
-          <p>
-            당사는 귀하의 개인정보를 보호하기 위해 관리적, 기술적, 물리적 보안 조치를 사용합니다. 당사는 귀하가 제공한 개인정보를 보호하기 위해 합리적인 조치를 취했지만, 보안 조치는 완벽하지 않으며 침투될 수 없는 것이 아니고, 데이터 전송 방법은 가로채기나 다른 유형의 오용으로부터 보장될 수 없다는 점을 유의해 주십시오.
-          </p>
-
-          <h2>개인정보 관련 옵션</h2>
-          <h3>계정 정보</h3>
-          <p>
-            귀하는 언제든지 다음과 같은 방법으로 계정의 정보를 검토하거나 변경할 수 있습니다:
-          </p>
-          <ul>
-            <li>계정 설정에 로그인하여 계정 업데이트</li>
-            <li>아래 제공된 연락처 정보를 사용하여 당사에 연락</li>
-          </ul>
-
-          <h3>이메일 및 커뮤니케이션</h3>
-          <p>
-            당사로부터 서신, 이메일 또는 기타 통신을 더 이상 받고 싶지 않은 경우, 다음 방법으로 구독을 취소할 수 있습니다:
-          </p>
-          <ul>
-            <li>당사 이메일의 구독 취소 링크 클릭</li>
-            <li>아래 제공된 연락처 정보를 사용하여 당사에 연락</li>
-          </ul>
-
-          <h2>문의하기</h2>
-          <p>
-            이 개인정보 처리방침에 관한 질문이나 의견이 있으시면, 문의 양식을 통해 연락해 주십시오.
-          </p>
+            <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Contact Us</h2>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
+              If you have any questions about this Privacy Policy, please contact us at:
+            </p>
+            <p className="text-gray-700 dark:text-gray-300">
+              Email: privacy@hiroshi.dev
+            </p>
+          </div>
         </div>
       </div>
       <Footer />

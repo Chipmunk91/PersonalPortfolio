@@ -16,94 +16,85 @@ export default function EnglishTermsOfService() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navbar />
-      <div className="container mx-auto px-4 py-16 max-w-4xl">
-        <h1 className="text-3xl font-bold mb-8">Terms of Service</h1>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 pt-32">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">Terms of Service</h1>
         
         <div className="prose dark:prose-invert max-w-none">
-          <p className="lead">
-            These Terms of Service ("Terms") govern your use of our website and services. Please read these Terms carefully before accessing or using our website. By accessing or using any part of the site, you agree to be bound by these Terms.
+          <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
+            Last updated: May 19, 2025
           </p>
 
-          <h2>1. Acceptance of Terms</h2>
-          <p>
-            By accessing this website, you are agreeing to be bound by these Terms of Service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing this site.
+          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Introduction</h2>
+          <p className="mb-4 text-gray-700 dark:text-gray-300">
+            Welcome to Hiroshi.dev. These Terms of Service ("Terms") govern your use of our website and services. 
+            By accessing or using our website, you agree to be bound by these Terms. If you disagree with any part of 
+            the Terms, you may not access our website.
           </p>
 
-          <h2>2. Use License</h2>
-          <p>
-            Permission is granted to temporarily view the materials (information or software) on our website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Intellectual Property</h2>
+          <p className="mb-4 text-gray-700 dark:text-gray-300">
+            The content on this website, including but not limited to text, images, graphics, code, and design, 
+            is owned by or licensed to Hiroshi.dev and is protected by copyright, trademark, and other intellectual 
+            property laws. You may not reproduce, distribute, modify, create derivative works of, publicly display, 
+            publicly perform, republish, download, store, or transmit any of the material on our website without our 
+            prior written consent.
           </p>
-          <ul>
-            <li>modify or copy the materials;</li>
-            <li>use the materials for any commercial purpose, or for any public display (commercial or non-commercial);</li>
-            <li>attempt to decompile or reverse engineer any software contained on our website;</li>
-            <li>remove any copyright or other proprietary notations from the materials; or</li>
-            <li>transfer the materials to another person or "mirror" the materials on any other server.</li>
+
+          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">User Contributions</h2>
+          <p className="mb-4 text-gray-700 dark:text-gray-300">
+            Any content you submit to our website, such as comments or messages, may be used by us for any purpose 
+            consistent with our Privacy Policy. You retain ownership of your content, but grant us a non-exclusive, 
+            royalty-free, perpetual, irrevocable, and fully sublicensable right to use, reproduce, modify, adapt, 
+            publish, translate, create derivative works from, distribute, and display such content throughout the world 
+            in any media.
+          </p>
+
+          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Prohibited Uses</h2>
+          <p className="mb-4 text-gray-700 dark:text-gray-300">
+            You agree not to use our website:
+          </p>
+          <ul className="list-disc pl-6 mb-6 text-gray-700 dark:text-gray-300">
+            <li className="mb-2">In any way that violates any applicable federal, state, local, or international law or regulation</li>
+            <li className="mb-2">To transmit any material that is defamatory, obscene, indecent, abusive, offensive, harassing, or otherwise objectionable</li>
+            <li className="mb-2">To impersonate or attempt to impersonate us, our employees, another user, or any other person or entity</li>
+            <li className="mb-2">To engage in any other conduct that restricts or inhibits anyone's use or enjoyment of the website</li>
+            <li className="mb-2">To attempt to gain unauthorized access to, interfere with, damage, or disrupt any parts of the website</li>
           </ul>
-          <p>
-            This license shall automatically terminate if you violate any of these restrictions and may be terminated by us at any time. Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials in your possession whether in electronic or printed format.
+
+          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Disclaimer of Warranties</h2>
+          <p className="mb-4 text-gray-700 dark:text-gray-300">
+            Your use of our website and services is at your sole risk. Our website and services are provided on an "AS IS" 
+            and "AS AVAILABLE" basis, without warranties of any kind, either express or implied. We do not guarantee that 
+            our website will be secure or free from errors or viruses.
           </p>
 
-          <h2>3. User Accounts</h2>
-          <p>
-            If you create an account on the website, you are responsible for maintaining the security of your account and the confidentiality of your password. You are fully responsible for all activities that occur under your account and any other actions taken in connection with the account.
-          </p>
-          <p>
-            You must immediately notify us of any unauthorized use of your account or any other breaches of security. We will not be liable for any acts or omissions by you, including any damages of any kind incurred as a result of such acts or omissions.
-          </p>
-
-          <h2>4. Content and Copyright</h2>
-          <p>
-            All content included on our website, such as text, graphics, logos, images, audio clips, video clips, data compilations, and software, is the property of ours or our content suppliers and protected by international copyright laws.
-          </p>
-          <p>
-            The compilation of all content on this site is the exclusive property of ours and is protected by international copyright laws. All software used on this site is the property of ours or our software suppliers and is protected by international copyright laws.
+          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Limitation of Liability</h2>
+          <p className="mb-4 text-gray-700 dark:text-gray-300">
+            To the fullest extent permitted by applicable law, in no event will we be liable for any damages arising out 
+            of or in connection with your use of our website or services. This includes, but is not limited to, direct, 
+            indirect, consequential, incidental, and punitive damages.
           </p>
 
-          <h2>5. User Submissions</h2>
-          <p>
-            By submitting content or information to our website, you grant us a non-exclusive, worldwide, royalty-free license to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, and display such content throughout the world in any media.
-          </p>
-          <p>
-            You represent and warrant that you own or control all the rights to the content you submit, and that the content is accurate, not confidential, and not in violation of any contractual restrictions or other third party rights.
-          </p>
-
-          <h2>6. Disclaimer</h2>
-          <p>
-            The materials on our website are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
-          </p>
-          <p>
-            Further, we do not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on our website or otherwise relating to such materials or on any sites linked to this site.
+          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Indemnification</h2>
+          <p className="mb-4 text-gray-700 dark:text-gray-300">
+            You agree to defend, indemnify, and hold us harmless from and against any claims, liabilities, damages, 
+            judgments, awards, losses, costs, expenses, or fees arising out of or relating to your violation of these 
+            Terms or your use of the website.
           </p>
 
-          <h2>7. Limitations</h2>
-          <p>
-            In no event shall we or our suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on our website, even if we or an authorized representative has been notified orally or in writing of the possibility of such damage.
+          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Changes to the Terms</h2>
+          <p className="mb-4 text-gray-700 dark:text-gray-300">
+            We may revise and update these Terms from time to time at our sole discretion. All changes are effective 
+            immediately when we post them. Your continued use of the website following the posting of revised Terms 
+            means that you accept and agree to the changes.
           </p>
 
-          <h2>8. Revisions and Errata</h2>
-          <p>
-            The materials appearing on our website could include technical, typographical, or photographic errors. We do not warrant that any of the materials on this website are accurate, complete, or current. We may make changes to the materials contained on the website at any time without notice. We do not, however, make any commitment to update the materials.
+          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">Contact Us</h2>
+          <p className="mb-4 text-gray-700 dark:text-gray-300">
+            If you have any questions about these Terms, please contact us at:
           </p>
-
-          <h2>9. Links</h2>
-          <p>
-            We have not reviewed all of the sites linked to our website and are not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by us of the site. Use of any such linked website is at the user's own risk.
-          </p>
-
-          <h2>10. Modifications</h2>
-          <p>
-            We may revise these Terms of Service for our website at any time without notice. By using this website you are agreeing to be bound by the then current version of these Terms of Service.
-          </p>
-
-          <h2>11. Governing Law</h2>
-          <p>
-            These Terms shall be governed and construed in accordance with applicable laws, without regard to its conflict of law provisions.
-          </p>
-
-          <h2>12. Contact Information</h2>
-          <p>
-            If you have any questions about these Terms, please contact us through our contact form.
+          <p className="text-gray-700 dark:text-gray-300">
+            Email: terms@hiroshi.dev
           </p>
         </div>
       </div>
