@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BlogFilterSectionProps {
   searchQuery: string;

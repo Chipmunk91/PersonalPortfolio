@@ -6,7 +6,7 @@ category: tutorial
 readTime: 5
 author: Hiroshi Tanaka
 date: May 15, 2023
-translations: {"en":{"title":"Building Intuitive AI Interfaces","excerpt":"Learn how to design user interfaces that make AI systems more accessible and understandable to non-technical users."},"ko":{"title":"직관적인 AI 인터페이스 구축하기","excerpt":"비기술적 사용자가 AI 시스템을 더 쉽게 접근하고 이해할 수 있는 사용자 인터페이스를 설계하는 방법을 알아보세요."},"ja":{"title":"直感的なAIインターフェースの構築","excerpt":"非技術者がAIシステムをより簡単に利用し理解できるユーザーインターフェースを設計する方法を学びましょう。"}}
+translations: {"en":{"title":"Building Intuitive AI Interfaces","excerpt":"Learn how to design user interfaces that make AI systems more accessible and understandable to non-technical users.","category":"tutorial","readTime":5,"author":"Hiroshi Tanaka"},"ko":{"title":"직관적인 AI 인터페이스 구축하기","excerpt":"비기술적 사용자가 AI 시스템을 더 쉽게 접근하고 이해할 수 있는 사용자 인터페이스를 설계하는 방법을 알아보세요.","category":"튜토리얼","readTime":5,"author":"다나카 히로시"},"ja":{"title":"直感的なAIインターフェースの構築","excerpt":"非技術者がAIシステムをより簡単に利用し理解できるユーザーインターフェースを設計する方法を学びましょう。","category":"チュートリアル","readTime":5,"author":"田中 広志"}}
 ---
 
 <en>
