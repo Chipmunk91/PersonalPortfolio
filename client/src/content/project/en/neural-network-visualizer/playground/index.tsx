@@ -231,7 +231,7 @@ export default function NeuralNetworkVisualizer({ onChange }: NeuralNetworkVisua
       const stepX = 1.0 / gridSize;
       const stepY = 1.0 / gridSize;
       
-      const points = [];
+      const points: [number, number][] = [];
       
       for (let x = 0; x < 1; x += stepX) {
         for (let y = 0; y < 1; y += stepY) {

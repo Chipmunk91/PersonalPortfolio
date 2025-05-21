@@ -299,7 +299,7 @@ export default function SentimentAnalyzer({ onChange }: SentimentAnalyzerProps) 
       const result = [];
       const angleStep = (2 * Math.PI) / words.length;
       const radiusScale = d3.scaleLinear()
-        .domain([d3.min(words, d => d.size) || 10, d3.max(words, d => d.size) || 20])
+        .domain([10, 20])
         .range([height / 4, height / 2 - 20]);
       
       for (let i = 0; i < words.length; i++) {

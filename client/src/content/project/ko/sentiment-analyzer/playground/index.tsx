@@ -106,9 +106,9 @@ export default function SentimentAnalyzer({ onChange }: SentimentAnalyzerProps) 
   
   // Sample texts
   const sampleTexts = {
-    sample1: "この製品は最高です！素晴らしく、完璧に動作します。デザインは美しく、機能性は抜群です。この購入にとても満足しており、誰にでも強くお勧めします。",
-    sample2: "これはひどい経験でした。製品は品質が悪く、数日で壊れました。カスタマーサービスは役に立たず、失礼でした。非常に失望しており、誰にもお勧めしません。",
-    sample3: "製品は予定通り到着し、説明通りに動作しているようです。パッケージは標準的で、マニュアルには基本的な説明が記載されていました。説明に基づいて期待していた通りで、それ以上でも以下でもありません。"
+    sample1: "이 제품은 정말 좋아요! 놀랍고 완벽하게 작동합니다. 디자인이 아름답고 기능성이 뛰어납니다. 구매에 매우 만족하며 누구에게나 강력히 추천합니다.",
+    sample2: "이것은 끔찍한 경험이었습니다. 제품은 품질이 나쁘고 며칠 만에 고장났습니다. 고객 서비스는 도움이 되지 않고 무례했습니다. 매우 실망했으며 누구에게도 추천하지 않습니다.",
+    sample3: "제품은 예정대로 도착했으며 설명대로 작동하는 것 같습니다. 포장은 표준적이었고 설명서에는 기본적인 지침이 제공되었습니다. 설명에 기초하여 예상했던 대로, 그 이상도 이하도 아닙니다."
   };
   
   // Analyze text when it changes or threshold changes
@@ -163,9 +163,9 @@ export default function SentimentAnalyzer({ onChange }: SentimentAnalyzerProps) 
     const margin = { top: 20, right: 20, bottom: 40, left: 40 };
     
     const data = [
-      { name: 'ポジティブ', value: analysis.score.positive },
-      { name: 'ニュートラル', value: analysis.score.neutral },
-      { name: 'ネガティブ', value: analysis.score.negative }
+      { name: '긍정적', value: analysis.score.positive },
+      { name: '중립적', value: analysis.score.neutral },
+      { name: '부정적', value: analysis.score.negative }
     ];
     
     const x = d3.scaleBand()
@@ -196,7 +196,7 @@ export default function SentimentAnalyzer({ onChange }: SentimentAnalyzerProps) 
       .attr("y", d => y(d.value))
       .attr("width", x.bandwidth())
       .attr("height", d => height - margin.bottom - y(d.value))
-      .attr("fill", d => d.name === 'ポジティブ' ? '#4CAF50' : d.name === 'ネガティブ' ? '#F44336' : '#2196F3');
+      .attr("fill", d => d.name === '긍정적' ? '#4CAF50' : d.name === '부정적' ? '#F44336' : '#2196F3');
   };
   
   const renderRadarChart = () => {
@@ -211,10 +211,10 @@ export default function SentimentAnalyzer({ onChange }: SentimentAnalyzerProps) 
     const radius = Math.min(width, height) / 2 - margin;
     
     const emotions = [
-      { name: '喜び', value: analysis.emotions.joy },
-      { name: '怒り', value: analysis.emotions.anger },
-      { name: '恐れ', value: analysis.emotions.fear },
-      { name: '驚き', value: analysis.emotions.surprise }
+      { name: '기쁨', value: analysis.emotions.joy },
+      { name: '분노', value: analysis.emotions.anger },
+      { name: '두려움', value: analysis.emotions.fear },
+      { name: '놀라움', value: analysis.emotions.surprise }
     ];
     
     const angleSlice = (Math.PI * 2) / emotions.length;
@@ -334,14 +334,14 @@ export default function SentimentAnalyzer({ onChange }: SentimentAnalyzerProps) 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <Card className="p-4 overflow-hidden">
-        <h3 className="text-lg font-bold mb-4">テキスト分析</h3>
+        <h3 className="text-lg font-bold mb-4">텍스트 분석</h3>
         
         <Tabs value={sampleMode} onValueChange={(v) => setSampleMode(v as any)}>
           <TabsList className="mb-4">
-            <TabsTrigger value="manual">カスタムテキスト</TabsTrigger>
-            <TabsTrigger value="sample1">ポジティブサンプル</TabsTrigger>
-            <TabsTrigger value="sample2">ネガティブサンプル</TabsTrigger>
-            <TabsTrigger value="sample3">ニュートラルサンプル</TabsTrigger>
+            <TabsTrigger value="manual">사용자 입력</TabsTrigger>
+            <TabsTrigger value="sample1">긍정 샘플</TabsTrigger>
+            <TabsTrigger value="sample2">부정 샘플</TabsTrigger>
+            <TabsTrigger value="sample3">중립 샘플</TabsTrigger>
           </TabsList>
         </Tabs>
         
@@ -351,12 +351,12 @@ export default function SentimentAnalyzer({ onChange }: SentimentAnalyzerProps) 
             setText(e.target.value);
             setSampleMode('manual');
           }}
-          placeholder="感情分析するテキストを入力してください..."
+          placeholder="감정 분석을 위한 텍스트를 입력하세요..."
           className="mb-4 min-h-[150px]"
         />
         
         <div className="flex items-center space-x-4 mb-4">
-          <Label htmlFor="threshold">キーワードしきい値: {threshold.toFixed(2)}</Label>
+          <Label htmlFor="threshold">키워드 임계값: {threshold.toFixed(2)}</Label>
           <Slider 
             id="threshold"
             min={0.01}
@@ -376,26 +376,26 @@ export default function SentimentAnalyzer({ onChange }: SentimentAnalyzerProps) 
                 analysis.sentiment === 'negative' ? 'bg-red-500' : 'bg-blue-500'
               }`}></div>
               <span className="font-medium">
-                総合感情: {analysis.sentiment === 'positive' ? 'ポジティブ' : 
-                         analysis.sentiment === 'negative' ? 'ネガティブ' : 'ニュートラル'}
+                전체 감정: {analysis.sentiment === 'positive' ? '긍정적' : 
+                          analysis.sentiment === 'negative' ? '부정적' : '중립적'}
               </span>
             </div>
             
             <div className="text-sm text-muted-foreground">
-              <p>ポジティブスコア: {(analysis.score.positive * 100).toFixed(1)}%</p>
-              <p>ネガティブスコア: {(analysis.score.negative * 100).toFixed(1)}%</p>
-              <p>ニュートラルスコア: {(analysis.score.neutral * 100).toFixed(1)}%</p>
+              <p>긍정 점수: {(analysis.score.positive * 100).toFixed(1)}%</p>
+              <p>부정 점수: {(analysis.score.negative * 100).toFixed(1)}%</p>
+              <p>중립 점수: {(analysis.score.neutral * 100).toFixed(1)}%</p>
             </div>
           </div>
         )}
       </Card>
       
       <Card className="p-4">
-        <h3 className="text-lg font-bold mb-4">感情の可視化</h3>
+        <h3 className="text-lg font-bold mb-4">감정 시각화</h3>
         
         {!analysis && (
           <div className="flex items-center justify-center h-[200px] text-muted-foreground">
-            可視化を表示するにはテキストを入力してください
+            시각화를 보려면 텍스트를 입력하세요
           </div>
         )}
         
@@ -403,9 +403,9 @@ export default function SentimentAnalyzer({ onChange }: SentimentAnalyzerProps) 
           <>
             <Tabs value={visualizationMode} onValueChange={(v) => setVisualizationMode(v as any)}>
               <TabsList className="mb-4">
-                <TabsTrigger value="bar">感情</TabsTrigger>
-                <TabsTrigger value="radar">感情分布</TabsTrigger>
-                <TabsTrigger value="words">キーワード</TabsTrigger>
+                <TabsTrigger value="bar">감정</TabsTrigger>
+                <TabsTrigger value="radar">감정 분포</TabsTrigger>
+                <TabsTrigger value="words">핵심 단어</TabsTrigger>
               </TabsList>
               
               <TabsContent value="bar" className="flex justify-center">
