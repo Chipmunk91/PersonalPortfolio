@@ -141,49 +141,35 @@ export default function Blog() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            {/* Get the localized content */}
-            {(() => {
-              const { 
-                title = post.title || 'Untitled',
-                category = post.category || 'general',
-                readTime = post.readTime || 5,
-                author = post.author || 'Anonymous'
-              } = post.translations[currentLanguage] || {};
-              
-              return (
-                <>
-                  <div className="mb-4">
-                    <h1 className="text-4xl md:text-5xl font-bold">
-                      {title}
-                    </h1>
-                  </div>
-                  
-                  <div className="flex flex-wrap items-center text-sm text-gray-600 dark:text-gray-400 gap-4 mb-6">
-                    <div className="flex items-center">
-                      <Calendar className="h-4 w-4 mr-2" />
-                      {post.date}
-                    </div>
-                    <div className="flex items-center">
-                      <Clock className="h-4 w-4 mr-2" />
-                      {readTime} min read
-                    </div>
-                    <div className="flex items-center">
-                      <User className="h-4 w-4 mr-2" />
-                      {author}
-                    </div>
-                    <div className="flex items-center">
-                      <Tag className="h-4 w-4 mr-2" />
-                      <span className="capitalize">{category}</span>
-                    </div>
-                  </div>
-                </>
-              );
-            })()}
+            <div className="mb-4">
+              <h1 className="text-4xl md:text-5xl font-bold">
+                {post.translations[currentLanguage]?.title || post.title}
+              </h1>
+            </div>
+            
+            <div className="flex flex-wrap items-center text-sm text-gray-600 dark:text-gray-400 gap-4 mb-6">
+              <div className="flex items-center">
+                <Calendar className="h-4 w-4 mr-2" />
+                {post.date}
+              </div>
+              <div className="flex items-center">
+                <Clock className="h-4 w-4 mr-2" />
+                {post.readTime} min read
+              </div>
+              <div className="flex items-center">
+                <User className="h-4 w-4 mr-2" />
+                {post.author}
+              </div>
+              <div className="flex items-center">
+                <Tag className="h-4 w-4 mr-2" />
+                <span className="capitalize">{post.category}</span>
+              </div>
+            </div>
             
             <div className="rounded-xl overflow-hidden mb-8">
               <img 
                 src={post.imageUrl} 
-                alt={post.translations[currentLanguage]?.title || post.title || 'Blog post image'} 
+                alt={post.title} 
                 className="w-full h-auto object-cover"
               />
             </div>
@@ -320,38 +306,20 @@ export default function Blog() {
   }
   
   // Blog listing view
-  // Get the current language for search
-  const { language } = useLanguage();
-  
   // Get categories for filter buttons
-  const categories = ["all", ...Array.from(new Set(blogPosts.map(post => 
-    post.translations[language]?.category || post.category || 'uncategorized'
-  )))].filter(Boolean) as string[];
+  const categories = ["all", ...Array.from(new Set(blogPosts.map(post => post.category)))];
   
   // Filter posts by category and search query
   const filteredPosts = blogPosts
-    .filter(post => {
-      if (selectedCategory === "all") return true;
-      
-      // Check category in translations or fallback
-      const postCategory = post.translations[language]?.category || post.category || '';
-      return postCategory === selectedCategory;
-    })
+    .filter(post => selectedCategory === "all" || post.category === selectedCategory)
     .filter(post => {
       if (!searchQuery) return true;
       const query = searchQuery.toLowerCase();
-      
-      // Get translated or fallback content for searching
-      const title = (post.translations[language]?.title || post.title || '').toLowerCase();
-      const excerpt = (post.translations[language]?.excerpt || post.excerpt || '').toLowerCase();
-      const author = (post.translations[language]?.author || post.author || '').toLowerCase();
-      const category = (post.translations[language]?.category || post.category || '').toLowerCase();
-      
       return (
-        title.includes(query) ||
-        excerpt.includes(query) ||
-        author.includes(query) ||
-        category.includes(query)
+        post.title.toLowerCase().includes(query) ||
+        post.excerpt.toLowerCase().includes(query) ||
+        post.author.toLowerCase().includes(query) ||
+        post.category.toLowerCase().includes(query)
       );
     });
   

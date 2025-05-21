@@ -13,14 +13,9 @@ export function BlogCard({ post, index }: BlogCardProps) {
   const [_, setLocation] = useLocation();
   const { language } = useLanguage();
   
-  // Get the localized content in the current language, or fallback to defaults
-  const { 
-    title = post.title || 'Untitled',
-    excerpt = post.excerpt || '',
-    author = post.author || 'Anonymous',
-    category = post.category || 'general',
-    readTime = post.readTime || 5
-  } = post.translations[language] || {};
+  // Get the title and excerpt in the current language, or fallback to the default
+  const title = post.translations[language]?.title || post.title;
+  const excerpt = post.translations[language]?.excerpt || post.excerpt;
   
   // Localized read more text
   const readMoreText = {
@@ -50,7 +45,7 @@ export function BlogCard({ post, index }: BlogCardProps) {
         />
         <div className="absolute top-4 right-4">
           <span className="inline-block px-3 py-1 bg-primary font-medium text-white text-xs rounded-full">
-            {category}
+            {post.category}
           </span>
         </div>
       </div>
@@ -59,7 +54,7 @@ export function BlogCard({ post, index }: BlogCardProps) {
           <Calendar className="h-4 w-4 mr-1" />
           <span className="mr-4">{post.date}</span>
           <Clock className="h-4 w-4 mr-1" />
-          <span>{readTime} min read</span>
+          <span>{post.readTime} min read</span>
         </div>
         <h3 className="text-xl font-bold mb-3 line-clamp-2 text-gray-900 dark:text-white">{title}</h3>
         <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
@@ -68,7 +63,7 @@ export function BlogCard({ post, index }: BlogCardProps) {
         <div className="flex justify-between items-center">
           <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
             <User className="h-4 w-4 mr-1" />
-            {author}
+            {post.author}
           </span>
           <span className="text-primary font-medium text-sm inline-flex items-center">
             {readMoreText}
