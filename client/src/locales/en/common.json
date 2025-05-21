@@ -1,0 +1,43 @@
+{
+  "nav": {
+    "about": "About",
+    "projects": "Projects",
+    "blog": "Blog",
+    "contact": "Contact Me"
+  },
+  "hero": {
+    "title": "Data Visualization & AI Interpretability",
+    "subtitle": "Building tools to make complex data more accessible and understandable.",
+    "cta": "View Projects"
+  },
+  "footer": {
+    "copyright": "© {{year}} Hiroshi Tanaka. All rights reserved.",
+    "navigation": "Navigation",
+    "legal": "Legal",
+    "about": "About",
+    "projects": "Projects",
+    "blog": "Blog",
+    "contact": "Contact",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "cookiePolicy": "Cookie Policy"
+  },
+  "buttons": {
+    "submitForm": "Submit",
+    "sendMessage": "Send Message",
+    "learnMore": "Learn More",
+    "viewAll": "View All",
+    "subscribe": "Subscribe",
+    "schedule": "Schedule a Call",
+    "backToTop": "Back to Top",
+    "backToHome": "Back to Home"
+  },
+  "languageSelector": {
+    "language": "Language"
+  },
+  "theme": {
+    "light": "Light Mode",
+    "dark": "Dark Mode",
+    "system": "System"
+  }
+}

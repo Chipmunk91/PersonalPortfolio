@@ -1,0 +1,43 @@
+{
+  "nav": {
+    "about": "소개",
+    "projects": "프로젝트",
+    "blog": "블로그",
+    "contact": "연락하기"
+  },
+  "hero": {
+    "title": "데이터 시각화 및 AI 해석",
+    "subtitle": "복잡한 데이터를 더 쉽게 접근하고 이해할 수 있도록 도구를 만들고 있습니다.",
+    "cta": "프로젝트 보기"
+  },
+  "footer": {
+    "copyright": "© {{year}} 히로시 타나카. 모든 권리 보유.",
+    "navigation": "네비게이션",
+    "legal": "법적 정보",
+    "about": "소개",
+    "projects": "프로젝트",
+    "blog": "블로그",
+    "contact": "연락하기",
+    "privacyPolicy": "개인정보 처리방침",
+    "termsOfService": "이용약관",
+    "cookiePolicy": "쿠키 정책"
+  },
+  "buttons": {
+    "submitForm": "제출하기",
+    "sendMessage": "메시지 보내기",
+    "learnMore": "더 알아보기",
+    "viewAll": "모두 보기",
+    "subscribe": "구독하기",
+    "schedule": "통화 예약하기",
+    "backToTop": "맨 위로",
+    "backToHome": "홈으로 돌아가기"
+  },
+  "languageSelector": {
+    "language": "언어"
+  },
+  "theme": {
+    "light": "라이트 모드",
+    "dark": "다크 모드",
+    "system": "시스템"
+  }
+}

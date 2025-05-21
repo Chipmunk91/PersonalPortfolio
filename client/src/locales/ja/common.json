@@ -1,0 +1,43 @@
+{
+  "nav": {
+    "about": "概要",
+    "projects": "プロジェクト",
+    "blog": "ブログ",
+    "contact": "お問い合わせ"
+  },
+  "hero": {
+    "title": "データ可視化とAI解釈性",
+    "subtitle": "複雑なデータをより分かりやすく、アクセスしやすくするためのツールを構築しています。",
+    "cta": "プロジェクトを見る"
+  },
+  "footer": {
+    "copyright": "© {{year}} 田中ヒロシ. 全著作権所有。",
+    "navigation": "ナビゲーション",
+    "legal": "法的情報",
+    "about": "概要",
+    "projects": "プロジェクト",
+    "blog": "ブログ",
+    "contact": "お問い合わせ",
+    "privacyPolicy": "プライバシーポリシー",
+    "termsOfService": "利用規約",
+    "cookiePolicy": "クッキーポリシー"
+  },
+  "buttons": {
+    "submitForm": "送信",
+    "sendMessage": "メッセージを送る",
+    "learnMore": "詳細を見る",
+    "viewAll": "すべて見る",
+    "subscribe": "登録する",
+    "schedule": "通話を予約する",
+    "backToTop": "トップに戻る",
+    "backToHome": "ホームに戻る"
+  },
+  "languageSelector": {
+    "language": "言語"
+  },
+  "theme": {
+    "light": "ライトモード",
+    "dark": "ダークモード",
+    "system": "システム"
+  }
+}

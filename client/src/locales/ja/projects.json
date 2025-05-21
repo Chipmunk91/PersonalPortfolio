@@ -1,0 +1,19 @@
+{
+  "title": "プロジェクト",
+  "subtitle": "私のインタラクティブなデータ可視化ツールとAI解釈性プロジェクトをご覧ください。",
+  "filterByCategory": "カテゴリーでフィルター",
+  "allCategories": "すべてのカテゴリー",
+  "viewProject": "プロジェクトを見る",
+  "liveDemo": "ライブデモ",
+  "paper": "研究論文",
+  "codeRepo": "コードリポジトリ",
+  "technologies": "使用技術",
+  "projectDetails": "プロジェクト詳細",
+  "playground": "インタラクティブプレイグラウンド",
+  "relatedProjects": "関連プロジェクト",
+  "notFound": {
+    "title": "プロジェクトが見つかりません",
+    "message": "お探しのプロジェクトは存在しないか、削除されました。"
+  },
+  "backToProjects": "プロジェクト一覧に戻る"
+}

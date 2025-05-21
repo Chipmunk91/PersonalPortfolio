@@ -1,0 +1,19 @@
+{
+  "title": "Projects",
+  "subtitle": "Explore my interactive data visualization tools and AI interpretability projects.",
+  "filterByCategory": "Filter by category",
+  "allCategories": "All Categories",
+  "viewProject": "View Project",
+  "liveDemo": "Live Demo",
+  "paper": "Research Paper",
+  "codeRepo": "Code Repository",
+  "technologies": "Technologies",
+  "projectDetails": "Project Details",
+  "playground": "Interactive Playground",
+  "relatedProjects": "Related Projects",
+  "notFound": {
+    "title": "Project Not Found",
+    "message": "The project you're looking for doesn't exist or has been removed."
+  },
+  "backToProjects": "Back to Projects"
+}
