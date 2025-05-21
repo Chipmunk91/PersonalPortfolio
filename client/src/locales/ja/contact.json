@@ -1,0 +1,39 @@
+{
+  "title": "お問い合わせ",
+  "subtitle": "ご質問や協業のご興味がありましたら、お気軽にご連絡ください。",
+  "form": {
+    "name": "お名前",
+    "email": "メールアドレス",
+    "subject": "件名",
+    "message": "メッセージ",
+    "budget": "予算（USD）",
+    "timeline": "タイムライン",
+    "inquiryType": "お問い合わせ種類",
+    "projectType": "プロジェクトタイプ",
+    "submit": "メッセージを送信",
+    "success": "メッセージが正常に送信されました！近日中にご連絡いたします。",
+    "error": "エラーが発生しました。もう一度お試しください。"
+  },
+  "inquiryTypes": {
+    "general": "一般的なお問い合わせ",
+    "project": "プロジェクト依頼",
+    "collaboration": "コラボレーション",
+    "speaking": "講演依頼"
+  },
+  "schedule": {
+    "title": "通話予約",
+    "description": "電話での相談をご希望ですか？30分の無料相談を予約できます。",
+    "button": "通話を予約する",
+    "selectDate": "日付を選択",
+    "selectTime": "時間を選択",
+    "yourDetails": "個人情報",
+    "confirmBooking": "予約を確認",
+    "success": "通話が予約されました。お話するのを楽しみにしています！",
+    "error": "予約に失敗しました。もう一度お試しください。"
+  },
+  "contactInfo": {
+    "address": "東京都",
+    "email": "hiroshi@example.com",
+    "phone": "+81 3-1234-5678"
+  }
+}

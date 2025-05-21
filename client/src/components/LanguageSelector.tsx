@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useLanguage, Language } from '@/contexts/LanguageContext';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,9 +7,11 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Globe } from 'lucide-react';
 import { useLocation } from 'wouter';
+import { useTranslation } from 'react-i18next';
+import { languageOptions } from '@/lib/i18n';
 
 export function LanguageSelector() {
-  const { language, setLanguage, languages } = useLanguage();
+  const { i18n } = useTranslation('common');
   const [isOpen, setIsOpen] = useState(false);
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,13 +34,13 @@ export function LanguageSelector() {
   // Determine if we're on the homepage
   const isHomepage = location === '/';
   
-  const handleSelectLanguage = (lang: Language) => {
-    setLanguage(lang);
+  const handleSelectLanguage = (langCode: string) => {
+    i18n.changeLanguage(langCode);
     setIsOpen(false);
   };
   
   // Find current language details
-  const currentLanguage = languages.find(lang => lang.code === language) || languages[0];
+  const currentLanguage = languageOptions.find(lang => lang.code === i18n.language) || languageOptions[0];
   
   // Use the same styling logic as the Nav links
   const linkClasses = isScrolled || !isHomepage
@@ -51,17 +52,17 @@ export function LanguageSelector() {
       <DropdownMenuTrigger asChild>
         <span 
           className={`flex items-center gap-1.5 cursor-pointer ${linkClasses}`}
-          aria-label="Select language"
+          aria-label={i18n.t('languageSelector.language')}
         >
           <Globe className="h-4 w-4" />
           <span>{currentLanguage.flag}</span>
         </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        {languages.map((lang) => (
+        {languageOptions.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
-            className={`flex items-center gap-2 cursor-pointer ${language === lang.code ? 'bg-primary-100 dark:bg-primary-900' : ''}`}
+            className={`flex items-center gap-2 cursor-pointer ${i18n.language === lang.code ? 'bg-primary-100 dark:bg-primary-900' : ''}`}
             onClick={() => handleSelectLanguage(lang.code)}
           >
             <span className="text-base">{lang.flag}</span>

@@ -1,0 +1,39 @@
+{
+  "title": "Get In Touch",
+  "subtitle": "Have a question or interested in working together? Feel free to reach out.",
+  "form": {
+    "name": "Your Name",
+    "email": "Your Email",
+    "subject": "Subject",
+    "message": "Your Message",
+    "budget": "Budget (USD)",
+    "timeline": "Timeline",
+    "inquiryType": "Inquiry Type",
+    "projectType": "Project Type",
+    "submit": "Send Message",
+    "success": "Message sent successfully! I'll get back to you soon.",
+    "error": "Something went wrong. Please try again."
+  },
+  "inquiryTypes": {
+    "general": "General Inquiry",
+    "project": "Project Request",
+    "collaboration": "Collaboration",
+    "speaking": "Speaking Engagement"
+  },
+  "schedule": {
+    "title": "Schedule a Call",
+    "description": "Prefer to discuss over a call? Schedule a 30-minute consultation.",
+    "button": "Schedule a Call",
+    "selectDate": "Select a Date",
+    "selectTime": "Select a Time",
+    "yourDetails": "Your Details",
+    "confirmBooking": "Confirm Booking",
+    "success": "Your call has been scheduled. Looking forward to talking with you!",
+    "error": "Failed to schedule call. Please try again."
+  },
+  "contactInfo": {
+    "address": "Tokyo, Japan",
+    "email": "hiroshi@example.com",
+    "phone": "+81 3-1234-5678"
+  }
+}
