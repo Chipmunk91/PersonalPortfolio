@@ -141,41 +141,10 @@ export default function Blog() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <div className="flex justify-between items-start mb-4">
+            <div className="mb-4">
               <h1 className="text-4xl md:text-5xl font-bold">
                 {post.translations[currentLanguage]?.title || post.title}
               </h1>
-              
-              {/* Language Selector for Blog Post */}
-              {availableLanguages.length > 1 && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="flex items-center gap-1.5">
-                      <Globe className="h-4 w-4" />
-                      <span className="uppercase">{currentLanguage}</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    {availableLanguages.map(lang => {
-                      const langOption = siteLanguages.find(l => l.code === lang);
-                      return (
-                        <DropdownMenuItem 
-                          key={lang}
-                          onClick={() => setCurrentLanguage(lang)}
-                          className={`${
-                            currentLanguage === lang ? "bg-primary/10 text-primary" : ""
-                          }`}
-                        >
-                          <span className="flex items-center gap-2">
-                            <span>{langOption?.flag || ''}</span>
-                            <span>{langOption?.name || lang}</span>
-                          </span>
-                        </DropdownMenuItem>
-                      );
-                    })}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
             </div>
             
             <div className="flex flex-wrap items-center text-sm text-gray-600 dark:text-gray-400 gap-4 mb-6">
