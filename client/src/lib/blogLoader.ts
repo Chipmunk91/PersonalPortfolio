@@ -55,34 +55,20 @@ const markdownFiles = Object.entries(blogImports).map(([path, content]) => {
 function parseMultilingualContent(content: string): Record<string, string> {
   const languageBlocks: Record<string, string> = {};
   
-  // Check for <lang> tag format (our new simplest format)
-  if (content.includes('<en>') || content.includes('<ko>') || content.includes('<ja>')) {
-    // Match language blocks using XML-like tags
-    const langPattern = /<([a-z]{2})>([\s\S]*?)<\/\1>/g;
-    let match;
-    
-    while ((match = langPattern.exec(content)) !== null) {
-      const langCode = match[1];
-      const langContent = match[2].trim();
-      languageBlocks[langCode] = langContent;
-    }
-    
-    // If we didn't find any valid language blocks, default to English
-    if (Object.keys(languageBlocks).length === 0) {
-      languageBlocks['en'] = content;
-    }
-  } 
-  // Fallback to check other formats
-  else if (content.includes('<!-- en-content -->') || content.includes('<!-- ko-content -->') || 
-           content.includes('<!-- ja-content -->') || content.includes('<!--en-->') || 
-           content.includes('<!--ko-->') || content.includes('<!--ja-->') || 
-           content.includes('# en') || content.includes('# ko') || content.includes('# ja')) {
-           
-    // For older formats, just extract the content without language markers
+  // Use regex to find language blocks starting with "# langCode"
+  const langSections = content.split(/\n# ([a-z]{2})\n/);
+  
+  if (langSections.length <= 1) {
+    // No language sections found, assume the content is in English
     languageBlocks['en'] = content;
-  } else {
-    // No language markers, assume the content is in English
-    languageBlocks['en'] = content;
+    return languageBlocks;
+  }
+  
+  // Skip the first element which is empty or content before the first language block
+  for (let i = 1; i < langSections.length; i += 2) {
+    const langCode = langSections[i];
+    const langContent = langSections[i+1] || '';
+    languageBlocks[langCode] = langContent.trim();
   }
   
   return languageBlocks;
@@ -99,56 +85,23 @@ export const blogPosts: BlogPostType[] = markdownFiles.map(file => {
   // Check if translations are defined in frontmatter
   if (frontMatter.translations) {
     try {
-      // Handle translations as a string that might be in different formats
-      let translationsData = {};
-      
-      if (typeof frontMatter.translations === 'string') {
-        try {
-          // Clean up any quotes around the JSON and convert to proper JSON
-          const cleanedTranslations = frontMatter.translations
-            .trim()
-            .replace(/^['"]|['"]$/g, '')  // Remove quotes at beginning/end
-            .replace(/\\"/g, '"')         // Convert escaped quotes
-            .replace(/'/g, '"');          // Convert single quotes to double quotes
-            
-          translationsData = JSON.parse(cleanedTranslations);
-        } catch (jsonError) {
-          console.error('Could not parse translations as JSON:', jsonError);
-          translationsData = {};
-        }
-      } else if (typeof frontMatter.translations === 'object') {
-        // If it's already an object, use it directly
-        translationsData = frontMatter.translations;
-      }
-      
-      // Create translations for each language
-      if (translationsData && typeof translationsData === 'object') {
-        Object.keys(translationsData).forEach(langCode => {
-          const langData = translationsData[langCode as keyof typeof translationsData];
-          if (langData && typeof langData === 'object') {
-            translations[langCode] = {
-              title: (langData as any).title || frontMatter.title,
-              excerpt: (langData as any).excerpt || frontMatter.excerpt,
-              content: languageContents[langCode] || '',
-              category: (langData as any).category || frontMatter.category,
-              readTime: (langData as any).readTime ? parseInt((langData as any).readTime) : parseInt(frontMatter.readTime),
-              author: (langData as any).author || frontMatter.author
-            };
-          }
-        });
-      }
+      const translationsData = JSON.parse(frontMatter.translations.replace(/'/g, '"'));
+      Object.keys(translationsData).forEach(langCode => {
+        translations[langCode] = {
+          title: translationsData[langCode].title || frontMatter.title,
+          excerpt: translationsData[langCode].excerpt || frontMatter.excerpt,
+          content: languageContents[langCode] || ''
+        };
+      });
     } catch (e) {
-      console.error('Error processing translations:', e);
+      console.error('Error parsing translations JSON:', e);
     }
   } else {
     // For backward compatibility, create at least an English translation
     translations['en'] = {
       title: frontMatter.title,
       excerpt: frontMatter.excerpt,
-      content: languageContents['en'] || content,
-      category: frontMatter.category,
-      readTime: parseInt(frontMatter.readTime),
-      author: frontMatter.author
+      content: languageContents['en'] || content
     };
   }
   
@@ -171,25 +124,19 @@ export function getBlogPostContent(id: number, language: string = 'en'): string 
   if (!post) return '';
   
   // Check if the requested language exists in translations
-  if (post.translations && 
-      post.translations[language] && 
-      post.translations[language].content) {
-    return post.translations[language].content;
+  if (post.translations && post.translations[language] && post.translations[language].content) {
+    return post.translations[language].content || '';
   }
   
-  // Fallback to default language (English)
-  if (post.translations && 
-      post.translations['en'] && 
-      post.translations['en'].content) {
-    return post.translations['en'].content;
+  // Fallback to default language (English) or the first available translation
+  if (post.translations && post.translations['en'] && post.translations['en'].content) {
+    return post.translations['en'].content || '';
   }
   
   // Further fallback to any available language
   const availableLanguage = Object.keys(post.translations || {})[0];
-  if (availableLanguage && 
-      post.translations[availableLanguage] && 
-      post.translations[availableLanguage].content) {
-    return post.translations[availableLanguage].content;
+  if (availableLanguage && post.translations[availableLanguage].content) {
+    return post.translations[availableLanguage].content || '';
   }
   
   // Last resort: get raw content

@@ -61,11 +61,11 @@ export default function Blog() {
         setPost(foundPost);
         
         // Set current language to site language if available for this post
-        const availableLangs = Object.keys(foundPost.translations || {});
-        const langToUse = availableLangs.includes(siteLanguage) ? siteLanguage : 'en';
+        const langToUse = foundPost.translations[siteLanguage] ? siteLanguage : 'en';
         setCurrentLanguage(langToUse);
         
-        // Save available languages
+        // Get list of available languages for this post
+        const availableLangs = Object.keys(foundPost.translations || {});
         setAvailableLanguages(availableLangs);
         
         // Get post content in the current language
@@ -79,18 +79,16 @@ export default function Blog() {
         setRelatedPosts(related);
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params?.id, siteLanguage]);
+  }, [params, siteLanguage]);
   
   // Update content when language changes
   useEffect(() => {
-    if (post && params?.id && currentLanguage) {
+    if (post && params?.id) {
       const id = parseInt(params.id);
       const postContent = getBlogPostContent(id, currentLanguage);
       setContent(postContent);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentLanguage, params?.id, post?.id]);
+  }, [currentLanguage, post, params]);
 
   // If viewing a specific blog post
   if (params && params.id) {
@@ -141,10 +139,38 @@ export default function Blog() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <div className="mb-4">
+            <div className="flex justify-between items-start mb-4">
               <h1 className="text-4xl md:text-5xl font-bold">
                 {post.translations[currentLanguage]?.title || post.title}
               </h1>
+              
+              {/* Language Selector for Blog Post */}
+              {availableLanguages.length > 1 && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="flex items-center gap-1.5">
+                      <Globe className="h-4 w-4" />
+                      <span className="uppercase">{currentLanguage}</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    {availableLanguages.map(lang => (
+                      <DropdownMenuItem 
+                        key={lang}
+                        onClick={() => setCurrentLanguage(lang)}
+                        className={`${
+                          currentLanguage === lang ? "bg-primary-100 dark:bg-primary-900" : ""
+                        }`}
+                      >
+                        <span className="capitalize mr-2">
+                          {siteLanguages.find(l => l.code === lang)?.flag || ''} 
+                          {siteLanguages.find(l => l.code === lang)?.name || lang}
+                        </span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
             </div>
             
             <div className="flex flex-wrap items-center text-sm text-gray-600 dark:text-gray-400 gap-4 mb-6">

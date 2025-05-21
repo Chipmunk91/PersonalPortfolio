@@ -29,9 +29,6 @@ export interface BlogPostTranslation {
   title: string;
   excerpt: string;
   content?: string;
-  category?: string;
-  readTime?: number;
-  author?: string;
 }
 
 // Blog post type

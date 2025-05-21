@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BlogFilterSectionProps {
   searchQuery: string;
@@ -20,22 +19,6 @@ export function BlogFilterSection({
   categories,
   setCurrentPage
 }: BlogFilterSectionProps) {
-  const { language } = useLanguage();
-  
-  // Translations for category labels
-  const categoryTranslations: Record<string, Record<string, string>> = {
-    'all': {
-      'en': 'All Categories',
-      'ko': '모든 카테고리',
-      'ja': 'すべてのカテゴリ'
-    },
-    'tutorial': {
-      'en': 'Tutorial',
-      'ko': '튜토리얼',
-      'ja': 'チュートリアル'
-    }
-    // Add more category translations as needed
-  };
   return (
     <div className="mb-12">
       {/* Search Bar */}
@@ -76,9 +59,7 @@ export function BlogFilterSection({
                 : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
             }`}
           >
-            {category === 'all' 
-              ? (categoryTranslations['all'][language] || 'All Categories')
-              : (categoryTranslations[category]?.[language] || category)}
+            {category === 'all' ? 'All Categories' : category}
           </button>
         ))}
       </motion.div>
