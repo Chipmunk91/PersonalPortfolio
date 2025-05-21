@@ -88,7 +88,7 @@ export default function Blog() {
       const postContent = getBlogPostContent(id, currentLanguage);
       setContent(postContent);
     }
-  }, [currentLanguage, post, params]);
+  }, [currentLanguage, params?.id]);
 
   // If viewing a specific blog post
   if (params && params.id) {

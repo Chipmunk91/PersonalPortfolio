@@ -55,16 +55,39 @@ const markdownFiles = Object.entries(blogImports).map(([path, content]) => {
 function parseMultilingualContent(content: string): Record<string, string> {
   const languageBlocks: Record<string, string> = {};
   
-  // First, check if we have language markers in the content
-  if (content.includes('# en') || content.includes('# ko') || content.includes('# ja')) {
-    // Match language blocks that start with a language code marker
-    // Example: "# en\n\nEnglish content here\n\n# ko\n\nKorean content here"
-    const langPattern = /# ([a-z]{2})\s*\n([\s\S]*?)(?=\n# [a-z]{2}\s*\n|$)/g;
+  // Check if we have HTML comment language markers in the content
+  if (content.includes('<!--en-->') || content.includes('<!--ko-->') || content.includes('<!--ja-->')) {
+    // Match language blocks using HTML comments
+    // Example: "<!--en-->English content here<!--end-en--><!--ko-->Korean content here<!--end-ko-->"
+    const langPattern = /<!--([a-z]{2})-->([\s\S]*?)<!--end-\1-->/g;
     let match;
     
     while ((match = langPattern.exec(content)) !== null) {
       const langCode = match[1];
       const langContent = match[2].trim();
+      languageBlocks[langCode] = langContent;
+    }
+    
+    // If we didn't find any valid language blocks, default to English
+    if (Object.keys(languageBlocks).length === 0) {
+      languageBlocks['en'] = content;
+    }
+  } 
+  // Fallback to check for the old language markers format
+  else if (content.includes('# en') || content.includes('# ko') || content.includes('# ja')) {
+    // Match language blocks that start with a language code marker
+    const langPattern = /# ([a-z]{2})\s*\n([\s\S]*?)(?=\n# [a-z]{2}\s*\n|$)/g;
+    let match;
+    
+    while ((match = langPattern.exec(content)) !== null) {
+      const langCode = match[1];
+      let langContent = match[2].trim();
+      
+      // If the content has a language marker as a heading, remove the heading
+      if (langContent.startsWith(`## ${langCode}`)) {
+        langContent = langContent.substring(langCode.length + 3).trim();
+      }
+      
       languageBlocks[langCode] = langContent;
     }
     
@@ -92,34 +115,40 @@ export const blogPosts: BlogPostType[] = markdownFiles.map(file => {
   if (frontMatter.translations) {
     try {
       // Handle translations as a string that might be in different formats
-      let translationsData;
+      let translationsData = {};
       
       if (typeof frontMatter.translations === 'string') {
-        // Try to parse as JSON
-        if (frontMatter.translations.startsWith('{')) {
-          translationsData = JSON.parse(frontMatter.translations.replace(/'/g, '"'));
-        } else {
-          // For backward compatibility, try to eval the string (safely)
-          try {
-            translationsData = JSON.parse(frontMatter.translations);
-          } catch (innerError) {
-            console.error('Could not parse translations as JSON:', innerError);
-            translationsData = {};
-          }
+        try {
+          // Clean up any quotes around the JSON and convert to proper JSON
+          const cleanedTranslations = frontMatter.translations
+            .trim()
+            .replace(/^['"]|['"]$/g, '')  // Remove quotes at beginning/end
+            .replace(/\\"/g, '"')         // Convert escaped quotes
+            .replace(/'/g, '"');          // Convert single quotes to double quotes
+            
+          translationsData = JSON.parse(cleanedTranslations);
+        } catch (jsonError) {
+          console.error('Could not parse translations as JSON:', jsonError);
+          translationsData = {};
         }
-      } else {
+      } else if (typeof frontMatter.translations === 'object') {
         // If it's already an object, use it directly
         translationsData = frontMatter.translations;
       }
       
       // Create translations for each language
-      Object.keys(translationsData).forEach(langCode => {
-        translations[langCode] = {
-          title: translationsData[langCode].title || frontMatter.title,
-          excerpt: translationsData[langCode].excerpt || frontMatter.excerpt,
-          content: languageContents[langCode] || ''
-        };
-      });
+      if (translationsData && typeof translationsData === 'object') {
+        Object.keys(translationsData).forEach(langCode => {
+          const langData = translationsData[langCode as keyof typeof translationsData];
+          if (langData && typeof langData === 'object') {
+            translations[langCode] = {
+              title: (langData as any).title || frontMatter.title,
+              excerpt: (langData as any).excerpt || frontMatter.excerpt,
+              content: languageContents[langCode] || ''
+            };
+          }
+        });
+      }
     } catch (e) {
       console.error('Error processing translations:', e);
     }

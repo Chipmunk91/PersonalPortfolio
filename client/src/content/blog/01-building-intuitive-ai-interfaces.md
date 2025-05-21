@@ -6,11 +6,9 @@ category: tutorial
 readTime: 5
 author: Hiroshi Tanaka
 date: May 15, 2023
-translations: '{"en":{"title":"Building Intuitive AI Interfaces","excerpt":"Learn how to design user interfaces that make AI systems more accessible and understandable to non-technical users."},"ko":{"title":"직관적인 AI 인터페이스 구축하기","excerpt":"비기술적 사용자가 AI 시스템을 더 쉽게 접근하고 이해할 수 있는 사용자 인터페이스를 설계하는 방법을 알아보세요."},"ja":{"title":"直感的なAIインターフェースの構築","excerpt":"非技術者がAIシステムをより簡単に利用し理解できるユーザーインターフェースを設計する方法を学びましょう。"}}'
 ---
 
-# en
-
+<!-- en-content -->
 ## Building Intuitive AI Interfaces
 
 Learn how to design and implement user interfaces that make AI systems more accessible and understandable to non-technical users.
@@ -34,9 +32,9 @@ Use metaphors and interaction patterns that users already understand. Even when 
 #### 3. Transparent Feedback
 
 AI systems often involve uncertainty and probabilistic outcomes. Make this transparent to users without resorting to technical jargon.
+<!-- /en-content -->
 
-# ko
-
+<!-- ko-content -->
 ## 직관적인 AI 인터페이스 구축하기
 
 비기술적 사용자가 AI 시스템을 더 쉽게 접근하고 이해할 수 있는 사용자 인터페이스를 설계하는 방법을 알아보세요.
@@ -60,9 +58,9 @@ AI 인터페이스를 설계할 때 가장 중요한 원칙 중 하나는 점진
 #### 3. 투명한 피드백
 
 AI 시스템은 종종 불확실성과 확률적 결과를 포함합니다. 기술적 전문 용어를 사용하지 않고도 이를 사용자에게 투명하게 만드세요.
+<!-- /ko-content -->
 
-# ja
-
+<!-- ja-content -->
 ## 直感的なAIインターフェースの構築
 
 非技術者がAIシステムをより簡単に利用し理解できるユーザーインターフェースを設計する方法を学びましょう。
@@ -86,3 +84,4 @@ AIインターフェースを設計する際の最も重要な原則の一つは
 #### 3. 透明なフィードバック
 
 AIシステムはしばしば不確実性と確率的な結果を伴います。専門用語に頼ることなく、これをユーザーに透明に伝えましょう。
+<!-- /ja-content -->
