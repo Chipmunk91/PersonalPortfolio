@@ -348,10 +348,269 @@ const mockTermsOfServiceContent: Record<string, PageContent> = {
   }
 };
 
+// Mock CMS data for the Home page
+const mockHomeContent: Record<string, PageContent> = {
+  en: {
+    title: "Data Visualization for AI",
+    body: `
+      <div class="hero-section">
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
+          Data Visualization for AI
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mb-8">
+          Building intuitive interfaces that make complex AI models understandable and accessible to everyone.
+        </p>
+      </div>
+      
+      <div class="features-section">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+          Specialized in
+        </h2>
+        <div class="features-list">
+          <div class="feature-item">
+            <h3>Interactive Visualizations</h3>
+            <p>Building dynamic, responsive visual interfaces that let users explore complex data intuitively.</p>
+          </div>
+          <div class="feature-item">
+            <h3>AI Model Interpretability</h3>
+            <p>Making complex AI/ML models transparent and understandable through visual and interactive tools.</p>
+          </div>
+          <div class="feature-item">
+            <h3>UX/UI Design</h3>
+            <p>Creating intuitive, accessible interfaces that make complex data visualizations easy to understand.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="cta-section">
+        <h2>Ready to transform your data into intuitive visuals?</h2>
+        <p>Let's collaborate on your next project and create powerful, interactive visualizations that drive insights.</p>
+      </div>
+    `,
+    metadata: {
+      heroImage: "/images/hero-bg.jpg",
+      skills: ["D3.js", "React", "TensorFlow", "Visualization", "UX Research", "Python"]
+    }
+  },
+  ja: {
+    title: "AIのためのデータ可視化",
+    body: `
+      <div class="hero-section">
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
+          AIのためのデータ可視化
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mb-8">
+          複雑なAIモデルを誰にでも理解しやすく、アクセスしやすくする直感的なインターフェイスを構築します。
+        </p>
+      </div>
+      
+      <div class="features-section">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+          専門分野
+        </h2>
+        <div class="features-list">
+          <div class="feature-item">
+            <h3>インタラクティブな可視化</h3>
+            <p>ユーザーが複雑なデータを直感的に探索できるダイナミックでレスポンシブなビジュアルインターフェイスを構築します。</p>
+          </div>
+          <div class="feature-item">
+            <h3>AIモデルの解釈可能性</h3>
+            <p>視覚的でインタラクティブなツールを通じて、複雑なAI/MLモデルを透明で理解しやすくします。</p>
+          </div>
+          <div class="feature-item">
+            <h3>UX/UIデザイン</h3>
+            <p>複雑なデータの可視化を理解しやすくする直感的でアクセスしやすいインターフェイスを作成します。</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="cta-section">
+        <h2>データを直感的に視覚化する準備はできていますか？</h2>
+        <p>次のプロジェクトで協力し、洞察を促進する強力でインタラクティブな可視化を作成しましょう。</p>
+      </div>
+    `,
+    metadata: {
+      heroImage: "/images/hero-bg.jpg",
+      skills: ["D3.js", "React", "TensorFlow", "可視化", "UXリサーチ", "Python"]
+    }
+  },
+  ko: {
+    title: "AI를 위한 데이터 시각화",
+    body: `
+      <div class="hero-section">
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
+          AI를 위한 데이터 시각화
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mb-8">
+          복잡한 AI 모델을 모든 사람이 이해하고 접근할 수 있게 만드는 직관적인 인터페이스를 구축합니다.
+        </p>
+      </div>
+      
+      <div class="features-section">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+          전문 분야
+        </h2>
+        <div class="features-list">
+          <div class="feature-item">
+            <h3>인터랙티브 시각화</h3>
+            <p>사용자가 복잡한 데이터를 직관적으로 탐색할 수 있는 동적이고 반응형 시각적 인터페이스를 구축합니다.</p>
+          </div>
+          <div class="feature-item">
+            <h3>AI 모델 해석 가능성</h3>
+            <p>시각적이고 상호작용적인 도구를 통해 복잡한 AI/ML 모델을 투명하고 이해하기 쉽게 만듭니다.</p>
+          </div>
+          <div class="feature-item">
+            <h3>UX/UI 디자인</h3>
+            <p>복잡한 데이터 시각화를 쉽게 이해할 수 있는 직관적이고 접근하기 쉬운 인터페이스를 만듭니다.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="cta-section">
+        <h2>데이터를 직관적인 시각화로 변환할 준비가 되셨나요?</h2>
+        <p>다음 프로젝트에서 협력하여 인사이트를 도출하는 강력하고 상호작용적인 시각화를 만들어 보세요.</p>
+      </div>
+    `,
+    metadata: {
+      heroImage: "/images/hero-bg.jpg",
+      skills: ["D3.js", "React", "TensorFlow", "시각화", "UX 리서치", "Python"]
+    }
+  }
+};
+
+// Mock CMS data for the About page
+const mockAboutContent: Record<string, PageContent> = {
+  en: {
+    title: "About Me",
+    body: `
+      <div class="about-intro">
+        <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+          Hi there! I'm a data visualization specialist focused on making AI models more interpretable and accessible. With over 8 years of experience creating interactive data experiences, I help organizations and researchers communicate complex information effectively.
+        </p>
+      </div>
+      
+      <div class="about-expertise">
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">My Expertise</h2>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          My work sits at the intersection of AI, data visualization, and human-computer interaction. I specialize in:
+        </p>
+        <ul class="list-disc pl-6 mt-2 mb-6 text-gray-700 dark:text-gray-300">
+          <li class="mb-2">Designing interactive dashboards that help users understand AI predictions</li>
+          <li class="mb-2">Creating tools that explain how machine learning models make decisions</li>
+          <li class="mb-2">Developing visualization techniques that reveal patterns in complex datasets</li>
+          <li class="mb-2">Building user-friendly interfaces for technical and non-technical audiences</li>
+        </ul>
+      </div>
+      
+      <div class="about-background">
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">Background</h2>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          With a background in computational visualization and human-computer interaction, I've collaborated with research labs, tech companies, and healthcare organizations to develop intuitive ways of understanding complex data and AI systems.
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          My projects have been featured in IEEE Visualization, ACM CHI, and other top visualization venues. I'm passionate about making technical concepts accessible through thoughtful design and interactive experiences.
+        </p>
+      </div>
+    `,
+    metadata: {
+      profileImage: "/images/profile.jpg",
+      timeline: [
+        { year: "2019-Present", title: "AI Visualization Consultant", company: "Various Clients" },
+        { year: "2016-2019", title: "Senior Data Visualization Engineer", company: "TechViz Inc." },
+        { year: "2014-2016", title: "UX Researcher", company: "DataLab Research" }
+      ]
+    }
+  },
+  ja: {
+    title: "自己紹介",
+    body: `
+      <div class="about-intro">
+        <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+          こんにちは！AIモデルをより解釈しやすく、アクセスしやすくすることに焦点を当てたデータ可視化の専門家です。インタラクティブなデータ体験の作成において8年以上の経験を持ち、組織や研究者が複雑な情報を効果的に伝えるのを支援しています。
+        </p>
+      </div>
+      
+      <div class="about-expertise">
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">専門分野</h2>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          私の仕事は、AI、データ可視化、ヒューマンコンピュータインタラクションの交差点にあります。以下の分野に特化しています：
+        </p>
+        <ul class="list-disc pl-6 mt-2 mb-6 text-gray-700 dark:text-gray-300">
+          <li class="mb-2">ユーザーがAI予測を理解するのに役立つインタラクティブなダッシュボードの設計</li>
+          <li class="mb-2">機械学習モデルがどのように決定を下すかを説明するツールの作成</li>
+          <li class="mb-2">複雑なデータセットのパターンを明らかにする可視化技術の開発</li>
+          <li class="mb-2">技術的・非技術的な視聴者のためのユーザーフレンドリーなインターフェイスの構築</li>
+        </ul>
+      </div>
+      
+      <div class="about-background">
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">経歴</h2>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          計算可視化とヒューマンコンピュータインタラクションのバックグラウンドを持ち、研究室、テクノロジー企業、医療機関と協力して、複雑なデータとAIシステムを理解するための直感的な方法を開発してきました。
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          私のプロジェクトはIEEE Visualization、ACM CHIなどのトップクラスの可視化の場で紹介されています。思慮深いデザインとインタラクティブな体験を通じて、技術的な概念をアクセスしやすくすることに情熱を持っています。
+        </p>
+      </div>
+    `,
+    metadata: {
+      profileImage: "/images/profile.jpg",
+      timeline: [
+        { year: "2019-現在", title: "AI可視化コンサルタント", company: "様々なクライアント" },
+        { year: "2016-2019", title: "シニアデータ可視化エンジニア", company: "TechViz Inc." },
+        { year: "2014-2016", title: "UXリサーチャー", company: "DataLab Research" }
+      ]
+    }
+  },
+  ko: {
+    title: "소개",
+    body: `
+      <div class="about-intro">
+        <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+          안녕하세요! AI 모델을 더 해석하기 쉽고 접근하기 쉽게 만드는 데 중점을 둔 데이터 시각화 전문가입니다. 인터랙티브한 데이터 경험을 만드는 8년 이상의 경험을 바탕으로 조직과 연구자들이 복잡한 정보를 효과적으로 전달할 수 있도록 돕고 있습니다.
+        </p>
+      </div>
+      
+      <div class="about-expertise">
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">전문 분야</h2>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          제 작업은 AI, 데이터 시각화, 인간-컴퓨터 상호작용의 교차점에 있습니다. 다음 분야를 전문으로 합니다:
+        </p>
+        <ul class="list-disc pl-6 mt-2 mb-6 text-gray-700 dark:text-gray-300">
+          <li class="mb-2">사용자가 AI 예측을 이해하는 데 도움이 되는 인터랙티브 대시보드 설계</li>
+          <li class="mb-2">머신 러닝 모델이 결정을 내리는 방식을 설명하는 도구 제작</li>
+          <li class="mb-2">복잡한 데이터셋의 패턴을 드러내는 시각화 기술 개발</li>
+          <li class="mb-2">기술적 및 비기술적 사용자를 위한 사용자 친화적 인터페이스 구축</li>
+        </ul>
+      </div>
+      
+      <div class="about-background">
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">배경</h2>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          계산 시각화 및 인간-컴퓨터 상호작용 배경을 바탕으로, 연구소, 기술 기업, 의료 기관과 협력하여 복잡한 데이터와 AI 시스템을 이해하기 위한 직관적인 방법을 개발해 왔습니다.
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 mb-4">
+          제 프로젝트는 IEEE Visualization, ACM CHI 및 기타 최고 수준의 시각화 행사에서 소개되었습니다. 사려 깊은 디자인과 인터랙티브한 경험을 통해 기술적 개념을 접근하기 쉽게 만드는 데 열정을 가지고 있습니다.
+        </p>
+      </div>
+    `,
+    metadata: {
+      profileImage: "/images/profile.jpg",
+      timeline: [
+        { year: "2019-현재", title: "AI 시각화 컨설턴트", company: "다양한 클라이언트" },
+        { year: "2016-2019", title: "시니어 데이터 시각화 엔지니어", company: "TechViz Inc." },
+        { year: "2014-2016", title: "UX 연구원", company: "DataLab Research" }
+      ]
+    }
+  }
+};
+
 // Initialize the content cache with our mock data
 contentCache['privacy-policy'] = mockPrivacyPolicyContent;
 contentCache['cookie-policy'] = mockCookiePolicyContent;
 contentCache['terms-of-service'] = mockTermsOfServiceContent;
+contentCache['home'] = mockHomeContent;
+contentCache['about'] = mockAboutContent;
 
 /**
  * Fetches localized content for a specific page

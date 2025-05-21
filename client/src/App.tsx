@@ -7,31 +7,27 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import { useTranslation } from "react-i18next";
 
-// English Pages
-import EnHome from "@/pages/en/Home";
-import EnAbout from "@/pages/en/About";
+// English Pages (Other pages still using language-specific implementations)
 import EnProjects from "@/pages/en/Projects";
 import EnBlog from "@/pages/en/Blog";
 import EnContact from "@/pages/en/Contact";
 import EnNotFound from "@/pages/en/not-found";
 
-// Japanese Pages
-import JaHome from "@/pages/ja/Home";
-import JaAbout from "@/pages/ja/About";
+// Japanese Pages (Other pages still using language-specific implementations)
 import JaProjects from "@/pages/ja/Projects";
 import JaBlog from "@/pages/ja/Blog";
 import JaContact from "@/pages/ja/Contact";
 import JaNotFound from "@/pages/ja/not-found";
 
-// Korean Pages
-import KoHome from "@/pages/ko/Home";
-import KoAbout from "@/pages/ko/About";
+// Korean Pages (Other pages still using language-specific implementations)
 import KoProjects from "@/pages/ko/Projects";
 import KoBlog from "@/pages/ko/Blog";
 import KoContact from "@/pages/ko/Contact";
 import KoNotFound from "@/pages/ko/not-found";
 
 // Dynamic Localized Pages
+import HomePage from "@/pages/[lang]/Home";
+import AboutPage from "@/pages/[lang]/About";
 import PrivacyPolicyPage from "@/pages/[lang]/PrivacyPolicy";
 import TermsOfServicePage from "@/pages/[lang]/TermsOfService";
 import CookiePolicyPage from "@/pages/[lang]/CookiePolicy";
@@ -71,32 +67,28 @@ function Router() {
       {/* Root redirects to language path */}
       <Route path="/" component={LanguageRedirect} />
       
-      {/* Dynamic Localized Policy Pages */}
+      {/* Dynamic Localized Pages */}
+      <Route path="/:lang" component={HomePage} />
+      <Route path="/:lang/about" component={AboutPage} />
       <Route path="/:lang/privacy-policy" component={PrivacyPolicyPage} />
       <Route path="/:lang/terms-of-service" component={TermsOfServicePage} />
       <Route path="/:lang/cookie-policy" component={CookiePolicyPage} />
       
-      {/* English Routes */}
-      <Route path="/en" component={EnHome} />
-      <Route path="/en/about" component={EnAbout} />
+      {/* English Routes (still using language-specific implementations) */}
       <Route path="/en/projects" component={EnProjects} />
       <Route path="/en/blog" component={EnBlog} />
       <Route path="/en/blog/:id" component={EnBlog} />
       <Route path="/en/contact" component={EnContact} />
       <Route path="/en/*" component={EnNotFound} />
       
-      {/* Japanese Routes */}
-      <Route path="/ja" component={JaHome} />
-      <Route path="/ja/about" component={JaAbout} />
+      {/* Japanese Routes (still using language-specific implementations) */}
       <Route path="/ja/projects" component={JaProjects} />
       <Route path="/ja/blog" component={JaBlog} />
       <Route path="/ja/blog/:id" component={JaBlog} />
       <Route path="/ja/contact" component={JaContact} />
       <Route path="/ja/*" component={JaNotFound} />
       
-      {/* Korean Routes */}
-      <Route path="/ko" component={KoHome} />
-      <Route path="/ko/about" component={KoAbout} />
+      {/* Korean Routes (still using language-specific implementations) */}
       <Route path="/ko/projects" component={KoProjects} />
       <Route path="/ko/blog" component={KoBlog} />
       <Route path="/ko/blog/:id" component={KoBlog} />
