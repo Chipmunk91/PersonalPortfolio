@@ -23,16 +23,9 @@ import {
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
-interface BlogProps {
-  id?: string;
-}
-
-export default function Blog({ id }: BlogProps = {}) {
+export default function Blog() {
   const [, setLocation] = useLocation();
-  const [, routeParams] = useRoute<{ id: string }>('/blog/:id');
-  
-  // Use id from props if provided, otherwise check route
-  const blogId = id || (routeParams ? routeParams.id : undefined);
+  const [match, params] = useRoute<{ id: string }>('/blog/:id');
 
   // Blog post view states
   const [post, setPost] = useState<BlogPostType | undefined>(undefined);
@@ -47,8 +40,8 @@ export default function Blog({ id }: BlogProps = {}) {
 
   // One-time effect for initial route
   useEffect(() => {
-    if (blogId) {
-      const postId = parseInt(blogId);
+    if (match && params && params.id) {
+      const postId = parseInt(params.id);
       const foundPost = blogPosts.find(p => p.id === postId);
       
       if (foundPost) {
@@ -65,10 +58,10 @@ export default function Blog({ id }: BlogProps = {}) {
         setRelatedPosts(related);
       }
     }
-  }, [blogId]);
+  }, [match, params]);
 
   // If viewing a specific blog post
-  if (blogId) {
+  if (match && params && params.id) {
     if (!post) {
       return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
