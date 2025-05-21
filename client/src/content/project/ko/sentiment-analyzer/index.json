@@ -1,0 +1,11 @@
+{
+  "id": 2,
+  "title": "감정 분석 대시보드",
+  "description": "소셜 미디어, 리뷰 및 고객 피드백에서 텍스트를 처리하여 감정 트렌드를 식별하는 실시간 감정 분석 대시보드입니다.",
+  "imageUrl": "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500",
+  "categories": ["인공지능", "시각화"],
+  "technologies": ["자연어 처리", "React", "Python", "Chart.js"],
+  "demoUrl": "#",
+  "githubUrl": "https://github.com/username/sentiment-analyzer",
+  "featured": true
+}

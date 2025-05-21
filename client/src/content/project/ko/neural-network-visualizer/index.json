@@ -1,7 +1,7 @@
 {
   "id": 1,
   "title": "신경망 시각화 도구",
-  "description": "신경망 아키텍처와 결정 경계를 실시간으로 시각화하는 인터랙티브 도구입니다.",
+  "description": "신경망 아키텍처와 결정 경계를 실시간으로 시각화하는 대화형 도구입니다.",
   "imageUrl": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500",
   "categories": ["시각화", "인터랙티브"],
   "technologies": ["D3.js", "TensorFlow.js", "React"],

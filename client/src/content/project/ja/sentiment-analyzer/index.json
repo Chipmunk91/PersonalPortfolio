@@ -1,0 +1,11 @@
+{
+  "id": 2,
+  "title": "感情分析ダッシュボード",
+  "description": "ソーシャルメディア、レビュー、カスタマーフィードバックからテキストを処理し、感情トレンドを識別するリアルタイム感情分析ダッシュボードです。",
+  "imageUrl": "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=500",
+  "categories": ["AI", "可視化"],
+  "technologies": ["自然言語処理", "React", "Python", "Chart.js"],
+  "demoUrl": "#",
+  "githubUrl": "https://github.com/username/sentiment-analyzer",
+  "featured": true
+}
