@@ -1,4 +1,4 @@
-import { BlogPostType } from './types';
+import { BlogPostType, BlogPostTranslation } from './types';
 
 // Function to parse frontmatter from Markdown content
 export function parseFrontMatter(markdown: string): { 
@@ -51,9 +51,60 @@ const markdownFiles = Object.entries(blogImports).map(([path, content]) => {
 // Sort by ID
 .sort((a, b) => a.id - b.id);
 
+// Parse multilingual content from the content string
+function parseMultilingualContent(content: string): Record<string, string> {
+  const languageBlocks: Record<string, string> = {};
+  
+  // Use regex to find language blocks starting with "# langCode"
+  const langSections = content.split(/\n# ([a-z]{2})\n/);
+  
+  if (langSections.length <= 1) {
+    // No language sections found, assume the content is in English
+    languageBlocks['en'] = content;
+    return languageBlocks;
+  }
+  
+  // Skip the first element which is empty or content before the first language block
+  for (let i = 1; i < langSections.length; i += 2) {
+    const langCode = langSections[i];
+    const langContent = langSections[i+1] || '';
+    languageBlocks[langCode] = langContent.trim();
+  }
+  
+  return languageBlocks;
+}
+
 // Parse blog posts from markdown files
 export const blogPosts: BlogPostType[] = markdownFiles.map(file => {
   const { frontMatter, content } = parseFrontMatter(file.content);
+  const languageContents = parseMultilingualContent(content);
+  
+  // Extract translations from the frontmatter if available
+  const translations: Record<string, BlogPostTranslation> = {};
+  
+  // Check if translations are defined in frontmatter
+  if (frontMatter.translations) {
+    try {
+      const translationsData = JSON.parse(frontMatter.translations.replace(/'/g, '"'));
+      Object.keys(translationsData).forEach(langCode => {
+        translations[langCode] = {
+          title: translationsData[langCode].title || frontMatter.title,
+          excerpt: translationsData[langCode].excerpt || frontMatter.excerpt,
+          content: languageContents[langCode] || ''
+        };
+      });
+    } catch (e) {
+      console.error('Error parsing translations JSON:', e);
+    }
+  } else {
+    // For backward compatibility, create at least an English translation
+    translations['en'] = {
+      title: frontMatter.title,
+      excerpt: frontMatter.excerpt,
+      content: languageContents['en'] || content
+    };
+  }
+  
   return {
     id: file.id,
     title: frontMatter.title,
@@ -62,12 +113,33 @@ export const blogPosts: BlogPostType[] = markdownFiles.map(file => {
     category: frontMatter.category,
     readTime: parseInt(frontMatter.readTime),
     author: frontMatter.author,
-    date: frontMatter.date
+    date: frontMatter.date,
+    translations
   };
 });
 
-// Get blog post content by ID
-export function getBlogPostContent(id: number): string {
+// Get blog post content by ID and language
+export function getBlogPostContent(id: number, language: string = 'en'): string {
+  const post = blogPosts.find(post => post.id === id);
+  if (!post) return '';
+  
+  // Check if the requested language exists in translations
+  if (post.translations && post.translations[language] && post.translations[language].content) {
+    return post.translations[language].content || '';
+  }
+  
+  // Fallback to default language (English) or the first available translation
+  if (post.translations && post.translations['en'] && post.translations['en'].content) {
+    return post.translations['en'].content || '';
+  }
+  
+  // Further fallback to any available language
+  const availableLanguage = Object.keys(post.translations || {})[0];
+  if (availableLanguage && post.translations[availableLanguage].content) {
+    return post.translations[availableLanguage].content || '';
+  }
+  
+  // Last resort: get raw content
   const file = markdownFiles.find(file => file.id === id);
   if (!file) return '';
   
