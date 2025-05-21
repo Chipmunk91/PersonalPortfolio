@@ -288,9 +288,9 @@ export function ContactSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Book a Call</h3>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">{t('bookCall.title')}</h3>
                 <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  Schedule a 30-minute call to discuss your project or collaboration opportunity.
+                  {t('bookCall.description')}
                 </p>
                 
                 <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg mb-4">
@@ -307,15 +307,15 @@ export function ContactSection() {
                       <path d="M12 18H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                       <path d="M16 18H16.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                     </svg>
-                    <p className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Available for meetings</p>
+                    <p className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">{t('bookCall.availableText')}</p>
                     <Button 
                       className="mt-2" 
                       onClick={() => window.open('https://calendly.com', '_blank')}
                     >
-                      Schedule a Call
+                      {t('bookCall.button')}
                     </Button>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">
-                      (Currently linked to a placeholder Calendly page)
+                      {t('bookCall.placeholder')}
                     </p>
                   </div>
                 </div>
@@ -324,30 +324,30 @@ export function ContactSection() {
                   <div className="flex items-start">
                     <Mail className="h-5 w-5 text-primary-500 mt-1 mr-3" />
                     <div>
-                      <h4 className="text-sm font-medium text-gray-900 dark:text-white">Email</h4>
-                      <p className="text-gray-600 dark:text-gray-400">contact@example.com</p>
+                      <h4 className="text-sm font-medium text-gray-900 dark:text-white">{t('contactInfo.email.label')}</h4>
+                      <p className="text-gray-600 dark:text-gray-400">{t('contactInfo.email.value')}</p>
                     </div>
                   </div>
                   
                   <div className="flex items-start">
                     <MapPin className="h-5 w-5 text-primary-500 mt-1 mr-3" />
                     <div>
-                      <h4 className="text-sm font-medium text-gray-900 dark:text-white">Location</h4>
-                      <p className="text-gray-600 dark:text-gray-400">Tokyo, Japan</p>
+                      <h4 className="text-sm font-medium text-gray-900 dark:text-white">{t('contactInfo.location.label')}</h4>
+                      <p className="text-gray-600 dark:text-gray-400">{t('contactInfo.location.value')}</p>
                     </div>
                   </div>
                   
                   <div className="flex items-start">
                     <Clock className="h-5 w-5 text-primary-500 mt-1 mr-3" />
                     <div>
-                      <h4 className="text-sm font-medium text-gray-900 dark:text-white">Working Hours</h4>
-                      <p className="text-gray-900 dark:text-white">Mon-Fri: 9:00 AM - 6:00 PM JST</p>
+                      <h4 className="text-sm font-medium text-gray-900 dark:text-white">{t('contactInfo.workingHours.label')}</h4>
+                      <p className="text-gray-900 dark:text-white">{t('contactInfo.workingHours.value')}</p>
                     </div>
                   </div>
                 </div>
                 
                 <div className="mt-8">
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">Connect with me</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{t('contactInfo.connect')}</p>
                   <div className="flex gap-3">
                     <a 
                       href="https://linkedin.com" 
