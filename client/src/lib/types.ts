@@ -28,6 +28,9 @@ export interface ProjectType {
 export interface BlogPostTranslation {
   title: string;
   excerpt: string;
+  category?: string;
+  readTime?: number;
+  author?: string;
   content?: string;
 }
 
@@ -35,14 +38,14 @@ export interface BlogPostTranslation {
 export interface BlogPostType {
   id: number;
   imageUrl: string;
-  category: string;
-  readTime: number;
-  author: string;
   date: string;
   translations: {
     [key: string]: BlogPostTranslation; // key is language code: 'en', 'ko', 'ja'
   };
-  // Keep original title and excerpt fields for backward compatibility and default display
-  title: string;
-  excerpt: string;
+  // These fields are used as fallbacks if not specified in translations
+  category?: string; 
+  readTime?: number;
+  author?: string;
+  title?: string;
+  excerpt?: string;
 }

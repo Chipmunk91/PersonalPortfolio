@@ -141,35 +141,49 @@ export default function Blog() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <div className="mb-4">
-              <h1 className="text-4xl md:text-5xl font-bold">
-                {post.translations[currentLanguage]?.title || post.title}
-              </h1>
-            </div>
-            
-            <div className="flex flex-wrap items-center text-sm text-gray-600 dark:text-gray-400 gap-4 mb-6">
-              <div className="flex items-center">
-                <Calendar className="h-4 w-4 mr-2" />
-                {post.date}
-              </div>
-              <div className="flex items-center">
-                <Clock className="h-4 w-4 mr-2" />
-                {post.readTime} min read
-              </div>
-              <div className="flex items-center">
-                <User className="h-4 w-4 mr-2" />
-                {post.author}
-              </div>
-              <div className="flex items-center">
-                <Tag className="h-4 w-4 mr-2" />
-                <span className="capitalize">{post.category}</span>
-              </div>
-            </div>
+            {/* Get the localized content */}
+            {(() => {
+              const { 
+                title = post.title || 'Untitled',
+                category = post.category || 'general',
+                readTime = post.readTime || 5,
+                author = post.author || 'Anonymous'
+              } = post.translations[currentLanguage] || {};
+              
+              return (
+                <>
+                  <div className="mb-4">
+                    <h1 className="text-4xl md:text-5xl font-bold">
+                      {title}
+                    </h1>
+                  </div>
+                  
+                  <div className="flex flex-wrap items-center text-sm text-gray-600 dark:text-gray-400 gap-4 mb-6">
+                    <div className="flex items-center">
+                      <Calendar className="h-4 w-4 mr-2" />
+                      {post.date}
+                    </div>
+                    <div className="flex items-center">
+                      <Clock className="h-4 w-4 mr-2" />
+                      {readTime} min read
+                    </div>
+                    <div className="flex items-center">
+                      <User className="h-4 w-4 mr-2" />
+                      {author}
+                    </div>
+                    <div className="flex items-center">
+                      <Tag className="h-4 w-4 mr-2" />
+                      <span className="capitalize">{category}</span>
+                    </div>
+                  </div>
+                </>
+              );
+            })()}
             
             <div className="rounded-xl overflow-hidden mb-8">
               <img 
                 src={post.imageUrl} 
-                alt={post.title} 
+                alt={post.translations[currentLanguage]?.title || post.title || 'Blog post image'} 
                 className="w-full h-auto object-cover"
               />
             </div>
