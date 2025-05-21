@@ -47,21 +47,29 @@ export default function EnglishBlog() {
   const [searchQuery, setSearchQuery] = useState("");
   const postsPerPage = 6;
 
+  // State for language-specific blog posts
+  const [languagePosts, setLanguagePosts] = useState<BlogPostType[]>([]);
+  
+  // Load language-specific posts
+  useEffect(() => {
+    setLanguagePosts(getBlogPostsByLanguage('en'));
+  }, []);
+  
   // One-time effect for initial route
   useEffect(() => {
     if (params && params.id) {
       const id = parseInt(params.id);
-      const foundPost = blogPosts.find(p => p.id === id);
+      const foundPost = getBlogPostById(id, 'en');
       
       if (foundPost) {
         setPost(foundPost);
         
         // Get post content
-        const postContent = getBlogPostContent(id);
+        const postContent = getBlogPostContent(id, 'en');
         setContent(postContent);
         
         // Get related posts (same category, excluding current post)
-        const related = blogPosts
+        const related = languagePosts
           .filter(p => p.id !== id && p.category === foundPost.category)
           .slice(0, 3);
         setRelatedPosts(related);
@@ -280,10 +288,10 @@ export default function EnglishBlog() {
   
   // Blog listing view
   // Get categories for filter buttons
-  const categories = ["all", ...Array.from(new Set(blogPosts.map(post => post.category)))];
+  const categories = ["all", ...Array.from(new Set(languagePosts.map(post => post.category)))];
   
   // Filter posts by category and search query
-  const filteredPosts = blogPosts
+  const filteredPosts = languagePosts
     .filter(post => selectedCategory === "all" || post.category === selectedCategory)
     .filter(post => {
       if (!searchQuery) return true;
