@@ -5,13 +5,12 @@ import { LanguageSelector } from './LanguageSelector';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { getTranslation } from '@/lib/translations';
+import { useTranslation } from 'react-i18next';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
-  const { language } = useLanguage();
+  const { t } = useTranslation('common');
   
   // Handle scroll event to change navbar appearance
   useEffect(() => {
@@ -56,10 +55,10 @@ export function Navbar() {
               </SheetTrigger>
               <SheetContent>
                 <div className="flex flex-col space-y-4 mt-8">
-                  <Link href="/about" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'nav.about')}</Link>
-                  <Link href="/projects" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'nav.projects')}</Link>
-                  <Link href="/blog" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'nav.blog')}</Link>
-                  <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{getTranslation(language, 'nav.contact')}</Link>
+                  <Link href="/about" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.about')}</Link>
+                  <Link href="/projects" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.projects')}</Link>
+                  <Link href="/blog" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.blog')}</Link>
+                  <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.contact')}</Link>
                   <div className="px-3 py-2 flex items-center">
                     <LanguageSelector />
                   </div>
@@ -69,10 +68,10 @@ export function Navbar() {
             
             {/* Desktop menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <Link href="/about" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'nav.about')}</Link>
-              <Link href="/projects" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'nav.projects')}</Link>
-              <Link href="/blog" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'nav.blog')}</Link>
-              <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{getTranslation(language, 'nav.contact')}</Link>
+              <Link href="/about" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{t('nav.about')}</Link>
+              <Link href="/projects" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{t('nav.projects')}</Link>
+              <Link href="/blog" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{t('nav.blog')}</Link>
+              <Link href="/contact" onClick={() => window.scrollTo(0, 0)} className={linkClasses}>{t('nav.contact')}</Link>
               <LanguageSelector />
             </div>
           </div>
