@@ -41,6 +41,10 @@ const markdownFiles = Object.entries(blogImports).map(([path, content]) => {
   const idMatch = filename.match(/^(\d+)/);
   const id = idMatch ? parseInt(idMatch[1]) : 0;
   
+  // Extract language from the path (en, ja, ko)
+  const pathParts = path.split('/');
+  const language = pathParts[pathParts.length - 2]; // Gets language folder name
+  
   return { 
     id, 
     content: content as string,

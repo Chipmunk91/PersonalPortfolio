@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRoute, useLocation } from 'wouter';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { getBlogPostsByLanguage, getBlogPostContent, getBlogPostById } from '@/lib/blogLoader';
+import { blogPosts, getBlogPostContent, getBlogPostById } from '@/lib/blogLoader';
 import { BlogPostType } from '@/lib/types';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { BlogCard } from '@/components/BlogCard';
