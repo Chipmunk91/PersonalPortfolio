@@ -23,9 +23,16 @@ import {
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
-export default function Blog() {
+interface BlogProps {
+  id?: string;
+}
+
+export default function Blog({ id }: BlogProps = {}) {
   const [, setLocation] = useLocation();
-  const [, params] = useRoute<{ id: string }>('/blog/:id');
+  const [, routeParams] = useRoute<{ id: string }>('/blog/:id');
+  
+  // Use id from props if provided, otherwise check route
+  const blogId = id || (routeParams ? routeParams.id : undefined);
 
   // Blog post view states
   const [post, setPost] = useState<BlogPostType | undefined>(undefined);
@@ -40,28 +47,28 @@ export default function Blog() {
 
   // One-time effect for initial route
   useEffect(() => {
-    if (params && params.id) {
-      const id = parseInt(params.id);
-      const foundPost = blogPosts.find(p => p.id === id);
+    if (blogId) {
+      const postId = parseInt(blogId);
+      const foundPost = blogPosts.find(p => p.id === postId);
       
       if (foundPost) {
         setPost(foundPost);
         
         // Get post content
-        const postContent = getBlogPostContent(id);
+        const postContent = getBlogPostContent(postId);
         setContent(postContent);
         
         // Get related posts (same category, excluding current post)
         const related = blogPosts
-          .filter(p => p.id !== id && p.category === foundPost.category)
+          .filter(p => p.id !== postId && p.category === foundPost.category)
           .slice(0, 3);
         setRelatedPosts(related);
       }
     }
-  }, [params]);
+  }, [blogId]);
 
   // If viewing a specific blog post
-  if (params && params.id) {
+  if (blogId) {
     if (!post) {
       return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">

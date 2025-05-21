@@ -41,10 +41,16 @@ export function LanguageSelector() {
     setIsOpen(false);
     
     // Add language switching event to analytics if available
-    if (window.gtag) {
-      window.gtag('event', 'language_change', {
-        'language': langCode
-      });
+    try {
+      // Check if gtag is available and use it
+      const anyWindow = window as any;
+      if (anyWindow.gtag) {
+        anyWindow.gtag('event', 'language_change', {
+          'language': langCode
+        });
+      }
+    } catch (error) {
+      console.log('Analytics not available');
     }
   };
   
