@@ -24,23 +24,26 @@ export default function KoreanProjects() {
     }
   }, [i18n]);
   
-  // Extract all unique categories from projects
+  // Get Korean language projects
+  const koreanProjects = getProjectsByLanguage('ko');
+  
+  // Extract all unique categories from Korean projects
   const allCategories = Array.from(
     new Set(
-      projects.flatMap(project => 
+      koreanProjects.flatMap(project => 
         project.categories.map(cat => cat.toLowerCase())
       )
     )
   );
   
-  const filteredProjects = projects.filter(project => 
+  const filteredProjects = koreanProjects.filter(project => 
     filter === 'all' || project.categories.some(cat => cat.toLowerCase() === filter.toLowerCase())
   );
   
   // Select the first project by default when component mounts
   useEffect(() => {
-    if (projects.length > 0 && !selectedProject) {
-      setSelectedProject(projects[0]);
+    if (koreanProjects.length > 0 && !selectedProject) {
+      setSelectedProject(koreanProjects[0]);
     }
   }, []);
 
