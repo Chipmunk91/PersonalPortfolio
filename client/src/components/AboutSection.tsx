@@ -7,8 +7,11 @@ import {
 import { FaMedium, FaPlay } from "react-icons/fa";
 import { skills, timelineItems } from '@/lib/data';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export function AboutSection() {
+  const { t } = useTranslation('about');
+  
   return (
     <section id="about" className="py-20 bg-gray-50 dark:bg-gray-800">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,7 +27,7 @@ export function AboutSection() {
             >
               <img 
                 src="https://images.unsplash.com/photo-1543269664-56d93c1b41a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=800" 
-                alt="Hiroshi Tanaka" 
+                alt={t('profile.altText')} 
                 className="w-full h-auto" 
               />
             </motion.div>
@@ -47,17 +50,16 @@ export function AboutSection() {
             
             {/* Video Introduction */}
             <div className="bg-gray-100 dark:bg-gray-800 rounded-xl p-6 mb-6">
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Quick Introduction</h3>
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">{t('video.title')}</h3>
               <div className="aspect-video rounded-lg overflow-hidden bg-black mb-4">
                 <div className="w-full h-full flex items-center justify-center bg-gray-800 text-gray-500">
                   <FaPlay className="h-12 w-12" />
                 </div>
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                A brief 30-second introduction to my work and expertise in AI visualization
+                {t('video.description')}
               </p>
             </div>
-            
 
           </div>
           
@@ -68,9 +70,9 @@ export function AboutSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">About Me</h2>
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">{t('title')}</h2>
               <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
-                I'm a data scientist and visualization expert specializing in creating interactive tools that make AI systems more interpretable and accessible. With over 8 years of experience at the intersection of AI, data visualization, and UX design, I help organizations turn complex data into intuitive visual experiences.
+                {t('bio')}
               </p>
             </motion.div>
             
@@ -81,7 +83,7 @@ export function AboutSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Career Journey</h3>
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">{t('timeline.title')}</h3>
               <div className="relative pl-10 mb-12">
                 {timelineItems.map((item, index) => (
                   <TimelineItem 
@@ -102,11 +104,11 @@ export function AboutSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-6">Skills & Expertise</h3>
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-6">{t('skills.title')}</h3>
               
               {/* Data Visualization */}
               <div className="mb-8">
-                <h4 className="text-lg font-medium text-primary-600 dark:text-primary-400 mb-3">Data Visualization</h4>
+                <h4 className="text-lg font-medium text-primary-600 dark:text-primary-400 mb-3">{t('skills.categories.dataViz')}</h4>
                 <div className="grid grid-cols-2 gap-4 mb-3">
                   {skills
                     .filter(skill => skill.category === 'visualization')
@@ -126,7 +128,7 @@ export function AboutSection() {
               
               {/* Web Development */}
               <div className="mb-8">
-                <h4 className="text-lg font-medium text-secondary-600 dark:text-secondary-400 mb-3">Web Development</h4>
+                <h4 className="text-lg font-medium text-secondary-600 dark:text-secondary-400 mb-3">{t('skills.categories.webDev')}</h4>
                 <div className="grid grid-cols-2 gap-4 mb-3">
                   {skills
                     .filter(skill => skill.category === 'frontend' || skill.category === 'languages')
@@ -151,7 +153,7 @@ export function AboutSection() {
               
               {/* AI & Data Science */}
               <div className="mb-4">
-                <h4 className="text-lg font-medium text-accent-600 dark:text-accent-400 mb-3">AI & Data Science</h4>
+                <h4 className="text-lg font-medium text-accent-600 dark:text-accent-400 mb-3">{t('skills.categories.aiData')}</h4>
                 <div className="grid grid-cols-2 gap-4 mb-3">
                   {skills
                     .filter(skill => skill.category === 'ai' || skill.category === 'data' || skill.category === 'ux')

@@ -1,0 +1,41 @@
+{
+  "title": "Subscribe to my newsletter",
+  "description": "Get the latest articles, tutorials, and resources on AI visualization and interpretability delivered straight to your inbox.",
+  "benefits": {
+    "title": "Newsletter benefits:",
+    "items": {
+      "earlyAccess": "Early access to new articles and tools",
+      "exclusiveResources": "Exclusive resources not published on the blog",
+      "expertTips": "Tips and techniques from industry experts",
+      "workshops": "Opportunities to join private workshops"
+    }
+  },
+  "form": {
+    "title": "Join the newsletter",
+    "nameLabel": "Name (optional)",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "submit": "Subscribe",
+    "subscribing": "Subscribing...",
+    "privacyNotice": "We respect your privacy. Unsubscribe at any time."
+  },
+  "success": {
+    "title": "Thanks for subscribing!",
+    "message": "You'll receive your first newsletter soon.",
+    "subscribeAnother": "Subscribe another email"
+  },
+  "errors": {
+    "failed": "Failed to subscribe",
+    "generic": "Something went wrong. Please try again."
+  },
+  "toast": {
+    "success": {
+      "title": "Successfully subscribed!",
+      "description": "Thank you for subscribing to our newsletter."
+    },
+    "error": {
+      "title": "Subscription failed"
+    }
+  }
+}

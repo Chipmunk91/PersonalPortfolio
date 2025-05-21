@@ -1,0 +1,22 @@
+{
+  "title": "About Me",
+  "bio": "I'm a data scientist and visualization expert specializing in creating interactive tools that make AI systems more interpretable and accessible. With over 8 years of experience at the intersection of AI, data visualization, and UX design, I help organizations turn complex data into intuitive visual experiences.",
+  "profile": {
+    "altText": "Hiroshi Tanaka"
+  },
+  "video": {
+    "title": "Quick Introduction",
+    "description": "A brief 30-second introduction to my work and expertise in AI visualization"
+  },
+  "timeline": {
+    "title": "Career Journey"
+  },
+  "skills": {
+    "title": "Skills & Expertise",
+    "categories": {
+      "dataViz": "Data Visualization",
+      "webDev": "Web Development", 
+      "aiData": "AI & Data Science"
+    }
+  }
+}
