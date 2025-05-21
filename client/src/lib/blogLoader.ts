@@ -55,20 +55,26 @@ const markdownFiles = Object.entries(blogImports).map(([path, content]) => {
 function parseMultilingualContent(content: string): Record<string, string> {
   const languageBlocks: Record<string, string> = {};
   
-  // Use regex to find language blocks starting with "# langCode"
-  const langSections = content.split(/\n# ([a-z]{2})\n/);
-  
-  if (langSections.length <= 1) {
-    // No language sections found, assume the content is in English
+  // First, check if we have language markers in the content
+  if (content.includes('# en') || content.includes('# ko') || content.includes('# ja')) {
+    // Match language blocks that start with a language code marker
+    // Example: "# en\n\nEnglish content here\n\n# ko\n\nKorean content here"
+    const langPattern = /# ([a-z]{2})\s*\n([\s\S]*?)(?=\n# [a-z]{2}\s*\n|$)/g;
+    let match;
+    
+    while ((match = langPattern.exec(content)) !== null) {
+      const langCode = match[1];
+      const langContent = match[2].trim();
+      languageBlocks[langCode] = langContent;
+    }
+    
+    // If we didn't find any valid language blocks, default to English
+    if (Object.keys(languageBlocks).length === 0) {
+      languageBlocks['en'] = content;
+    }
+  } else {
+    // No language markers, assume the content is in English
     languageBlocks['en'] = content;
-    return languageBlocks;
-  }
-  
-  // Skip the first element which is empty or content before the first language block
-  for (let i = 1; i < langSections.length; i += 2) {
-    const langCode = langSections[i];
-    const langContent = langSections[i+1] || '';
-    languageBlocks[langCode] = langContent.trim();
   }
   
   return languageBlocks;
@@ -85,7 +91,28 @@ export const blogPosts: BlogPostType[] = markdownFiles.map(file => {
   // Check if translations are defined in frontmatter
   if (frontMatter.translations) {
     try {
-      const translationsData = JSON.parse(frontMatter.translations.replace(/'/g, '"'));
+      // Handle translations as a string that might be in different formats
+      let translationsData;
+      
+      if (typeof frontMatter.translations === 'string') {
+        // Try to parse as JSON
+        if (frontMatter.translations.startsWith('{')) {
+          translationsData = JSON.parse(frontMatter.translations.replace(/'/g, '"'));
+        } else {
+          // For backward compatibility, try to eval the string (safely)
+          try {
+            translationsData = JSON.parse(frontMatter.translations);
+          } catch (innerError) {
+            console.error('Could not parse translations as JSON:', innerError);
+            translationsData = {};
+          }
+        }
+      } else {
+        // If it's already an object, use it directly
+        translationsData = frontMatter.translations;
+      }
+      
+      // Create translations for each language
       Object.keys(translationsData).forEach(langCode => {
         translations[langCode] = {
           title: translationsData[langCode].title || frontMatter.title,
@@ -94,7 +121,7 @@ export const blogPosts: BlogPostType[] = markdownFiles.map(file => {
         };
       });
     } catch (e) {
-      console.error('Error parsing translations JSON:', e);
+      console.error('Error processing translations:', e);
     }
   } else {
     // For backward compatibility, create at least an English translation
@@ -124,19 +151,25 @@ export function getBlogPostContent(id: number, language: string = 'en'): string 
   if (!post) return '';
   
   // Check if the requested language exists in translations
-  if (post.translations && post.translations[language] && post.translations[language].content) {
-    return post.translations[language].content || '';
+  if (post.translations && 
+      post.translations[language] && 
+      post.translations[language].content) {
+    return post.translations[language].content;
   }
   
-  // Fallback to default language (English) or the first available translation
-  if (post.translations && post.translations['en'] && post.translations['en'].content) {
-    return post.translations['en'].content || '';
+  // Fallback to default language (English)
+  if (post.translations && 
+      post.translations['en'] && 
+      post.translations['en'].content) {
+    return post.translations['en'].content;
   }
   
   // Further fallback to any available language
   const availableLanguage = Object.keys(post.translations || {})[0];
-  if (availableLanguage && post.translations[availableLanguage].content) {
-    return post.translations[availableLanguage].content || '';
+  if (availableLanguage && 
+      post.translations[availableLanguage] && 
+      post.translations[availableLanguage].content) {
+    return post.translations[availableLanguage].content;
   }
   
   // Last resort: get raw content
