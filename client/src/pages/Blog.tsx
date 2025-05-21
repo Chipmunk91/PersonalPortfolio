@@ -154,20 +154,23 @@ export default function Blog() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    {availableLanguages.map(lang => (
-                      <DropdownMenuItem 
-                        key={lang}
-                        onClick={() => setCurrentLanguage(lang)}
-                        className={`${
-                          currentLanguage === lang ? "bg-primary-100 dark:bg-primary-900" : ""
-                        }`}
-                      >
-                        <span className="capitalize mr-2">
-                          {siteLanguages.find(l => l.code === lang)?.flag || ''} 
-                          {siteLanguages.find(l => l.code === lang)?.name || lang}
-                        </span>
-                      </DropdownMenuItem>
-                    ))}
+                    {availableLanguages.map(lang => {
+                      const langOption = siteLanguages.find(l => l.code === lang);
+                      return (
+                        <DropdownMenuItem 
+                          key={lang}
+                          onClick={() => setCurrentLanguage(lang)}
+                          className={`${
+                            currentLanguage === lang ? "bg-primary/10 text-primary" : ""
+                          }`}
+                        >
+                          <span className="flex items-center gap-2">
+                            <span>{langOption?.flag || ''}</span>
+                            <span>{langOption?.name || lang}</span>
+                          </span>
+                        </DropdownMenuItem>
+                      );
+                    })}
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
