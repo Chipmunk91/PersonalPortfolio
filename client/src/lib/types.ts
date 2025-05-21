@@ -22,6 +22,7 @@ export interface ProjectType {
   demoUrl: string;
   githubUrl: string;
   dirName?: string;
+  language?: string;
 }
 
 // Blog post type

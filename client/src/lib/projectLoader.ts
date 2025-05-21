@@ -1,16 +1,23 @@
 import { ProjectType } from './types';
 
 // Import project index files
-const projectIndices = import.meta.glob('../content/project/*/index.json', { eager: true });
-const projectPapers = import.meta.glob('../content/project/*/paper.md', { query: '?raw', import: 'default', eager: true });
-const projectVideos = import.meta.glob('../content/project/*/video.json', { eager: true });
-const projectPlaygrounds = import.meta.glob('../content/project/*/playground/index.tsx', { eager: true });
+const projectIndices = import.meta.glob('../content/project/**/*.json', { eager: true });
+const projectPapers = import.meta.glob('../content/project/**/paper.md', { query: '?raw', import: 'default', eager: true });
+const projectVideos = import.meta.glob('../content/project/**/video.json', { eager: true });
+const projectPlaygrounds = import.meta.glob('../content/project/**/playground/index.tsx', { eager: true });
 
 // Parse project data from the project directories
-export const projects: ProjectType[] = Object.entries(projectIndices).map(([path, content]) => {
-  // Extract project directory name
+export const projects: ProjectType[] = Object.entries(projectIndices)
+  .filter(([path]) => path.includes('/index.json'))
+  .map(([path, content]) => {
+  // Extract project directory name and language
   const dirPath = path.substring(0, path.lastIndexOf('/'));
   const dirName = dirPath.substring(dirPath.lastIndexOf('/') + 1);
+  
+  // Extract language from path (en/ja/ko)
+  const pathParts = path.split('/');
+  // Path format: "../content/project/en/projectname/index.json" => language is at position -3
+  const language = pathParts[pathParts.length - 3];
   
   // Get the project data from index.json
   const projectData = content as any;
@@ -24,7 +31,8 @@ export const projects: ProjectType[] = Object.entries(projectIndices).map(([path
     technologies: projectData.technologies,
     demoUrl: projectData.demoUrl,
     githubUrl: projectData.githubUrl,
-    dirName: dirName
+    dirName: dirName,
+    language: language
   };
 }).sort((a, b) => a.id - b.id);
 
