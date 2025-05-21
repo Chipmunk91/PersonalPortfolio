@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { X, Download } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from 'react-i18next';
 
 interface EmailCaptureModalProps {
   isOpen: boolean;
@@ -17,6 +18,7 @@ interface EmailCaptureModalProps {
 }
 
 export function EmailCaptureModal({ isOpen, onClose }: EmailCaptureModalProps) {
+  const { t } = useTranslation('common');
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
@@ -43,15 +45,15 @@ export function EmailCaptureModal({ isOpen, onClose }: EmailCaptureModalProps) {
             </div>
           </div>
           
-          <DialogTitle className="text-xl font-bold mb-2">Before you go...</DialogTitle>
+          <DialogTitle className="text-xl font-bold mb-2">{t('emailCapture.title')}</DialogTitle>
           <DialogDescription>
-            Get my free guide: "The 5 Things Everyone Gets Wrong About AI Visualizations"
+            {t('emailCapture.description')}
           </DialogDescription>
         </DialogHeader>
         
         <form className="space-y-4 mt-4">
           <div>
-            <Input type="text" placeholder="Your Name" />
+            <Input type="text" placeholder={t('emailCapture.namePlaceholder')} />
           </div>
           <div>
             <Input type="email" placeholder="Your Email" />

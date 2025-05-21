@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTranslation } from 'react-i18next';
 
 interface BlogFilterSectionProps {
   searchQuery: string;
@@ -19,6 +20,7 @@ export function BlogFilterSection({
   categories,
   setCurrentPage
 }: BlogFilterSectionProps) {
+  const { t } = useTranslation('blog');
   return (
     <div className="mb-12">
       {/* Search Bar */}
@@ -26,7 +28,7 @@ export function BlogFilterSection({
         <div className="relative">
           <input
             type="text"
-            placeholder="Search articles..."
+            placeholder={t('filter.searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
@@ -59,7 +61,7 @@ export function BlogFilterSection({
                 : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
             }`}
           >
-            {category === 'all' ? 'All Categories' : category}
+            {category === 'all' ? t('filter.allCategories') : t(`categories.${category}`, { defaultValue: category })}
           </button>
         ))}
       </motion.div>
