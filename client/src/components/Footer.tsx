@@ -2,9 +2,11 @@ import { Linkedin, Twitter, Github } from 'lucide-react';
 import { FaMedium } from 'react-icons/fa';
 import { Link } from 'wouter';
 import { useTranslation } from 'react-i18next';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export function Footer() {
   const { t } = useTranslation('common');
+  const { language } = useLanguage();
   const currentYear = new Date().getFullYear();
   
   return (
@@ -12,9 +14,9 @@ export function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <div className="mb-6 md:mb-0">
-            <a href="/" className="text-2xl font-bold">
+            <Link href={`/${language}`} onClick={() => window.scrollTo(0, 0)} className="text-2xl font-bold">
               Hiroshi<span className="text-primary-500">.dev</span>
-            </a>
+            </Link>
             <p className="text-gray-400 mt-2 max-w-md">
               {t('hero.subtitle')}
             </p>
@@ -24,19 +26,19 @@ export function Footer() {
             <div>
               <h4 className="font-medium mb-3">{t('footer.navigation')}</h4>
               <ul className="space-y-2">
-                <li><Link href="/about" onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.about')}</Link></li>
-                <li><Link href="/projects" onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.projects')}</Link></li>
-                <li><Link href="/blog" onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.blog')}</Link></li>
-                <li><Link href="/contact" onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.contact')}</Link></li>
+                <li><Link href={`/${language}/about`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.about')}</Link></li>
+                <li><Link href={`/${language}/projects`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.projects')}</Link></li>
+                <li><Link href={`/${language}/blog`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.blog')}</Link></li>
+                <li><Link href={`/${language}/contact`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.contact')}</Link></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-medium mb-3">{t('footer.legal')}</h4>
               <ul className="space-y-2">
-                <li><Link href="/privacy-policy" onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.privacyPolicy')}</Link></li>
-                <li><Link href="/terms-of-service" onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.termsOfService')}</Link></li>
-                <li><Link href="/cookie-policy" onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.cookiePolicy')}</Link></li>
+                <li><Link href={`/${language}/privacy-policy`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.privacyPolicy')}</Link></li>
+                <li><Link href={`/${language}/terms-of-service`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.termsOfService')}</Link></li>
+                <li><Link href={`/${language}/cookie-policy`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.cookiePolicy')}</Link></li>
               </ul>
             </div>
           </div>

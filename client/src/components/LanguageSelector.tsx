@@ -9,11 +9,14 @@ import { Globe } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { useTranslation } from 'react-i18next';
 import { languageOptions } from '@/lib/i18n';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { type Language } from '@/contexts/LanguageContext';
 
 export function LanguageSelector() {
   const { i18n } = useTranslation('common');
+  const { setLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   
   // Track scroll position to match navbar behavior
@@ -31,11 +34,33 @@ export function LanguageSelector() {
     };
   }, []);
   
+  // Extract current path without language prefix
+  const getPathWithoutLang = (path: string): string => {
+    const pathParts = path.split('/');
+    if (pathParts.length > 1 && ['en', 'ja', 'ko'].includes(pathParts[1])) {
+      return '/' + pathParts.slice(2).join('/');
+    }
+    return path;
+  };
+
   // Determine if we're on the homepage
-  const isHomepage = location === '/';
+  const isHomepage = location.endsWith('/en') || 
+                    location.endsWith('/ja') || 
+                    location.endsWith('/ko') || 
+                    location === '/';
   
   const handleSelectLanguage = (langCode: string) => {
+    // Update i18n language
     i18n.changeLanguage(langCode);
+    
+    // Update language in context
+    setLanguage(langCode as Language);
+    
+    // Update URL to reflect language change but keep current page
+    const currentPath = getPathWithoutLang(location);
+    const newPath = currentPath === '/' ? `/${langCode}` : `/${langCode}${currentPath}`;
+    setLocation(newPath);
+    
     setIsOpen(false);
   };
   
