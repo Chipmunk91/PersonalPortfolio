@@ -39,5 +39,13 @@
     "light": "Light Mode",
     "dark": "Dark Mode",
     "system": "System"
+  },
+  "emailCapture": {
+    "title": "Before you go...",
+    "description": "Get my free guide: \"The 5 Things Everyone Gets Wrong About AI Visualizations\"",
+    "namePlaceholder": "Your Name",
+    "emailPlaceholder": "Your Email",
+    "submitButton": "Download Free Guide",
+    "privacyNotice": "I respect your privacy. You can unsubscribe at any time."
   }
 }

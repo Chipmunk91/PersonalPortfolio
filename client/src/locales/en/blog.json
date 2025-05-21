@@ -1,23 +1,27 @@
 {
-  "title": "Blog & Insights",
-  "subtitle": "Thoughts, tutorials, and deep dives into data visualization, AI interpretability, and interactive tools.",
-  "readTime": "{{time}} min read",
-  "publishedOn": "Published on",
-  "author": "By",
-  "category": "Category",
-  "searchPlaceholder": "Search articles...",
-  "filterByCategory": "Filter by category",
-  "allCategories": "All Categories",
-  "relatedPosts": "Related Posts",
-  "sharePost": "Share this post:",
-  "backToBlog": "Back to Blog",
-  "readMore": "Read more",
-  "notFound": {
-    "title": "Blog Post Not Found",
-    "message": "The blog post you're looking for doesn't exist or has been removed."
+  "title": "Blog",
+  "subtitle": "Thoughts and insights on AI, data visualization, and UX design",
+  "filter": {
+    "searchPlaceholder": "Search articles...",
+    "allCategories": "All Categories"
   },
-  "newsletter": {
-    "title": "Subscribe to my newsletter",
-    "description": "Get the latest articles, tutorials, and resources on AI visualization and interpretability delivered straight to your inbox."
-  }
+  "categories": {
+    "ai": "AI",
+    "visualization": "Visualization",
+    "ux": "UX Design",
+    "development": "Development",
+    "tutorial": "Tutorial"
+  },
+  "readTime": "{{time}} min read",
+  "readMore": "Read Article",
+  "sharePost": "Share this post",
+  "relatedPosts": "Related Articles",
+  "author": "Author",
+  "published": "Published",
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {{number}}"
+  },
+  "emptyState": "No articles found matching your search criteria"
 }

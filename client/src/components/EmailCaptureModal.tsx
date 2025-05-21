@@ -56,15 +56,15 @@ export function EmailCaptureModal({ isOpen, onClose }: EmailCaptureModalProps) {
             <Input type="text" placeholder={t('emailCapture.namePlaceholder')} />
           </div>
           <div>
-            <Input type="email" placeholder="Your Email" />
+            <Input type="email" placeholder={t('emailCapture.emailPlaceholder')} />
           </div>
           <Button type="submit" className="w-full">
-            Download Free Guide
+            {t('emailCapture.submitButton')}
           </Button>
         </form>
         
         <p className="text-xs text-gray-500 dark:text-gray-500 text-center mt-4">
-          I respect your privacy. You can unsubscribe at any time.
+          {t('emailCapture.privacyNotice')}
         </p>
       </DialogContent>
     </Dialog>

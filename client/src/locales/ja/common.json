@@ -39,5 +39,13 @@
     "light": "ライトモード",
     "dark": "ダークモード",
     "system": "システム"
+  },
+  "emailCapture": {
+    "title": "お待ちください...",
+    "description": "無料ガイドをゲット：「AIビジュアライゼーションに関する5つの誤解」",
+    "namePlaceholder": "お名前",
+    "emailPlaceholder": "メールアドレス",
+    "submitButton": "無料ガイドをダウンロード",
+    "privacyNotice": "プライバシーを尊重します。いつでも購読解除できます。"
   }
 }
