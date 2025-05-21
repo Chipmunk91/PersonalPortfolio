@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRoute, useLocation } from 'wouter';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { blogPosts, getBlogPostContent, getBlogPostById } from '@/lib/blogLoader';
+import { blogPosts, getBlogPostContent, getBlogPostById, getBlogPostsByLanguage } from '@/lib/blogLoader';
 import { BlogPostType } from '@/lib/types';
 import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { BlogCard } from '@/components/BlogCard';
@@ -51,17 +51,17 @@ export default function JapaneseBlog() {
   useEffect(() => {
     if (params && params.id) {
       const id = parseInt(params.id);
-      const foundPost = blogPosts.find(p => p.id === id);
+      const foundPost = getBlogPostById(id, 'ja');
       
       if (foundPost) {
         setPost(foundPost);
         
         // Get post content
-        const postContent = getBlogPostContent(id);
+        const postContent = getBlogPostContent(id, 'ja');
         setContent(postContent);
         
         // Get related posts (same category, excluding current post)
-        const related = blogPosts
+        const related = getBlogPostsByLanguage('ja')
           .filter(p => p.id !== id && p.category === foundPost.category)
           .slice(0, 3);
         setRelatedPosts(related);
@@ -279,11 +279,14 @@ export default function JapaneseBlog() {
   }
   
   // Blog listing view
+  // Get Japanese blog posts
+  const japanesePosts = getBlogPostsByLanguage('ja');
+  
   // Get categories for filter buttons
-  const categories = ["all", ...Array.from(new Set(blogPosts.map(post => post.category)))];
+  const categories = ["all", ...Array.from(new Set(japanesePosts.map(post => post.category)))];
   
   // Filter posts by category and search query
-  const filteredPosts = blogPosts
+  const filteredPosts = japanesePosts
     .filter(post => selectedCategory === "all" || post.category === selectedCategory)
     .filter(post => {
       if (!searchQuery) return true;
