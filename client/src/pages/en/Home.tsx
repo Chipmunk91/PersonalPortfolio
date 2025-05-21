@@ -47,7 +47,7 @@ export default function EnglishHome() {
 
   // Get featured projects and blog posts
   const featuredProjects = projects.slice(0, 3);
-  const featuredPosts = blogPosts.slice(0, 2);
+  const featuredPosts = getBlogPostsByLanguage('en').slice(0, 2);
   const featuredSkills = skills.slice(0, 8);
 
   return (
