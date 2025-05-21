@@ -8,11 +8,10 @@ import {
 import { Globe } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { useTranslation } from 'react-i18next';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { languageOptions } from '@/lib/i18n';
 
 export function LanguageSelector() {
-  const { i18n, t } = useTranslation('common');
-  const { language, setLanguage, languages, currentLanguageOption } = useLanguage();
+  const { i18n } = useTranslation('common');
   const [isOpen, setIsOpen] = useState(false);
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -36,23 +35,12 @@ export function LanguageSelector() {
   const isHomepage = location === '/';
   
   const handleSelectLanguage = (langCode: string) => {
-    // Update language in context (which also updates i18n)
-    setLanguage(langCode as any);
+    i18n.changeLanguage(langCode);
     setIsOpen(false);
-    
-    // Add language switching event to analytics if available
-    try {
-      // Check if gtag is available and use it
-      const anyWindow = window as any;
-      if (anyWindow.gtag) {
-        anyWindow.gtag('event', 'language_change', {
-          'language': langCode
-        });
-      }
-    } catch (error) {
-      console.log('Analytics not available');
-    }
   };
+  
+  // Find current language details
+  const currentLanguage = languageOptions.find(lang => lang.code === i18n.language) || languageOptions[0];
   
   // Use the same styling logic as the Nav links
   const linkClasses = isScrolled || !isHomepage
@@ -64,24 +52,21 @@ export function LanguageSelector() {
       <DropdownMenuTrigger asChild>
         <span 
           className={`flex items-center gap-1.5 cursor-pointer ${linkClasses}`}
-          aria-label={t('languageSelector.language')}
+          aria-label={i18n.t('languageSelector.language')}
         >
           <Globe className="h-4 w-4" />
-          <span>{currentLanguageOption.flag}</span>
+          <span>{currentLanguage.flag}</span>
         </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        {languages.map((lang) => (
+        {languageOptions.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
-            className={`flex items-center gap-2 cursor-pointer ${language === lang.code ? 'bg-primary-100 dark:bg-primary-900' : ''}`}
+            className={`flex items-center gap-2 cursor-pointer ${i18n.language === lang.code ? 'bg-primary-100 dark:bg-primary-900' : ''}`}
             onClick={() => handleSelectLanguage(lang.code)}
           >
             <span className="text-base">{lang.flag}</span>
-            <span className="flex-1">{lang.name}</span>
-            {language === lang.code && (
-              <span className="text-primary-500 text-xs font-medium">✓</span>
-            )}
+            <span>{lang.name}</span>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

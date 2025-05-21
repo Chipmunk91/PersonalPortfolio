@@ -25,7 +25,7 @@ import { Button } from '@/components/ui/button';
 
 export default function Blog() {
   const [, setLocation] = useLocation();
-  const [match, params] = useRoute<{ id: string }>('/blog/:id');
+  const [, params] = useRoute<{ id: string }>('/blog/:id');
 
   // Blog post view states
   const [post, setPost] = useState<BlogPostType | undefined>(undefined);
@@ -40,28 +40,28 @@ export default function Blog() {
 
   // One-time effect for initial route
   useEffect(() => {
-    if (match && params && params.id) {
-      const postId = parseInt(params.id);
-      const foundPost = blogPosts.find(p => p.id === postId);
+    if (params && params.id) {
+      const id = parseInt(params.id);
+      const foundPost = blogPosts.find(p => p.id === id);
       
       if (foundPost) {
         setPost(foundPost);
         
         // Get post content
-        const postContent = getBlogPostContent(postId);
+        const postContent = getBlogPostContent(id);
         setContent(postContent);
         
         // Get related posts (same category, excluding current post)
         const related = blogPosts
-          .filter(p => p.id !== postId && p.category === foundPost.category)
+          .filter(p => p.id !== id && p.category === foundPost.category)
           .slice(0, 3);
         setRelatedPosts(related);
       }
     }
-  }, [match, params]);
+  }, [params]);
 
   // If viewing a specific blog post
-  if (match && params && params.id) {
+  if (params && params.id) {
     if (!post) {
       return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
