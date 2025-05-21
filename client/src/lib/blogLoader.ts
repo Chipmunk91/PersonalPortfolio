@@ -30,10 +30,10 @@ export function parseFrontMatter(markdown: string): {
   return { frontMatter, content };
 }
 
-// Import markdown files from the content/blog directory
+// Import markdown files from the content/blog directory with language-specific subfolders
 // Note: In a production environment, this would use Node.js file system API to read all files in the directory
 // For this demo, we'll use Vite's import.meta.glob to dynamically import all markdown files
-const blogImports = import.meta.glob('../content/blog/*.md', { query: '?raw', import: 'default', eager: true });
+const blogImports = import.meta.glob('../content/blog/**/*.md', { query: '?raw', import: 'default', eager: true });
 
 // Convert the imported files into an array with proper ID extraction from filenames
 const markdownFiles = Object.entries(blogImports).map(([path, content]) => {
@@ -42,10 +42,15 @@ const markdownFiles = Object.entries(blogImports).map(([path, content]) => {
   const idMatch = filename.match(/^(\d+)/);
   const id = idMatch ? parseInt(idMatch[1]) : 0;
   
+  // Extract language from path (e.g., "../content/blog/en/file.md" -> "en")
+  const pathParts = path.split('/');
+  const language = pathParts[pathParts.length - 2];
+  
   return { 
     id, 
     content: content as string,
-    path
+    path,
+    language
   };
 })
 // Sort by ID

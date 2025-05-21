@@ -11,9 +11,9 @@ import { FaMedium, FaPlay } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
 
 // Import content
-import profileData from "@/content/about/profile.json";
-import careerData from "@/content/about/career.json";
-import skillsData from "@/content/about/skills.json";
+import profileData from "@/content/about/ja/profile.json";
+import careerData from "@/content/about/ja/career.json";
+import skillsData from "@/content/about/ja/skills.json";
 
 export default function JapaneseAbout() {
   const { i18n } = useTranslation();
