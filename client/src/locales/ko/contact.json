@@ -1,39 +1,75 @@
 {
   "title": "연락하기",
-  "subtitle": "질문이 있거나 함께 일하는 데 관심이 있으신가요? 언제든지 연락해 주세요.",
+  "subtitle": "프로젝트 아이디어가 있거나 협업하고 싶으신가요? 연락해 주세요.",
   "form": {
-    "name": "이름",
+    "title": "메시지 보내기",
+    "fullName": "이름",
     "email": "이메일",
-    "subject": "제목",
+    "inquiryType": "무엇을 찾고 계신가요?",
     "message": "메시지",
-    "budget": "예산 (USD)",
-    "timeline": "타임라인",
-    "inquiryType": "문의 유형",
-    "projectType": "프로젝트 유형",
     "submit": "메시지 보내기",
-    "success": "메시지가 성공적으로 전송되었습니다! 곧 답변 드리겠습니다.",
-    "error": "문제가 발생했습니다. 다시 시도해 주세요."
-  },
-  "inquiryTypes": {
-    "general": "일반 문의",
-    "project": "프로젝트 요청",
+    "sending": "전송 중...",
+    "selectOption": "옵션을 선택하세요",
+    "project": "프로젝트/채용",
     "collaboration": "협업",
-    "speaking": "강연 의뢰"
+    "speaking": "강연 기회",
+    "other": "기타",
+    "budget": {
+      "label": "프로젝트 예산",
+      "placeholder": "예산 범위 선택",
+      "under5k": "$5,000 미만",
+      "5k10k": "$5,000 - $10,000",
+      "10k20k": "$10,000 - $20,000",
+      "20kPlus": "$20,000 이상"
+    },
+    "timeline": {
+      "label": "프로젝트 일정",
+      "placeholder": "일정 선택",
+      "lessThan1": "1개월 미만",
+      "1to3": "1-3개월",
+      "3to6": "3-6개월",
+      "6Plus": "6개월 이상"
+    },
+    "eventDate": "이벤트 날짜"
   },
-  "schedule": {
-    "title": "통화 예약하기",
-    "description": "통화로 논의하고 싶으신가요? 30분 상담을 예약하세요.",
-    "button": "통화 예약",
-    "selectDate": "날짜 선택",
-    "selectTime": "시간 선택",
-    "yourDetails": "개인 정보",
-    "confirmBooking": "예약 확인",
-    "success": "통화가 예약되었습니다. 대화하기를 기대합니다!",
-    "error": "예약에 실패했습니다. 다시 시도해 주세요."
+  "success": {
+    "title": "메시지가 전송되었습니다!",
+    "message": "연락해 주셔서 감사합니다. 최대한 빨리 답변 드리겠습니다.",
+    "sendAnother": "다른 메시지 보내기"
+  },
+  "bookCall": {
+    "title": "통화 예약",
+    "description": "프로젝트나 협업 기회에 대해 논의하기 위한 30분 통화를 예약하세요.",
+    "availableText": "미팅 가능",
+    "button": "통화 예약하기",
+    "placeholder": "(현재 임시 Calendly 페이지에 연결되어 있습니다)"
   },
   "contactInfo": {
-    "address": "도쿄, 일본",
-    "email": "hiroshi@example.com",
-    "phone": "+81 3-1234-5678"
+    "email": {
+      "label": "이메일",
+      "value": "contact@example.com"
+    },
+    "location": {
+      "label": "위치",
+      "value": "도쿄, 일본"
+    },
+    "workingHours": {
+      "label": "업무 시간",
+      "value": "월-금: 오전 9시 - 오후 6시 JST"
+    },
+    "connect": "소셜 미디어"
+  },
+  "errors": {
+    "failed": "메시지 전송에 실패했습니다",
+    "generic": "문제가 발생했습니다. 다시 시도해 주세요."
+  },
+  "toast": {
+    "success": {
+      "title": "메시지가 성공적으로 전송되었습니다!",
+      "description": "연락해 주셔서 감사합니다. 곧 답변 드리겠습니다."
+    },
+    "error": {
+      "title": "메시지 전송 실패"
+    }
   }
 }

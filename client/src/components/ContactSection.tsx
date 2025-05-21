@@ -25,10 +25,12 @@ import { FaMedium } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
 import { ScheduleCallForm } from './ScheduleCallForm';
+import { useTranslation } from 'react-i18next';
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 export function ContactSection() {
+  const { t } = useTranslation('contact');
   const { toast } = useToast();
   
   // Form state
@@ -124,9 +126,9 @@ export function ContactSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Get in Touch</h2>
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{t('title')}</h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Have a project in mind or want to collaborate? I'd love to hear from you.
+            {t('subtitle')}
           </p>
         </motion.div>
         
@@ -140,7 +142,7 @@ export function ContactSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Send me a message</h3>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">{t('form.title')}</h3>
               
               {formStatus === 'success' ? (
                 <div className="text-center py-10">
