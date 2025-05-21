@@ -129,7 +129,10 @@ export const blogPosts: BlogPostType[] = markdownFiles.map(file => {
             translations[langCode] = {
               title: (langData as any).title || frontMatter.title,
               excerpt: (langData as any).excerpt || frontMatter.excerpt,
-              content: languageContents[langCode] || ''
+              content: languageContents[langCode] || '',
+              category: (langData as any).category || frontMatter.category,
+              readTime: (langData as any).readTime ? parseInt((langData as any).readTime) : parseInt(frontMatter.readTime),
+              author: (langData as any).author || frontMatter.author
             };
           }
         });
@@ -142,7 +145,10 @@ export const blogPosts: BlogPostType[] = markdownFiles.map(file => {
     translations['en'] = {
       title: frontMatter.title,
       excerpt: frontMatter.excerpt,
-      content: languageContents['en'] || content
+      content: languageContents['en'] || content,
+      category: frontMatter.category,
+      readTime: parseInt(frontMatter.readTime),
+      author: frontMatter.author
     };
   }
   
