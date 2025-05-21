@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { EmailCaptureModal } from "@/components/EmailCaptureModal";
 import { Button } from "@/components/ui/button";
 import { skills } from "@/lib/data";
-import { getProjectsByLanguage } from "@/lib/projectLoader";
+import { projects, getProjectsByLanguage } from "@/lib/projectLoader";
 import { getBlogPostsByLanguage } from "@/lib/blogLoader";
 import { motion } from "framer-motion";
 import {

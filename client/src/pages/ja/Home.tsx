@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { EmailCaptureModal } from "@/components/EmailCaptureModal";
 import { Button } from "@/components/ui/button";
 import { skills } from "@/lib/data";
-import { projects } from "@/lib/projectLoader";
+import { projects, getProjectsByLanguage } from "@/lib/projectLoader";
 import { getBlogPostsByLanguage } from "@/lib/blogLoader";
 import { motion } from "framer-motion";
 import {
@@ -46,7 +46,7 @@ export default function JapaneseHome() {
   }, []);
 
   // Get featured projects and blog posts
-  const featuredProjects = projects.slice(0, 3);
+  const featuredProjects = getProjectsByLanguage('ja').slice(0, 3);
   const featuredPosts = getBlogPostsByLanguage('ja').slice(0, 2);
   const featuredSkills = skills.slice(0, 8);
 
