@@ -88,6 +88,18 @@ export function getProjectByDirName(dirName: string): ProjectType | undefined {
   return projects.find(project => project.dirName === dirName);
 }
 
+// Function to get projects by language
+export function getProjectsByLanguage(language: string = 'en'): ProjectType[] {
+  return projects.filter(project => {
+    // If language is specified in the project data, use that
+    if (project.language) {
+      return project.language === language;
+    }
+    // Default to English if not specified
+    return language === 'en';
+  });
+}
+
 // Function to parse frontmatter from Markdown content
 export function parseFrontMatter(markdown: string): { 
   frontMatter: Record<string, any>;
