@@ -2,8 +2,11 @@ import { Button } from "@/components/ui/button";
 import { ParticlesBackground } from "./ParticlesBackground";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export function Hero() {
+  const { t } = useTranslation('common');
+  
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center">
       {/* Dynamic background */}
@@ -19,10 +22,10 @@ export function Hero() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
-            I build <span className="text-primary-400">interactive AI visualization</span> tools
+            {t('hero.title')}
           </h1>
           <p className="text-xl sm:text-2xl text-gray-300 mb-8">
-            Helping companies transform complex data into intuitive, interactive experiences that drive insights and decision-making.
+            {t('hero.subtitle')}
           </p>
           <div className="mb-12">
             <Button
@@ -30,7 +33,7 @@ export function Hero() {
               className="px-8 py-6 rounded-lg bg-primary-500 hover:bg-primary-600 text-white font-medium text-lg transition-colors duration-300 shadow-lg hover:shadow-xl h-auto"
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Explore My Work
+              {t('hero.cta')}
             </Button>
           </div>
           

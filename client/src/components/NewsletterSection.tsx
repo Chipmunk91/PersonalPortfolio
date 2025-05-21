@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import { Check, AlertCircle, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { apiRequest } from '@/lib/queryClient';
+import { useTranslation } from 'react-i18next';
 
 interface NewsletterSectionProps {
   title?: string;
@@ -12,15 +12,20 @@ interface NewsletterSectionProps {
 }
 
 export function NewsletterSection({ 
-  title = "Subscribe to my newsletter",
-  description = "Get the latest articles, tutorials, and resources on AI visualization and interpretability delivered straight to your inbox." 
+  title,
+  description
 }: NewsletterSectionProps) {
+  const { t } = useTranslation('common');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
+
+  // Use provided title/description or fallback to translations
+  const newsletterTitle = title || t('newsletter.title');
+  const newsletterDescription = description || t('newsletter.description');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,7 +46,7 @@ export function NewsletterSection({
       const data = await response.json();
       
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to subscribe');
+        throw new Error(data.message || t('newsletter.errors.failed'));
       }
       
       setIsSubmitting(false);
@@ -50,17 +55,17 @@ export function NewsletterSection({
       setName('');
       
       toast({
-        title: "Successfully subscribed!",
-        description: "Thank you for subscribing to our newsletter.",
+        title: t('newsletter.toast.success.title'),
+        description: t('newsletter.toast.success.description'),
       });
     } catch (err) {
       setIsSubmitting(false);
-      const errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
+      const errorMessage = err instanceof Error ? err.message : t('newsletter.errors.generic');
       setError(errorMessage);
       
       toast({
         variant: "destructive",
-        title: "Subscription failed",
+        title: t('newsletter.toast.error.title'),
         description: errorMessage,
       });
     }
@@ -81,20 +86,20 @@ export function NewsletterSection({
     >
       <div className="p-6 md:p-8">
         <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
-          {title}
+          {newsletterTitle}
         </h3>
         <p className="text-gray-600 dark:text-gray-400 mb-6">
-          {description}
+          {newsletterDescription}
         </p>
         
         <div className="flex flex-col md:flex-row items-start gap-6">
           <div className="md:w-1/2 bg-white dark:bg-black p-6 rounded-lg shadow-md">
-            <h4 className="text-gray-800 dark:text-gray-100 font-bold mb-4">Newsletter benefits:</h4>
+            <h4 className="text-gray-800 dark:text-gray-100 font-bold mb-4">{t('newsletter.benefits.title')}</h4>
             <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-              <BenefitItem text="Early access to new articles and tools" />
-              <BenefitItem text="Exclusive resources not published on the blog" />
-              <BenefitItem text="Tips and techniques from industry experts" />
-              <BenefitItem text="Opportunities to join private workshops" />
+              <BenefitItem text={t('newsletter.benefits.items.earlyAccess')} />
+              <BenefitItem text={t('newsletter.benefits.items.exclusiveResources')} />
+              <BenefitItem text={t('newsletter.benefits.items.expertTips')} />
+              <BenefitItem text={t('newsletter.benefits.items.workshops')} />
             </ul>
           </div>
           
@@ -104,32 +109,32 @@ export function NewsletterSection({
                 <div className="w-16 h-16 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Check className="w-8 h-8 text-primary-600 dark:text-primary-300" />
                 </div>
-                <h4 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">Thanks for subscribing!</h4>
+                <h4 className="text-xl font-bold mb-2 text-gray-800 dark:text-white">{t('newsletter.success.title')}</h4>
                 <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  You'll receive your first newsletter soon.
+                  {t('newsletter.success.message')}
                 </p>
                 <Button 
                   variant="outline" 
                   onClick={resetForm}
                   className="mx-auto"
                 >
-                  Subscribe another email
+                  {t('newsletter.success.subscribeAnother')}
                 </Button>
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
                 <h4 className="text-lg font-bold mb-4 text-gray-800 dark:text-white">
-                  Join the newsletter
+                  {t('newsletter.form.title')}
                 </h4>
                 
                 <div className="mb-4">
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Name (optional)
+                    {t('newsletter.form.nameLabel')}
                   </label>
                   <Input
                     id="name"
                     type="text"
-                    placeholder="Your name"
+                    placeholder={t('newsletter.form.namePlaceholder')}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700"
@@ -138,12 +143,12 @@ export function NewsletterSection({
                 
                 <div className="mb-4">
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Email address
+                    {t('newsletter.form.emailLabel')}
                   </label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="you@example.com"
+                    placeholder={t('newsletter.form.emailPlaceholder')}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -166,13 +171,13 @@ export function NewsletterSection({
                   {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Subscribing...
+                      {t('newsletter.form.subscribing')}
                     </>
-                  ) : 'Subscribe'}
+                  ) : t('newsletter.form.submit')}
                 </Button>
                 
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-3">
-                  We respect your privacy. Unsubscribe at any time.
+                  {t('newsletter.form.privacyNotice')}
                 </p>
               </form>
             )}

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Calendar, Clock, User } from 'lucide-react';
 import { BlogPostType } from '@/lib/types';
 import { useLocation } from 'wouter';
+import { useTranslation } from 'react-i18next';
 
 interface BlogCardProps {
   post: BlogPostType;
@@ -10,6 +11,7 @@ interface BlogCardProps {
 
 export function BlogCard({ post, index }: BlogCardProps) {
   const [_, setLocation] = useLocation();
+  const { t } = useTranslation('blog');
 
   return (
     <motion.div 
@@ -41,7 +43,7 @@ export function BlogCard({ post, index }: BlogCardProps) {
           <Calendar className="h-4 w-4 mr-1" />
           <span className="mr-4">{post.date}</span>
           <Clock className="h-4 w-4 mr-1" />
-          <span>{post.readTime} min read</span>
+          <span>{t('readTime', { time: post.readTime })}</span>
         </div>
         <h3 className="text-xl font-bold mb-3 line-clamp-2 text-gray-900 dark:text-white">{post.title}</h3>
         <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
@@ -53,7 +55,7 @@ export function BlogCard({ post, index }: BlogCardProps) {
             {post.author}
           </span>
           <span className="text-primary font-medium text-sm inline-flex items-center">
-            Read Article
+            {t('readMore')}
             <svg className="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
