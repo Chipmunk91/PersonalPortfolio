@@ -4,7 +4,7 @@ import { Footer } from "@/components/Footer";
 import { ProjectFilterSection } from "@/components/ProjectFilterSection";
 import { ProjectCarousel } from "@/components/ProjectCarousel";
 import { ProjectPlayground } from "@/components/ProjectPlayground";
-import { projects } from '@/lib/projectLoader';
+import { projects, getProjectsByLanguage } from '@/lib/projectLoader';
 import { ProjectType } from '@/lib/types';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -24,23 +24,26 @@ export default function JapaneseProjects() {
     }
   }, [i18n]);
   
-  // Extract all unique categories from projects
+  // Get Japanese language projects
+  const japaneseProjects = getProjectsByLanguage('ja');
+  
+  // Extract all unique categories from Japanese projects
   const allCategories = Array.from(
     new Set(
-      projects.flatMap(project => 
+      japaneseProjects.flatMap(project => 
         project.categories.map(cat => cat.toLowerCase())
       )
     )
   );
   
-  const filteredProjects = projects.filter(project => 
+  const filteredProjects = japaneseProjects.filter(project => 
     filter === 'all' || project.categories.some(cat => cat.toLowerCase() === filter.toLowerCase())
   );
   
   // Select the first project by default when component mounts
   useEffect(() => {
-    if (projects.length > 0 && !selectedProject) {
-      setSelectedProject(projects[0]);
+    if (japaneseProjects.length > 0 && !selectedProject) {
+      setSelectedProject(japaneseProjects[0]);
     }
   }, []);
 

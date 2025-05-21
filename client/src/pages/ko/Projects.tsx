@@ -4,7 +4,7 @@ import { Footer } from "@/components/Footer";
 import { ProjectFilterSection } from "@/components/ProjectFilterSection";
 import { ProjectCarousel } from "@/components/ProjectCarousel";
 import { ProjectPlayground } from "@/components/ProjectPlayground";
-import { projects } from '@/lib/projectLoader';
+import { projects, getProjectsByLanguage } from '@/lib/projectLoader';
 import { ProjectType } from '@/lib/types';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';

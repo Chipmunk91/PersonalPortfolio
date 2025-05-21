@@ -24,23 +24,26 @@ export default function EnglishProjects() {
     }
   }, [i18n]);
   
-  // Extract all unique categories from projects
+  // Get English language projects
+  const englishProjects = getProjectsByLanguage('en');
+  
+  // Extract all unique categories from English projects
   const allCategories = Array.from(
     new Set(
-      projects.flatMap(project => 
+      englishProjects.flatMap(project => 
         project.categories.map(cat => cat.toLowerCase())
       )
     )
   );
   
-  const filteredProjects = projects.filter(project => 
+  const filteredProjects = englishProjects.filter(project => 
     filter === 'all' || project.categories.some(cat => cat.toLowerCase() === filter.toLowerCase())
   );
   
   // Select the first project by default when component mounts
   useEffect(() => {
-    if (projects.length > 0 && !selectedProject) {
-      setSelectedProject(projects[0]);
+    if (englishProjects.length > 0 && !selectedProject) {
+      setSelectedProject(englishProjects[0]);
     }
   }, []);
 
