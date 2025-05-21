@@ -61,11 +61,11 @@ export default function Blog() {
         setPost(foundPost);
         
         // Set current language to site language if available for this post
-        const langToUse = foundPost.translations[siteLanguage] ? siteLanguage : 'en';
+        const availableLangs = Object.keys(foundPost.translations || {});
+        const langToUse = availableLangs.includes(siteLanguage) ? siteLanguage : 'en';
         setCurrentLanguage(langToUse);
         
-        // Get list of available languages for this post
-        const availableLangs = Object.keys(foundPost.translations || {});
+        // Save available languages
         setAvailableLanguages(availableLangs);
         
         // Get post content in the current language
@@ -79,16 +79,18 @@ export default function Blog() {
         setRelatedPosts(related);
       }
     }
-  }, [params, siteLanguage]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params?.id, siteLanguage]);
   
   // Update content when language changes
   useEffect(() => {
-    if (post && params?.id) {
+    if (post && params?.id && currentLanguage) {
       const id = parseInt(params.id);
       const postContent = getBlogPostContent(id, currentLanguage);
       setContent(postContent);
     }
-  }, [currentLanguage, params?.id]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentLanguage, params?.id, post?.id]);
 
   // If viewing a specific blog post
   if (params && params.id) {

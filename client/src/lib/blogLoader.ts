@@ -55,11 +55,10 @@ const markdownFiles = Object.entries(blogImports).map(([path, content]) => {
 function parseMultilingualContent(content: string): Record<string, string> {
   const languageBlocks: Record<string, string> = {};
   
-  // Check if we have HTML comment language markers in the content
-  if (content.includes('<!--en-->') || content.includes('<!--ko-->') || content.includes('<!--ja-->')) {
-    // Match language blocks using HTML comments
-    // Example: "<!--en-->English content here<!--end-en--><!--ko-->Korean content here<!--end-ko-->"
-    const langPattern = /<!--([a-z]{2})-->([\s\S]*?)<!--end-\1-->/g;
+  // Check for <lang> tag format (our new simplest format)
+  if (content.includes('<en>') || content.includes('<ko>') || content.includes('<ja>')) {
+    // Match language blocks using XML-like tags
+    const langPattern = /<([a-z]{2})>([\s\S]*?)<\/\1>/g;
     let match;
     
     while ((match = langPattern.exec(content)) !== null) {
@@ -73,28 +72,14 @@ function parseMultilingualContent(content: string): Record<string, string> {
       languageBlocks['en'] = content;
     }
   } 
-  // Fallback to check for the old language markers format
-  else if (content.includes('# en') || content.includes('# ko') || content.includes('# ja')) {
-    // Match language blocks that start with a language code marker
-    const langPattern = /# ([a-z]{2})\s*\n([\s\S]*?)(?=\n# [a-z]{2}\s*\n|$)/g;
-    let match;
-    
-    while ((match = langPattern.exec(content)) !== null) {
-      const langCode = match[1];
-      let langContent = match[2].trim();
-      
-      // If the content has a language marker as a heading, remove the heading
-      if (langContent.startsWith(`## ${langCode}`)) {
-        langContent = langContent.substring(langCode.length + 3).trim();
-      }
-      
-      languageBlocks[langCode] = langContent;
-    }
-    
-    // If we didn't find any valid language blocks, default to English
-    if (Object.keys(languageBlocks).length === 0) {
-      languageBlocks['en'] = content;
-    }
+  // Fallback to check other formats
+  else if (content.includes('<!-- en-content -->') || content.includes('<!-- ko-content -->') || 
+           content.includes('<!-- ja-content -->') || content.includes('<!--en-->') || 
+           content.includes('<!--ko-->') || content.includes('<!--ja-->') || 
+           content.includes('# en') || content.includes('# ko') || content.includes('# ja')) {
+           
+    // For older formats, just extract the content without language markers
+    languageBlocks['en'] = content;
   } else {
     // No language markers, assume the content is in English
     languageBlocks['en'] = content;
