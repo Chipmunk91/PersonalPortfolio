@@ -156,15 +156,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
+      // Store the contact message in the database
       const contactMessage = await storage.createContactMessage(validatedData.data);
       
-      // In a real system, we would send notification emails here to alert the site owner
-      // of a new contact submission and possibly an auto-reply to the user
+      // Import the email functions
+      const { sendContactNotification, sendContactAutoReply } = await import('./email');
+      
+      // Send notification email to admin (site owner)
+      const notificationSent = await sendContactNotification({
+        name: contactMessage.name,
+        email: contactMessage.email,
+        inquiryType: contactMessage.inquiryType,
+        message: contactMessage.message,
+        budget: contactMessage.budget,
+        timeline: contactMessage.timeline,
+        eventDate: contactMessage.eventDate
+      });
+      
+      // Send auto-reply email to the person who submitted the form
+      const autoReplySent = await sendContactAutoReply({
+        name: contactMessage.name,
+        email: contactMessage.email
+      });
+      
+      // Log email notification status
+      if (!notificationSent) {
+        console.warn("Failed to send contact notification email to admin");
+      }
+      
+      if (!autoReplySent) {
+        console.warn("Failed to send auto-reply email to user");
+      }
       
       return res.status(201).json({
         success: true,
         message: "Message sent successfully",
-        contactId: contactMessage.id
+        contactId: contactMessage.id,
+        emailStatus: {
+          notificationSent,
+          autoReplySent
+        }
       });
     } catch (error) {
       console.error("Error submitting contact form:", error);
