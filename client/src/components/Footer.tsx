@@ -23,7 +23,7 @@ export function Footer() {
           </div>
           
           <div className="flex flex-wrap justify-center gap-8">
-            <div className="min-w-[140px]">
+            <div>
               <h4 className="font-medium mb-3">{t('footer.navigation')}</h4>
               <ul className="space-y-2">
                 <li><Link href={`/${language}/about`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.about')}</Link></li>
@@ -33,7 +33,7 @@ export function Footer() {
               </ul>
             </div>
             
-            <div className="min-w-[140px]">
+            <div>
               <h4 className="font-medium mb-3">{t('footer.legal')}</h4>
               <ul className="space-y-2">
                 <li><Link href={`/${language}/privacy-policy`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.privacyPolicy')}</Link></li>

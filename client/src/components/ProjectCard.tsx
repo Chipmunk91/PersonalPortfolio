@@ -140,7 +140,7 @@ export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
           
           <div className="flex flex-wrap gap-2 mb-4 flex-1">
             {project.technologies.map((tech, i) => (
-              <span key={i} className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs rounded-full flex items-center justify-center">
+              <span key={i} className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs rounded-full">
                 {tech}
               </span>
             ))}
