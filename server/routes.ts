@@ -170,7 +170,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         message: contactMessage.message,
         budget: contactMessage.budget,
         timeline: contactMessage.timeline,
-        eventDate: contactMessage.eventDate
+        eventDate: contactMessage.eventDate ? contactMessage.eventDate.toISOString() : null
       });
       
       // Send auto-reply email to the person who submitted the form

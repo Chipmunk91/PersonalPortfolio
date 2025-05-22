@@ -88,16 +88,39 @@ export function ContactSection() {
     setError(null);
     
     try {
-      // Prepare the form data
-      const formData = {
+      // Log the form values to help debug any issues
+      console.log('Form submission values:', {
         name,
         email,
         inquiryType,
         message,
+        budget,
+        timeline,
+        eventDate
+      });
+
+      // Normalize inquiry type to handle different variations
+      let normalizedInquiryType = inquiryType.toLowerCase();
+      if (normalizedInquiryType.includes('speak')) {
+        normalizedInquiryType = 'speaking';
+      } else if (normalizedInquiryType.includes('project')) {
+        normalizedInquiryType = 'project';
+      } else if (normalizedInquiryType.includes('collab')) {
+        normalizedInquiryType = 'collaboration';
+      } else {
+        normalizedInquiryType = 'other';
+      }
+      
+      // Prepare the form data
+      const formData = {
+        name,
+        email,
+        inquiryType: normalizedInquiryType, // Use normalized value
+        message,
         // Include optional fields based on inquiry type
-        budget: inquiryType === 'project' ? budget : null,
-        timeline: inquiryType === 'collaboration' ? timeline : null,
-        eventDate: inquiryType === 'speaking' && eventDate ? eventDate : null
+        budget: normalizedInquiryType === 'project' ? budget : null,
+        timeline: normalizedInquiryType === 'collaboration' ? timeline : null,
+        eventDate: normalizedInquiryType === 'speaking' && eventDate ? eventDate : null
       };
       
       // Send the form data to the server
@@ -209,7 +232,7 @@ export function ContactSection() {
                 <SelectContent>
                   <SelectItem value="project">{t('form.project')}</SelectItem>
                   <SelectItem value="collaboration">{t('form.collaboration')}</SelectItem>
-                  <SelectItem value="speaking">{t('form.speaking')}</SelectItem>
+                  <SelectItem value="speaking">Speaking Opportunity</SelectItem>
                   <SelectItem value="other">{t('form.other')}</SelectItem>
                 </SelectContent>
               </Select>
