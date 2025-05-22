@@ -35,11 +35,12 @@ export default function JapaneseNotFound() {
                 {t('notFound.goHome', 'ホームへ')}
               </Link>
             </Button>
-            <Button asChild>
-              <a onClick={() => window.history.back()}>
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                {t('notFound.goBack', '戻る')}
-              </a>
+            <Button 
+              onClick={() => window.history.back()}
+              className="cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              {t('notFound.goBack', '戻る')}
             </Button>
           </div>
         </div>

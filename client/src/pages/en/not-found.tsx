@@ -35,11 +35,12 @@ export default function EnglishNotFound() {
                 {t('notFound.goHome', 'Go Home')}
               </Link>
             </Button>
-            <Button asChild>
-              <a onClick={() => window.history.back()}>
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                {t('notFound.goBack', 'Go Back')}
-              </a>
+            <Button 
+              onClick={() => window.history.back()}
+              className="cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              {t('notFound.goBack', 'Go Back')}
             </Button>
           </div>
         </div>

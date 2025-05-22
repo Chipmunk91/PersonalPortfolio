@@ -35,11 +35,12 @@ export default function KoreanNotFound() {
                 {t('notFound.goHome', '홈으로')}
               </Link>
             </Button>
-            <Button asChild>
-              <a onClick={() => window.history.back()}>
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                {t('notFound.goBack', '돌아가기')}
-              </a>
+            <Button 
+              onClick={() => window.history.back()}
+              className="cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              {t('notFound.goBack', '돌아가기')}
             </Button>
           </div>
         </div>
