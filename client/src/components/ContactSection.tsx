@@ -82,13 +82,18 @@ export function ContactSection() {
     localStorage.removeItem('contact_eventDate');
   };
   
+  // Make sure we get a normalized value for form submission
+  const normalizeInquiryType = (type: string) => {
+    // Return the value as-is since we're using standardized select values
+    return type;
+  };
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormStatus('submitting');
     setError(null);
     
     try {
-      // Log the form values to help debug any issues
       console.log('Form submission values:', {
         name,
         email,
@@ -98,29 +103,16 @@ export function ContactSection() {
         timeline,
         eventDate
       });
-
-      // Normalize inquiry type to handle different variations
-      let normalizedInquiryType = inquiryType.toLowerCase();
-      if (normalizedInquiryType.includes('speak')) {
-        normalizedInquiryType = 'speaking';
-      } else if (normalizedInquiryType.includes('project')) {
-        normalizedInquiryType = 'project';
-      } else if (normalizedInquiryType.includes('collab')) {
-        normalizedInquiryType = 'collaboration';
-      } else {
-        normalizedInquiryType = 'other';
-      }
       
-      // Prepare the form data
+      // Create a simpler form data structure without complex transformations
       const formData = {
         name,
         email,
-        inquiryType: normalizedInquiryType, // Use normalized value
+        inquiryType,
         message,
-        // Include optional fields based on inquiry type
-        budget: normalizedInquiryType === 'project' ? budget : null,
-        timeline: normalizedInquiryType === 'collaboration' ? timeline : null,
-        eventDate: normalizedInquiryType === 'speaking' && eventDate ? eventDate : null
+        budget: inquiryType === 'project' ? budget : null,
+        timeline: inquiryType === 'collaboration' ? timeline : null,
+        eventDate: inquiryType === 'speaking' && eventDate ? eventDate : null
       };
       
       // Send the form data to the server

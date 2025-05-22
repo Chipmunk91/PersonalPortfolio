@@ -43,8 +43,8 @@ export const insertSubscriberSchema = createInsertSchema(subscribers).pick({
   name: true,
 });
 
-// Create the base schema
-const baseContactMessageSchema = createInsertSchema(contactMessages).pick({
+// Create a simple schema without transformation to avoid validation issues
+export const insertContactMessageSchema = createInsertSchema(contactMessages).pick({
   name: true,
   email: true, 
   inquiryType: true,
@@ -52,29 +52,6 @@ const baseContactMessageSchema = createInsertSchema(contactMessages).pick({
   budget: true,
   timeline: true,
   eventDate: true,
-});
-
-// Enhance the schema with custom validation
-export const insertContactMessageSchema = baseContactMessageSchema.transform((data) => {
-  // Normalize inquiry type to handle different variations
-  let normalizedType = data.inquiryType.toLowerCase();
-  
-  // Map various forms to standardized values
-  if (normalizedType.includes('speak')) {
-    normalizedType = 'speaking';
-  } else if (normalizedType.includes('project')) {
-    normalizedType = 'project';
-  } else if (normalizedType.includes('collab')) {
-    normalizedType = 'collaboration';
-  } else {
-    normalizedType = 'other';
-  }
-  
-  // Return the normalized data
-  return {
-    ...data,
-    inquiryType: normalizedType
-  };
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;

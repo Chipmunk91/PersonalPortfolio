@@ -145,10 +145,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission endpoint
   app.post("/api/contact", async (req: Request, res: Response) => {
     try {
+      // Log the incoming request body for debugging
+      console.log("Contact form submission received:", req.body);
+
+      // Process the data slightly before validation
+      const processedData = {
+        ...req.body,
+        // Ensure inquiryType is standardized
+        inquiryType: req.body.inquiryType?.toLowerCase() || 'other'
+      };
+      
       // Validate the request body
-      const validatedData = insertContactMessageSchema.safeParse(req.body);
+      const validatedData = insertContactMessageSchema.safeParse(processedData);
       
       if (!validatedData.success) {
+        console.error("Contact form validation failed:", validatedData.error.format());
         return res.status(400).json({
           success: false,
           message: "Invalid contact form data",
