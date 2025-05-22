@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -8,6 +8,7 @@ import { HomeIcon, ArrowLeft } from 'lucide-react';
 
 export default function JapaneseNotFound() {
   const { i18n, t } = useTranslation();
+  const [, setLocation] = useLocation();
   
   // Ensure we're using Japanese
   React.useEffect(() => {
@@ -15,6 +16,17 @@ export default function JapaneseNotFound() {
       i18n.changeLanguage('ja');
     }
   }, [i18n]);
+
+  // Function to handle going back
+  const handleGoBack = () => {
+    // Try to use history first
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      // Fallback to blog list if history isn't available
+      setLocation('/ja/blog');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
@@ -36,7 +48,7 @@ export default function JapaneseNotFound() {
               </Link>
             </Button>
             <Button 
-              onClick={() => window.history.back()}
+              onClick={handleGoBack}
               className="cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
