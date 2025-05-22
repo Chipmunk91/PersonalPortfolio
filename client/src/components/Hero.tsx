@@ -31,7 +31,15 @@ export function Hero() {
             <Button
               size="lg"
               className="px-8 py-6 rounded-lg bg-primary-500 hover:bg-primary-600 text-white font-medium text-lg transition-colors duration-300 shadow-lg hover:shadow-xl h-auto"
-              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => {
+                // Get current language from URL or use default 'en'
+                const pathname = window.location.pathname;
+                const langMatch = pathname.match(/^\/(en|ja|ko)/);
+                const currentLang = langMatch ? langMatch[1] : 'en';
+                
+                // Navigate to projects page in the current language
+                window.location.href = `/${currentLang}/projects`;
+              }}
             >
               {t('hero.cta')}
             </Button>
