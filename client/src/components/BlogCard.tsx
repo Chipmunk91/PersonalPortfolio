@@ -15,8 +15,13 @@ export function BlogCard({ post, index }: BlogCardProps) {
   const { t } = useTranslation('blog');
   const { language } = useLanguage();
   
-  // Get the current post's language or use the global language setting
-  const postLanguage = post.language || language;
+  // Handle navigation to blog post
+  const navigateToBlogPost = (e: React.MouseEvent) => {
+    e.preventDefault();
+    // Use the post's specific language if available, otherwise use current UI language
+    const targetLanguage = post.language || language;
+    setLocation(`/${targetLanguage}/blog/${post.id}`);
+  };
 
   return (
     <motion.div 
@@ -26,10 +31,7 @@ export function BlogCard({ post, index }: BlogCardProps) {
       viewport={{ once: true }}
       transition={{ duration: 0.3, delay: 0.1 * (index % 3) }}
       whileHover={{ y: -5, transition: { duration: 0.2 }, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)" }}
-      onClick={() => {
-        // Use the post's specific language or fall back to the current language
-        setLocation(`/${postLanguage}/blog/${post.id}`);
-      }}
+      onClick={navigateToBlogPost}
       className="cursor-pointer bg-white dark:bg-gray-900 rounded-xl shadow-md overflow-hidden"
     >
       <div className="relative">
