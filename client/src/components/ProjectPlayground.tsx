@@ -2,6 +2,7 @@ import { BarChart3 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ProjectType } from '@/lib/types';
 import { getProjectPlayground } from '@/lib/projectLoader';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ProjectPlaygroundProps {
   selectedProject: ProjectType | null;
@@ -14,6 +15,9 @@ export function ProjectPlayground({
   playgroundConfig,
   onConfigChange
 }: ProjectPlaygroundProps) {
+  // Get the current language for loading localized content
+  const { language } = useLanguage();
+  
   return (
     <motion.div 
       id="playground-section"
@@ -36,7 +40,8 @@ export function ProjectPlayground({
         {selectedProject && selectedProject.dirName ? (
           /* Dynamically load the playground component for the selected project */
           (() => {
-            const playground = getProjectPlayground(selectedProject.dirName);
+            // Get the language-specific playground component using the current language
+            const playground = getProjectPlayground(selectedProject.dirName, language);
             if (playground && playground.default) {
               const PlaygroundComponent = playground.default;
               return (

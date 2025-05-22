@@ -37,12 +37,21 @@ export const projects: ProjectType[] = Object.entries(projectIndices)
 }).sort((a, b) => a.id - b.id);
 
 // Function to get paper content for a project
-export function getProjectPaper(dirName: string): string | null {
-  const paperPath = `../content/project/${dirName}/paper.md`;
+export function getProjectPaper(dirName: string, language: string = 'en'): string | null {
+  // Try to find the language-specific paper
+  let paperPath = `../content/project/${language}/${dirName}/paper.md`;
   
   // Find the paper in the imported papers
   for (const [path, content] of Object.entries(projectPapers)) {
-    if (path.includes(dirName)) {
+    // Check if this is the language-specific paper by looking for /${language}/${dirName}/
+    if (path.includes(`/${language}/${dirName}/`)) {
+      return content as string;
+    }
+  }
+  
+  // Fallback to non-language specific paper if needed
+  for (const [path, content] of Object.entries(projectPapers)) {
+    if (path.includes(`/${dirName}/paper.md`) && !path.includes('/en/') && !path.includes('/ja/') && !path.includes('/ko/')) {
       return content as string;
     }
   }
@@ -51,12 +60,21 @@ export function getProjectPaper(dirName: string): string | null {
 }
 
 // Function to get video data for a project
-export function getProjectVideo(dirName: string): any | null {
-  const videoPath = `../content/project/${dirName}/video.json`;
+export function getProjectVideo(dirName: string, language: string = 'en'): any | null {
+  // Try to find the language-specific video
+  let videoPath = `../content/project/${language}/${dirName}/video.json`;
   
   // Find the video in the imported videos
   for (const [path, content] of Object.entries(projectVideos)) {
-    if (path.includes(dirName)) {
+    // Check if this is the language-specific video by looking for /${language}/${dirName}/
+    if (path.includes(`/${language}/${dirName}/`)) {
+      return content as any;
+    }
+  }
+  
+  // Fallback to non-language specific video if needed
+  for (const [path, content] of Object.entries(projectVideos)) {
+    if (path.includes(`/${dirName}/video.json`) && !path.includes('/en/') && !path.includes('/ja/') && !path.includes('/ko/')) {
       return content as any;
     }
   }
@@ -65,12 +83,21 @@ export function getProjectVideo(dirName: string): any | null {
 }
 
 // Function to get playground data for a project
-export function getProjectPlayground(dirName: string): any | null {
-  const playgroundPath = `../content/project/${dirName}/playground/index.tsx`;
+export function getProjectPlayground(dirName: string, language: string = 'en'): any | null {
+  // Try to find the language-specific playground
+  let playgroundPath = `../content/project/${language}/${dirName}/playground/index.tsx`;
   
   // Find the playground in the imported playgrounds
   for (const [path, content] of Object.entries(projectPlaygrounds)) {
-    if (path.includes(dirName)) {
+    // Check if this is the language-specific playground by looking for /${language}/${dirName}/
+    if (path.includes(`/${language}/${dirName}/`)) {
+      return content as any;
+    }
+  }
+  
+  // Fallback to non-language specific playground if needed
+  for (const [path, content] of Object.entries(projectPlaygrounds)) {
+    if (path.includes(`/${dirName}/playground/index.tsx`) && !path.includes('/en/') && !path.includes('/ja/') && !path.includes('/ko/')) {
       return content as any;
     }
   }

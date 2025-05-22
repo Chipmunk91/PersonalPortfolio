@@ -4,7 +4,9 @@ import { ProjectType } from '@/lib/types';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useLocation } from 'wouter';
-import { getProjectVideo } from '@/lib/projectLoader';
+import { getProjectPaper, getProjectVideo } from '@/lib/projectLoader';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { MarkdownRenderer } from './MarkdownRenderer';
 import {
   Dialog,
   DialogContent,
