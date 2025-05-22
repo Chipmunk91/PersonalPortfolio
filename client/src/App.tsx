@@ -55,19 +55,23 @@ function LanguageRedirect() {
   return null;
 }
 
-// Simple language-aware 404 handler that renders the appropriate not found page
+// Custom 404 handler that redirects to language-specific 404 pages
 function LanguageAwareNotFound() {
   const { language } = useLanguage();
+  const [, navigate] = useLocation();
   
-  // Render the appropriate language-specific not found page
-  if (language === 'ja') {
-    return <JaNotFound />;
-  } else if (language === 'ko') {
-    return <KoNotFound />;
-  } else {
-    // Default to English
-    return <EnNotFound />;
-  }
+  // Use single-run effect to avoid infinite loops
+  useEffect(() => {
+    // Redirect once to the appropriate language 404 page
+    if (['en', 'ja', 'ko'].includes(language)) {
+      navigate(`/${language}/not-found`, { replace: true });
+    } else {
+      // Default to English if language is not supported
+      navigate('/en/not-found', { replace: true });
+    }
+  }, []); // Empty dependency array ensures this only runs once
+  
+  return null;
 }
 
 // Main Router component

@@ -29,12 +29,12 @@ export default function EnglishBlog() {
   const [, params] = useRoute<{ id: string }>('/en/blog/:id');
   const { i18n } = useTranslation();
   
-  // Ensure we're using English - only run this once
+  // Ensure we're using English
   useEffect(() => {
     if (i18n.language !== 'en') {
       i18n.changeLanguage('en');
     }
-  }, []);
+  }, [i18n]);
 
   // Blog post view states
   const [post, setPost] = useState<BlogPostType | undefined>(undefined);
@@ -80,9 +80,21 @@ export default function EnglishBlog() {
   // If viewing a specific blog post
   if (params && params.id) {
     if (!post) {
-      // Redirect to the main blog page if post is not found
-      setLocation('/en/blog');
-      return null;
+      return (
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+          <Navbar />
+          <div className="container mx-auto px-4 py-16">
+            <div className="text-center">
+              <h1 className="text-3xl font-bold">Blog Post Not Found</h1>
+              <p className="mt-4 mb-8">The blog post you're looking for doesn't exist or has been removed.</p>
+              <Button onClick={() => setLocation('/en/blog')}>
+                <ChevronLeft className="mr-2 h-4 w-4" /> Back to Blog
+              </Button>
+            </div>
+          </div>
+          <Footer />
+        </div>
+      );
     }
 
     return (
