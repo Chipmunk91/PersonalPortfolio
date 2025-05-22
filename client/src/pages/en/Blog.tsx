@@ -79,22 +79,15 @@ export default function EnglishBlog() {
 
   // If viewing a specific blog post
   if (params && params.id) {
+    // If post not found, redirect to language-specific 404 page
     if (!post) {
-      return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-          <Navbar />
-          <div className="container mx-auto px-4 py-16">
-            <div className="text-center">
-              <h1 className="text-3xl font-bold">Blog Post Not Found</h1>
-              <p className="mt-4 mb-8">The blog post you're looking for doesn't exist or has been removed.</p>
-              <Button onClick={() => setLocation('/en/blog')}>
-                <ChevronLeft className="mr-2 h-4 w-4" /> Back to Blog
-              </Button>
-            </div>
-          </div>
-          <Footer />
-        </div>
-      );
+      // Use effect for navigation to avoid render cycles
+      useEffect(() => {
+        setLocation('/en/not-found');
+      }, [setLocation]);
+      
+      // Return null while redirecting
+      return null;
     }
 
     return (

@@ -72,21 +72,13 @@ export default function JapaneseBlog() {
   // If viewing a specific blog post
   if (params && params.id) {
     if (!post) {
-      return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-          <Navbar />
-          <div className="container mx-auto px-4 py-16">
-            <div className="text-center">
-              <h1 className="text-3xl font-bold">ブログ記事が見つかりません</h1>
-              <p className="mt-4 mb-8">お探しのブログ記事は存在しないか、削除された可能性があります。</p>
-              <Button onClick={() => setLocation('/ja/blog')}>
-                <ChevronLeft className="mr-2 h-4 w-4" /> ブログに戻る
-              </Button>
-            </div>
-          </div>
-          <Footer />
-        </div>
-      );
+      // Use effect for navigation to avoid render cycles
+      useEffect(() => {
+        setLocation('/ja/not-found');
+      }, [setLocation]);
+      
+      // Return null while redirecting
+      return null;
     }
 
     return (
