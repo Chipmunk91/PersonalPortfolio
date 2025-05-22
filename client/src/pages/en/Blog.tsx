@@ -55,7 +55,7 @@ export default function EnglishBlog() {
     setLanguagePosts(getBlogPostsByLanguage('en'));
   }, []);
   
-  // One-time effect for initial route
+  // Hook to handle post loading and 404 redirect for missing posts
   useEffect(() => {
     if (params && params.id) {
       const id = parseInt(params.id);
@@ -69,25 +69,26 @@ export default function EnglishBlog() {
         setContent(postContent);
         
         // Get related posts (same category, excluding current post)
-        const related = languagePosts
+        const related = getBlogPostsByLanguage('en')
           .filter(p => p.id !== id && p.category === foundPost.category)
           .slice(0, 3);
         setRelatedPosts(related);
+      } else {
+        // If post not found, redirect to 404 page
+        setLocation('/en/not-found');
       }
     }
-  }, [params]);
+  }, [params, setLocation]);
 
   // If viewing a specific blog post
   if (params && params.id) {
-    // If post not found, redirect to language-specific 404 page
+    // If post not found, show loading spinner while redirect happens
     if (!post) {
-      // Use effect for navigation to avoid render cycles
-      useEffect(() => {
-        setLocation('/en/not-found');
-      }, [setLocation]);
-      
-      // Return null while redirecting
-      return null;
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        </div>
+      );
     }
 
     return (

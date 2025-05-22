@@ -47,7 +47,7 @@ export default function KoreanBlog() {
   const [searchQuery, setSearchQuery] = useState("");
   const postsPerPage = 6;
 
-  // One-time effect for initial route
+  // Hook to handle post loading and 404 redirect for missing posts
   useEffect(() => {
     if (params && params.id) {
       const id = parseInt(params.id);
@@ -65,20 +65,22 @@ export default function KoreanBlog() {
           .filter(p => p.id !== id && p.category === foundPost.category)
           .slice(0, 3);
         setRelatedPosts(related);
+      } else {
+        // If post not found, redirect to 404 page
+        setLocation('/ko/not-found');
       }
     }
-  }, [params]);
+  }, [params, setLocation]);
 
   // If viewing a specific blog post
   if (params && params.id) {
     if (!post) {
-      // For consistency, redirect to language-specific 404 page
-      useEffect(() => {
-        setLocation('/ko/not-found');
-      }, [setLocation]);
-      
-      // Return null while redirecting is happening
-      return null;
+      // Show loading state while redirect happens
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        </div>
+      );
     }
 
     return (
