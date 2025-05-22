@@ -163,7 +163,7 @@ export default function EnglishHome() {
       </section>
 
       {/* Featured Projects Preview */}
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section id="featured-projects" className="py-16 bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-end mb-10">
             <div>
