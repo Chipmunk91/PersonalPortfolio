@@ -19,13 +19,8 @@ export default function EnglishNotFound() {
 
   // Function to handle going back
   const handleGoBack = () => {
-    // Try to use history first
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      // Fallback to blog list if history isn't available
-      setLocation('/en/blog');
-    }
+    // Simply navigate to the blog list - more reliable than history.back()
+    setLocation('/en/blog');
   };
 
   return (

@@ -83,6 +83,11 @@ export default function KoreanBlog() {
       );
     }
 
+    // Scroll to top when viewing a blog post
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [post]);
+    
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-800">
         <Navbar />
