@@ -3,6 +3,7 @@ import { Calendar, Clock, User } from 'lucide-react';
 import { BlogPostType } from '@/lib/types';
 import { useLocation } from 'wouter';
 import { useTranslation } from 'react-i18next';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface BlogCardProps {
   post: BlogPostType;
@@ -12,6 +13,7 @@ interface BlogCardProps {
 export function BlogCard({ post, index }: BlogCardProps) {
   const [_, setLocation] = useLocation();
   const { t } = useTranslation('blog');
+  const { language } = useLanguage();
 
   return (
     <motion.div 
@@ -22,7 +24,7 @@ export function BlogCard({ post, index }: BlogCardProps) {
       transition={{ duration: 0.3, delay: 0.1 * (index % 3) }}
       whileHover={{ y: -5, transition: { duration: 0.2 }, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)" }}
       onClick={() => {
-        setLocation(`/blog/${post.id}`);
+        setLocation(`/${language}/blog/${post.id}`);
       }}
       className="cursor-pointer bg-white dark:bg-gray-900 rounded-xl shadow-md overflow-hidden"
     >

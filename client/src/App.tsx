@@ -55,6 +55,18 @@ function LanguageRedirect() {
   return null;
 }
 
+// Custom 404 handler that redirects to language-specific 404 pages
+function LanguageAwareNotFound() {
+  const { language } = useLanguage();
+  const [, navigate] = useLocation();
+  
+  useEffect(() => {
+    navigate(`/${language}/*`);
+  }, [language, navigate]);
+  
+  return null;
+}
+
 // Main Router component
 function Router() {
   const { language, setLanguage } = useLanguage();
@@ -111,8 +123,8 @@ function Router() {
       <Route path="/ko/cookie-policy" component={KoCookiePolicy} />
       <Route path="/ko/*" component={KoNotFound} />
       
-      {/* 404 page for non-matched routes */}
-      <Route component={NotFound} />
+      {/* Language-aware 404 redirect for non-matched routes */}
+      <Route component={LanguageAwareNotFound} />
     </Switch>
   );
 }
