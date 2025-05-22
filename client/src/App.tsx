@@ -60,9 +60,16 @@ function LanguageAwareNotFound() {
   const { language } = useLanguage();
   const [, navigate] = useLocation();
   
+  // Use single-run effect to avoid infinite loops
   useEffect(() => {
-    navigate(`/${language}/*`);
-  }, [language, navigate]);
+    // Redirect once to the appropriate language 404 page
+    if (['en', 'ja', 'ko'].includes(language)) {
+      navigate(`/${language}/not-found`, { replace: true });
+    } else {
+      // Default to English if language is not supported
+      navigate('/en/not-found', { replace: true });
+    }
+  }, []); // Empty dependency array ensures this only runs once
   
   return null;
 }
@@ -97,6 +104,7 @@ function Router() {
       <Route path="/en/privacy-policy" component={EnPrivacyPolicy} />
       <Route path="/en/terms-of-service" component={EnTermsOfService} />
       <Route path="/en/cookie-policy" component={EnCookiePolicy} />
+      <Route path="/en/not-found" component={EnNotFound} />
       <Route path="/en/*" component={EnNotFound} />
       
       {/* Japanese Routes */}
@@ -109,6 +117,7 @@ function Router() {
       <Route path="/ja/privacy-policy" component={JaPrivacyPolicy} />
       <Route path="/ja/terms-of-service" component={JaTermsOfService} />
       <Route path="/ja/cookie-policy" component={JaCookiePolicy} />
+      <Route path="/ja/not-found" component={JaNotFound} />
       <Route path="/ja/*" component={JaNotFound} />
       
       {/* Korean Routes */}
@@ -121,6 +130,7 @@ function Router() {
       <Route path="/ko/privacy-policy" component={KoPrivacyPolicy} />
       <Route path="/ko/terms-of-service" component={KoTermsOfService} />
       <Route path="/ko/cookie-policy" component={KoCookiePolicy} />
+      <Route path="/ko/not-found" component={KoNotFound} />
       <Route path="/ko/*" component={KoNotFound} />
       
       {/* Language-aware 404 redirect for non-matched routes */}
