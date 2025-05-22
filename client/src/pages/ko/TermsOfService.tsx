@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 
 export default function KoreanTermsOfService() {
   const { i18n } = useTranslation();
@@ -13,84 +14,97 @@ export default function KoreanTermsOfService() {
     }
   }, [i18n]);
 
-return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
       <Navbar />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 pt-32">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">이용 약관</h1>
+      <main className="flex-grow">
+        <section className="py-20 pt-28 bg-gray-50 dark:bg-gray-800">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+              <motion.h1 
+                className="text-3xl font-bold text-gray-900 dark:text-white mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                이용약관
+              </motion.h1>
 
-        <div className="prose dark:prose-invert max-w-none">
-          <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
-            최근 업데이트: 2025년 5월 19일
-          </p>
+              <motion.div 
+                className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-sm"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                  최종 업데이트: 2025년 5월 19일
+                </p>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">소개</h2>
-          <p className="mb-4 text-gray-700 dark:text-gray-300">
-            Hiroshi.dev에 오신 것을 환영합니다. 본 이용 약관("약관")은 귀하의 웹사이트 및 서비스 사용에 관한 규정입니다. 
-            당사 웹사이트에 접속하거나 사용하는 경우 본 약관에 구속되는 것에 동의하는 것으로 간주됩니다. 약관의 일부라도 동의하지 않는 
-            경우 당사 웹사이트에 접속하실 수 없습니다.
-          </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">1. 약관 수락</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  Hiroshi.dev("웹사이트")에 접속하거나 이용함으로써, 귀하는 이 이용약관("약관")에 구속되는 것에 동의합니다.
+                  이 약관에 동의하지 않으시면 웹사이트를 이용하지 마십시오.
+                </p>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">지적 재산권</h2>
-          <p className="mb-4 text-gray-700 dark:text-gray-300">
-            이 웹사이트의 콘텐츠는 텍스트, 이미지, 그래픽, 코드, 디자인 등을 포함하되 이에 국한되지 않으며, 
-            Hiroshi.dev 소유 또는 라이선스를 가지고 있으며 저작권, 상표 및 기타 지적 재산권 법률로 보호됩니다. 
-            사전 서면 동의 없이 웹사이트의 자료를 복사, 배포, 수정, 파생물 제작, 공개 전시, 공개 실행, 재게시, 다운로드, 
-            저장, 전송할 수 없습니다.
-          </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">2. 약관 변경</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  당사는 언제든지 이 약관을 수정할 권리를 보유합니다. 변경사항은 웹사이트에 게시되는 즉시 효력을 발생합니다.
+                  변경 후에도 웹사이트를 계속 이용하는 경우, 귀하는 새로운 약관을 수락한 것으로 간주됩니다.
+                </p>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">사용자 기여</h2>
-          <p className="mb-4 text-gray-700 dark:text-gray-300">
-            피드백이나 메세지와 같은 컨텐츠를 웹사이트에 제출할 경우, 당사의 개인정보 보호정책과 일치하는 목적으로 사용할 수 있습니다. 
-            귀하는 귀하의 컨텐츠에 대한 소유권을 유지하나, 전 세계 매체에서 해당 컨텐츠를 사용할 수 있는 비독점적, 로열티 프리, 
-            영구적, 불가역적, 완전 양도 가능한 권리를 당사에 제공합니다.
-          </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">3. 웹사이트 이용</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  귀하는 합법적인 목적으로만 웹사이트를 이용할 수 있습니다. 다음 행위는 금지됩니다:
+                </p>
+                <ul className="list-disc pl-6 mb-4 text-gray-700 dark:text-gray-300">
+                  <li className="mb-2">적용되는 법률이나 규정을 위반하는 방식으로 웹사이트를 이용하는 행위.</li>
+                  <li className="mb-2">웹사이트의 어떤 부분이나 웹사이트에 연결된 시스템이나 네트워크에 무단으로 접근하려는 시도.</li>
+                  <li className="mb-2">다른 사람의 웹사이트 이용이나 향유를 제한하거나 방해하는 행위.</li>
+                  <li className="mb-2">악성 소프트웨어, 바이러스, 또는 기타 악의적인 코드를 전송하기 위해 웹사이트를 이용하는 행위.</li>
+                </ul>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">금지된 사용</h2>
-          <p className="mb-4 text-gray-700 dark:text-gray-300">
-            귀하는 당사 웹사이트를 다음과 같이 사용하지 않을 것임을 동의합니다:
-          </p>
-          <ul className="list-disc pl-6 mb-6 text-gray-700 dark:text-gray-300">
-            <li className="mb-2">적용 가능한 연방, 주, 지방, 국제법 또는 규정을 위반하는 방식으로</li>
-            <li className="mb-2">명예 훼손, 외설, 음란, 학대, 모욕, 불쾌감, 괴롭힘 또는 기타 반감을 일으키는 자료를 전송하는 용도로</li>
-            <li className="mb-2">당사, 당사 직원, 다른 사용자 또는 다른 사람이나 단체를 사칭하거나 사칭하려고 시도하려는 용도로</li>
-            <li className="mb-2">다른 사람이 웹사이트를 사용하는 것을 제한하거나 방해하는 행위에 참여하는 용도로</li>
-            <li className="mb-2">웹사이트의 일부에 무단으로 접근, 간섭, 손상 또는 방해를 시도하는 용도로</li>
-          </ul>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">4. 지적 재산권</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  텍스트, 그래픽, 로고, 이미지, 소프트웨어를 포함하되 이에 국한되지 않는 웹사이트의 모든 콘텐츠는 
+                  Hiroshi.dev 또는 그 콘텐츠 제공자의 재산이며 국제 저작권 및 지적 재산권법에 의해 보호됩니다.
+                </p>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">보증의 부인</h2>
-          <p className="mb-4 text-gray-700 dark:text-gray-300">
-            웹사이트 및 서비스의 사용은 전적으로 귀하의 책임입니다. 웹사이트 및 서비스는 명시적이거나 묵시적인 보증 없이 "있는 그대로" 및 "사용 가능할 때" 제공됩니다. 
-            당사는 웹사이트가 보안이 유지되거나 오류 또는 바이러스가 없음을 보장하지 않습니다.
-          </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">5. 사용자 콘텐츠</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  웹사이트에 콘텐츠를 제출함으로써(예: 문의 양식이나 댓글을 통해), 귀하는 Hiroshi.dev에게 
+                  웹사이트 상에서 그리고 웹사이트를 통해 해당 콘텐츠를 사용, 수정, 공개적으로 표시, 복제, 배포할 수 있는 
+                  비독점적, 무료, 영구적, 전 세계적 라이선스를 부여합니다.
+                </p>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">책임 제한</h2>
-          <p className="mb-4 text-gray-700 dark:text-gray-300">
-            관련 법률이 허용하는 최대 한도 내에서, 웹사이트 또는 서비스를 사용함으로써 발생하는 어떠한 손해에 대해서도 당사는 책임을 지지 않습니다. 
-            여기에는 직접적, 간접적, 결과적, 부수적 및 처벌적 손해 등이 포함되며 이에 국한되지 않습니다.
-          </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">6. 면책 조항</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  웹사이트는 명시적이든 묵시적이든 어떠한 종류의 보증 없이 "있는 그대로" 그리고 "사용 가능한 대로" 제공됩니다.
+                  당사는 웹사이트가 오류 없이, 안전하게, 또는 항상 이용 가능하다는 것을 보장하지 않습니다.
+                </p>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">배상</h2>
-          <p className="mb-4 text-gray-700 dark:text-gray-300">
-            귀하는 본 약관의 위반이나 웹사이트 사용과 관련하여 발생하는 모든 청구, 책임, 손해, 판결, 상, 손실, 비용, 경비 또는 수수료로부터 당사를 방어하고 배상하며 
-            무해하게 보호할 것에 동의합니다.
-          </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">7. 책임의 제한</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  법률이 허용하는 최대 범위 내에서, Hiroshi.dev는 웹사이트 이용으로 인해 직접적으로나 간접적으로 발생하는
+                  간접적, 우발적, 특별, 결과적, 또는 징벌적 손해배상, 또는 수익이나 수입의 손실에 대해 책임을 지지 않습니다.
+                </p>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">약관의 변경</h2>
-          <p className="mb-4 text-gray-700 dark:text-gray-300">
-            당사는 단독 재량에 따라 이 약관을 수시로 수정하고 업데이트할 수 있습니다. 모든 변경 사항은 게시 즉시 효력을 갖습니다. 
-            수정된 약관이 게시된 후 웹사이트를 계속 사용하면 변경 사항을 수락하고 동의하는 것으로 간주됩니다.
-          </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">8. 준거법</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  이 약관은 법률 충돌 규정에 관계없이 일본 법률에 따라 해석되고 규율됩니다.
+                </p>
 
-          <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">문의하기</h2>
-          <p className="mb-4 text-gray-700 dark:text-gray-300">
-            약관에 관한 질문은 이메일로 문의해주시기 바랍니다:
-          </p>
-          <p className="text-gray-700 dark:text-gray-300">
-            이메일: terms@hiroshi.dev
-          </p>
-        </div>
-      </div>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">9. 문의하기</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  이 약관에 대해 질문이 있으시면 다음으로 문의하십시오:
+                </p>
+                <p className="text-gray-700 dark:text-gray-300">
+                  이메일: legal@hiroshi.dev
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      </main>
       <Footer />
     </div>
   );

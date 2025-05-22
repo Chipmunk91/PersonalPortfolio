@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 
 export default function JapaneseTermsOfService() {
   const { i18n } = useTranslation();
@@ -14,88 +15,97 @@ export default function JapaneseTermsOfService() {
   }, [i18n]);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-          <Navbar />
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 pt-32">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">利用規約</h1>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
+      <Navbar />
+      <main className="flex-grow">
+        <section className="py-20 pt-28 bg-gray-50 dark:bg-gray-800">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+              <motion.h1 
+                className="text-3xl font-bold text-gray-900 dark:text-white mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                利用規約
+              </motion.h1>
 
-            <div className="prose dark:prose-invert max-w-none">
-              <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
-                最終更新日: 2025年5月19日
-              </p>
+              <motion.div 
+                className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-sm"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                  最終更新日：2025年5月19日
+                </p>
 
-              <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">はじめに</h2>
-              <p className="mb-4 text-gray-700 dark:text-gray-300">
-                Hiroshi.devへようこそ。この利用規約（以下「規約」）は、当社のウェブサイトおよびサービスをご利用になる際の条件を定めるものです。 
-                当社のウェブサイトにアクセスまたは使用することにより、これらの規約に同意したものとみなされます。 
-                規約のいずれかの部分に同意しない場合、当社のウェブサイトへのアクセスは許可されません。
-              </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">1. 規約の承諾</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  Hiroshi.dev（「本ウェブサイト」）にアクセスまたは利用することにより、あなたはこれらの利用規約（「本規約」）に拘束されることに同意するものとします。
+                  本規約に同意しない場合は、本ウェブサイトを利用しないでください。
+                </p>
 
-              <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">知的財産</h2>
-              <p className="mb-4 text-gray-700 dark:text-gray-300">
-                本ウェブサイトのコンテンツ、テキスト、画像、グラフィック、コードおよびデザインを含むがこれに限定されないものは、Hiroshi.devが所有またはライセンスを受け、
-                著作権、商標法、その他の知的財産法により保護されています。
-                当社の事前の書面による同意なしに、当社のウェブサイト上の資料を複製、配布、変更、派生作品の作成、公に表示、
-                または送信することはできません。
-              </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">2. 規約の変更</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  当社は、いつでも本規約を変更する権利を留保します。変更は本ウェブサイトに掲載された時点で直ちに有効となります。
+                  変更後も本ウェブサイトを継続して利用することにより、あなたは新しい規約を承諾したものとみなされます。
+                </p>
 
-              <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">ユーザの投稿</h2>
-              <p className="mb-4 text-gray-700 dark:text-gray-300">
-                当社のウェブサイトに送信したコンテンツ（コメントやメッセージなど）は、
-                プライバシーポリシーに従った任意の目的で利用させていただきます。 
-                お客様はコンテンツの所有権を保持しますが、当社は当該コンテンツを使用、複製、変更、適応、公開、翻訳、
-                派生作品を作成し、世界中のあらゆるメディアで分配および表示するための非排他的、ロイヤリティフリー、
-                永久的、取消不可能かつ完全にサブライセンス可能な権利を与えていただきます。
-              </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">3. ウェブサイトの利用</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  あなたは合法的な目的のためにのみ本ウェブサイトを利用することができます。以下の行為は禁止されています：
+                </p>
+                <ul className="list-disc pl-6 mb-4 text-gray-700 dark:text-gray-300">
+                  <li className="mb-2">適用される法律や規制に違反するような方法での本ウェブサイトの利用。</li>
+                  <li className="mb-2">本ウェブサイトの任意の部分、またはウェブサイトに接続されているシステムやネットワークへの不正アクセスの試み。</li>
+                  <li className="mb-2">他者による本ウェブサイトの利用や享受を制限または妨げるような行為。</li>
+                  <li className="mb-2">マルウェア、ウイルス、その他の悪意のあるコードを送信するための本ウェブサイトの使用。</li>
+                </ul>
 
-              <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">禁止事項</h2>
-              <p className="mb-4 text-gray-700 dark:text-gray-300">
-                当社のウェブサイトを以下の目的で使用しないことに同意する:
-              </p>
-              <ul className="list-disc pl-6 mb-6 text-gray-700 dark:text-gray-300">
-                <li className="mb-2">適用される連邦法、州法、地方法、または国際法、規制に違反する方法で使用すること。</li>
-                <li className="mb-2">中傷的、わいせつ、わい談、虐待的、攻撃的、嫌がらせや、その他不適切な資料を送信すること。</li>
-                <li className="mb-2">私たちまたは他のユーザーのなりすまし、または他の人物や団体になりすますこと。</li>
-                <li className="mb-2">誰かのウェブサイトの使用楽しみを制約または妨げるその他の行為を行うこと。</li>
-                <li className="mb-2">ウェブサイトの一部に不正なアクセスを試みること、またはこれを妨害、損傷または乱すこと。</li>
-              </ul>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">4. 知的財産</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  テキスト、グラフィック、ロゴ、画像、ソフトウェアを含む（ただしこれらに限定されない）本ウェブサイト上のすべてのコンテンツは、
+                  Hiroshi.devまたはそのコンテンツ提供者の財産であり、国際的な著作権および知的財産法によって保護されています。
+                </p>
 
-              <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">保証の否認</h2>
-              <p className="mb-4 text-gray-700 dark:text-gray-300">
-                お客様による当社のウェブサイトおよびサービスの利用はお客様自身のリスクとします。
-                本ウェブサイトおよびサービスは「現状のまま」および「利用可能な場合」に限り提供され、あらゆる種類の保証を伴うものではありません。
-                当社は、本ウェブサイトが安全またはエラーやウイルスからのフリーであることを保証しません。
-              </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">5. ユーザーコンテンツ</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  本ウェブサイトにコンテンツを提出すること（例：問い合わせフォームやコメントを通じて）により、あなたはHiroshi.devに対し、
+                  ウェブサイト上およびウェブサイトを通じて、そのようなコンテンツを使用、修正、公開表示、複製、および配布するための
+                  非独占的、無償、永続的、および世界的なライセンスを付与します。
+                </p>
 
-              <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">責任の制限</h2>
-              <p className="mb-4 text-gray-700 dark:text-gray-300">
-                適用される法の最大限の範囲内で、当社は、本ウェブサイトおよびサービスのご利用により生じる損害について一切責任を負いません。
-                これには、直接的、間接的、または結果的損害、付随的損害、及び懲罰的損害賠償が含まれますが、これに限定されません。
-              </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">6. 免責事項</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  本ウェブサイトは「現状のまま」「利用可能な状態で」提供され、明示または黙示を問わず、いかなる種類の保証もありません。
+                  当社は、本ウェブサイトがエラーのないこと、安全であること、または常に利用可能であることを保証するものではありません。
+                </p>
 
-              <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">保証の否認</h2>
-              <p className="mb-4 text-gray-700 dark:text-gray-300">
-                お客様は、これらの規約の違反またはウェブサイトの使用に起因するあらゆる請求、責任、損害、判断、
-                賞、損失、費用、または手数料から当社を防御、補償し、無害なものとすることに同意します。
-              </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">7. 責任の制限</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  法律で許可される最大限の範囲において、Hiroshi.devは、本ウェブサイトの使用から直接的または間接的に発生した
+                  いかなる間接的、偶発的、特別、結果的、または懲罰的損害賠償、または利益や収入のいかなる損失についても責任を負いません。
+                </p>
 
-              <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">規約の変更</h2>
-              <p className="mb-4 text-gray-700 dark:text-gray-300">
-                当社は、これらの規約を随時当社の単独の裁量で改訂および更新することができます。
-                すべての変更は、当社が投稿したときに直ちに有効となります。
-                改訂された規約が投稿された後も、ウェブサイトの継続的な利用は、変更に同意したものとみなされます。
-              </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">8. 準拠法</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  本規約は、法の抵触に関する規定にかかわらず、日本国の法律に従って解釈され、それに準拠するものとします。
+                </p>
 
-              <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">お問い合わせ</h2>
-              <p className="mb-4 text-gray-700 dark:text-gray-300">
-                規約についてご不明な点がございましたら、次の宛先までお問い合わせください。
-              </p>
-              <p className="text-gray-700 dark:text-gray-300">
-                メール: terms@hiroshi.dev
-              </p>
+                <h2 className="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-white">9. お問い合わせ</h2>
+                <p className="mb-4 text-gray-700 dark:text-gray-300">
+                  本規約に関するご質問がございましたら、以下までお問い合わせください：
+                </p>
+                <p className="text-gray-700 dark:text-gray-300">
+                  メール: legal@hiroshi.dev
+                </p>
+              </motion.div>
             </div>
           </div>
-          <Footer />
-        </div>
-      );
-    }
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+}
