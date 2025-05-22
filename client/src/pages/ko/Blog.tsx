@@ -29,12 +29,12 @@ export default function KoreanBlog() {
   const [, params] = useRoute<{ id: string }>('/ko/blog/:id');
   const { i18n } = useTranslation();
   
-  // Ensure we're using Korean
+  // Ensure we're using Korean - only run this once
   useEffect(() => {
     if (i18n.language !== 'ko') {
       i18n.changeLanguage('ko');
     }
-  }, [i18n]);
+  }, []);
 
   // Blog post view states
   const [post, setPost] = useState<BlogPostType | undefined>(undefined);
@@ -72,21 +72,9 @@ export default function KoreanBlog() {
   // If viewing a specific blog post
   if (params && params.id) {
     if (!post) {
-      return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-          <Navbar />
-          <div className="container mx-auto px-4 py-16">
-            <div className="text-center">
-              <h1 className="text-3xl font-bold">블로그 게시물을 찾을 수 없습니다</h1>
-              <p className="mt-4 mb-8">찾고 계신 블로그 게시물이 존재하지 않거나 삭제되었을 수 있습니다.</p>
-              <Button onClick={() => setLocation('/ko/blog')}>
-                <ChevronLeft className="mr-2 h-4 w-4" /> 블로그로 돌아가기
-              </Button>
-            </div>
-          </div>
-          <Footer />
-        </div>
-      );
+      // Redirect to the main blog page if post is not found
+      setLocation('/ko/blog');
+      return null;
     }
 
     return (
