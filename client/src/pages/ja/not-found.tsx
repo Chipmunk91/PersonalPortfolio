@@ -19,8 +19,18 @@ export default function JapaneseNotFound() {
 
   // Function to handle going back
   const handleGoBack = () => {
-    // Simply navigate to the blog list - more reliable than history.back()
-    setLocation('/ja/blog');
+    // Check if we can extract a section from the current URL
+    const currentPath = window.location.pathname;
+    const segments = currentPath.split('/');
+    
+    // If we have at least a language and section (like /ja/blog/123)
+    if (segments.length >= 3) {
+      // Go back to the section's main page (like /ja/blog or /ja/projects)
+      setLocation(`/ja/${segments[2]}`);
+    } else {
+      // Default fallback to home
+      setLocation('/ja');
+    }
   };
 
   return (

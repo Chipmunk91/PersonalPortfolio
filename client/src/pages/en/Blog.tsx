@@ -80,6 +80,13 @@ export default function EnglishBlog() {
     }
   }, [params, setLocation]);
 
+  // Scroll to top when viewing a blog post - outside of conditional render
+  useEffect(() => {
+    if (params?.id && post) {
+      window.scrollTo(0, 0);
+    }
+  }, [params?.id, post]);
+
   // If viewing a specific blog post
   if (params && params.id) {
     // If post not found, show loading spinner while redirect happens
@@ -90,11 +97,6 @@ export default function EnglishBlog() {
         </div>
       );
     }
-
-    // Scroll to top when viewing a blog post
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, [post]);
     
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-800">

@@ -19,8 +19,18 @@ export default function EnglishNotFound() {
 
   // Function to handle going back
   const handleGoBack = () => {
-    // Simply navigate to the blog list - more reliable than history.back()
-    setLocation('/en/blog');
+    // Check if we can extract a section from the current URL
+    const currentPath = window.location.pathname;
+    const segments = currentPath.split('/');
+    
+    // If we have at least a language and section (like /en/blog/123)
+    if (segments.length >= 3) {
+      // Go back to the section's main page (like /en/blog or /en/projects)
+      setLocation(`/en/${segments[2]}`);
+    } else {
+      // Default fallback to home
+      setLocation('/en');
+    }
   };
 
   return (
