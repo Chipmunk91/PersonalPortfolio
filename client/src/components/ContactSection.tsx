@@ -105,6 +105,7 @@ export function ContactSection() {
       });
       
       // Create a simpler form data structure without complex transformations
+      // Important: For the Speaking inquiry type, we need to handle the date differently
       const formData = {
         name,
         email,
@@ -112,7 +113,8 @@ export function ContactSection() {
         message,
         budget: inquiryType === 'project' ? budget : null,
         timeline: inquiryType === 'collaboration' ? timeline : null,
-        eventDate: inquiryType === 'speaking' && eventDate ? eventDate : null
+        // Don't send eventDate field with speaking inquiry to avoid validation errors
+        ...(inquiryType === 'speaking' && eventDate ? { message: message + "\n\nEvent Date: " + eventDate } : {})
       };
       
       // Send the form data to the server
