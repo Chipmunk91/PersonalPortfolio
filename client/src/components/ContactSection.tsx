@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -32,20 +32,37 @@ export function ContactSection() {
   const { t } = useTranslation('contact');
   const { toast } = useToast();
   
-  // Form state
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [inquiryType, setInquiryType] = useState('');
-  const [message, setMessage] = useState('');
-  const [budget, setBudget] = useState('');
-  const [timeline, setTimeline] = useState('');
-  const [eventDate, setEventDate] = useState('');
+  // Form state - use localStorage to persist form data between submissions
+  const [name, setName] = useState(() => localStorage.getItem('contact_name') || '');
+  const [email, setEmail] = useState(() => localStorage.getItem('contact_email') || '');
+  const [inquiryType, setInquiryType] = useState(() => localStorage.getItem('contact_inquiryType') || '');
+  const [message, setMessage] = useState(() => localStorage.getItem('contact_message') || '');
+  const [budget, setBudget] = useState(() => localStorage.getItem('contact_budget') || '');
+  const [timeline, setTimeline] = useState(() => localStorage.getItem('contact_timeline') || '');
+  const [eventDate, setEventDate] = useState(() => localStorage.getItem('contact_eventDate') || '');
+  
+  // Save form data to localStorage when it changes
+  useEffect(() => {
+    localStorage.setItem('contact_name', name);
+    localStorage.setItem('contact_email', email);
+    localStorage.setItem('contact_inquiryType', inquiryType);
+    localStorage.setItem('contact_message', message);
+    localStorage.setItem('contact_budget', budget);
+    localStorage.setItem('contact_timeline', timeline);
+    localStorage.setItem('contact_eventDate', eventDate);
+  }, [name, email, inquiryType, message, budget, timeline, eventDate]);
   
   // Form submission state
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
   const [error, setError] = useState<string | null>(null);
   
   const resetForm = () => {
+    // Don't clear the form after submission since we want to retain the data
+    setError(null);
+  };
+  
+  // Function to completely clear the form data if user wants to start fresh
+  const clearFormData = () => {
     setName('');
     setEmail('');
     setInquiryType('');
@@ -54,6 +71,15 @@ export function ContactSection() {
     setTimeline('');
     setEventDate('');
     setError(null);
+    
+    // Also clear from localStorage
+    localStorage.removeItem('contact_name');
+    localStorage.removeItem('contact_email');
+    localStorage.removeItem('contact_inquiryType');
+    localStorage.removeItem('contact_message');
+    localStorage.removeItem('contact_budget');
+    localStorage.removeItem('contact_timeline');
+    localStorage.removeItem('contact_eventDate');
   };
   
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,9 +94,10 @@ export function ContactSection() {
         email,
         inquiryType,
         message,
-        ...(inquiryType === 'project' ? { budget } : {}),
-        ...(inquiryType === 'collaboration' ? { timeline } : {}),
-        ...(inquiryType === 'speaking' ? { eventDate: eventDate ? new Date(eventDate).toISOString() : null } : {})
+        // Include optional fields based on inquiry type
+        budget: inquiryType === 'project' ? budget : null,
+        timeline: inquiryType === 'collaboration' ? timeline : null,
+        eventDate: inquiryType === 'speaking' && eventDate ? eventDate : null
       };
       
       // Send the form data to the server
@@ -136,9 +163,17 @@ export function ContactSection() {
             <p className="text-gray-600 dark:text-gray-400 mb-6">
               {t('success.message')}
             </p>
-            <Button onClick={() => setFormStatus('idle')}>
-              {t('success.sendAnother')}
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button onClick={() => setFormStatus('idle')}>
+                {t('success.sendAnother')}
+              </Button>
+              <Button variant="outline" onClick={() => {
+                clearFormData();
+                setFormStatus('idle');
+              }}>
+                Clear Form Data
+              </Button>
+            </div>
           </div>
         ) : (
           <form className="space-y-6" onSubmit={handleSubmit}>
