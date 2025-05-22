@@ -45,19 +45,12 @@ export default function JapaneseNotFound() {
           <p className="text-gray-600 dark:text-gray-400 mb-8">
             {t('notFound.message', "申し訳ありませんが、お探しのページが見つかりませんでした。")}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Button asChild variant="outline">
               <Link href="/ja">
                 <HomeIcon className="w-4 h-4 mr-2" />
                 {t('notFound.goHome', 'ホームへ')}
               </Link>
-            </Button>
-            <Button 
-              onClick={handleGoBack}
-              className="cursor-pointer"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              {t('notFound.goBack', '戻る')}
             </Button>
           </div>
         </div>

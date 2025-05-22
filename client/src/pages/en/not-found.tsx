@@ -45,19 +45,12 @@ export default function EnglishNotFound() {
           <p className="text-gray-600 dark:text-gray-400 mb-8">
             {t('notFound.message', "Sorry, we couldn't find the page you're looking for.")}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Button asChild variant="outline">
               <Link href="/en">
                 <HomeIcon className="w-4 h-4 mr-2" />
                 {t('notFound.goHome', 'Go Home')}
               </Link>
-            </Button>
-            <Button 
-              onClick={handleGoBack}
-              className="cursor-pointer"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              {t('notFound.goBack', 'Go Back')}
             </Button>
           </div>
         </div>

@@ -45,19 +45,12 @@ export default function KoreanNotFound() {
           <p className="text-gray-600 dark:text-gray-400 mb-8">
             {t('notFound.message', "죄송합니다. 요청하신 페이지를 찾을 수 없습니다.")}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Button asChild variant="outline">
               <Link href="/ko">
                 <HomeIcon className="w-4 h-4 mr-2" />
                 {t('notFound.goHome', '홈으로')}
               </Link>
-            </Button>
-            <Button 
-              onClick={handleGoBack}
-              className="cursor-pointer"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              {t('notFound.goBack', '돌아가기')}
             </Button>
           </div>
         </div>
