@@ -17,7 +17,7 @@ export default function JapaneseContact() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
       <Navbar />
-      <main className="flex-grow">
+      <main className="flex-grow pt-20">
         <ContactSection />
       </main>
       <Footer />
