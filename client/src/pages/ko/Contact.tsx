@@ -15,9 +15,9 @@ export default function KoreanContact() {
   }, [i18n]);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
+    <div className="min-h-screen">
       <Navbar />
-      <main className="flex-grow pt-28">
+      <main className="py-20 pt-28 bg-gray-50 dark:bg-gray-800">
         <ContactSection />
       </main>
       <Footer />
