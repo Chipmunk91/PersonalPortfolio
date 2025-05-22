@@ -22,7 +22,7 @@ export function Footer() {
             </p>
           </div>
           
-          <div className="flex flex-wrap justify-center gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div>
               <h4 className="font-medium mb-3">{t('footer.navigation')}</h4>
               <ul className="space-y-2">
