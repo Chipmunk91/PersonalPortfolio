@@ -69,48 +69,46 @@ export default function KoreanProjects() {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <div className="pt-20">
-        <section id="projects" className="py-20 bg-gray-50 dark:bg-gray-800">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div 
-              className="text-center mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">주요 프로젝트</h2>
-              <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-                복잡한 AI 시스템을 더 이해하기 쉽고 접근하기 쉽게 만드는 인터랙티브 시각화 및 도구들입니다.
-              </p>
-            </motion.div>
-            
-            {/* Project Filters */}
-            <ProjectFilterSection
-              filter={filter}
-              setFilter={setFilter}
-              categories={allCategories}
-              setCurrentPage={setCurrentPage}
-            />
-            
-            {/* Project Carousel */}
-            <ProjectCarousel
-              projects={filteredProjects}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              projectsPerPage={projectsPerPage}
-              handleProjectSelect={handleProjectSelect}
-            />
-            
-            {/* Project Playground */}
-            <ProjectPlayground
-              selectedProject={selectedProject}
-              playgroundConfig={playgroundConfig}
-              onConfigChange={setPlaygroundConfig}
-            />
-          </div>
-        </section>
-      </div>
+      <section id="projects" className="py-20 pt-28 bg-gray-50 dark:bg-gray-800">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">프로젝트</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+              복잡한 AI 시스템을 더 쉽게 이해하고 접근할 수 있게 하는 인터랙티브 시각화 및 도구.
+            </p>
+          </motion.div>
+          
+          {/* Project Filters */}
+          <ProjectFilterSection
+            filter={filter}
+            setFilter={setFilter}
+            categories={allCategories}
+            setCurrentPage={setCurrentPage}
+          />
+          
+          {/* Project Carousel */}
+          <ProjectCarousel
+            projects={filteredProjects}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            projectsPerPage={projectsPerPage}
+            handleProjectSelect={handleProjectSelect}
+          />
+          
+          {/* Project Playground */}
+          <ProjectPlayground
+            selectedProject={selectedProject}
+            playgroundConfig={playgroundConfig}
+            onConfigChange={setPlaygroundConfig}
+          />
+        </div>
+      </section>
       <Footer />
     </div>
   );
