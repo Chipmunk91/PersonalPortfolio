@@ -127,6 +127,30 @@ export function getProjectsByLanguage(language: string = 'en'): ProjectType[] {
   });
 }
 
+// Function to get language-specific playground description
+export function getPlaygroundDescription(dirName: string, language: string = 'en'): string | null {
+  // Get all projects for the current language
+  const languageProjects = getProjectsByLanguage(language);
+  
+  // Find the specific project by directory name
+  const project = languageProjects.find(p => p.dirName === dirName);
+  
+  if (project && project.description) {
+    return project.description;
+  }
+  
+  // If no description is found in the requested language, try English as fallback
+  if (language !== 'en') {
+    const englishProjects = getProjectsByLanguage('en');
+    const englishProject = englishProjects.find(p => p.dirName === dirName);
+    if (englishProject && englishProject.description) {
+      return englishProject.description;
+    }
+  }
+  
+  return null;
+}
+
 // Function to parse frontmatter from Markdown content
 export function parseFrontMatter(markdown: string): { 
   frontMatter: Record<string, any>;
