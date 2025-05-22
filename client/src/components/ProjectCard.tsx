@@ -126,19 +126,21 @@ export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
           </div>
         </div>
         
-        <div className="p-6 flex flex-col h-[280px]">
-          <div className="flex justify-between items-start mb-4">
+        <div className="p-6 flex flex-col h-[300px]">
+          <div className="flex justify-between items-start mb-3">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white">{project.title}</h3>
             <span className={`px-2 py-1 text-xs rounded-full ${getCategoryColor(project.categories[0].toLowerCase())}`}>
               {project.categories[0].charAt(0).toUpperCase() + project.categories[0].slice(1)}
             </span>
           </div>
           
-          <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
-            {project.description}
-          </p>
+          <div className="mb-3 h-32 overflow-y-auto">
+            <p className="text-gray-600 dark:text-gray-400">
+              {project.description}
+            </p>
+          </div>
           
-          <div className="h-16 overflow-y-auto mb-4">
+          <div className="h-14 overflow-y-auto mb-3">
             <div className="flex flex-wrap gap-2">
               {project.technologies.map((tech, i) => (
                 <div key={i} className="inline-flex items-center justify-center h-6 px-2 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs rounded-full">
