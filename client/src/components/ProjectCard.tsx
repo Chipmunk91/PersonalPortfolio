@@ -29,6 +29,43 @@ export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
   const { language } = useLanguage();
   const [paperContent, setPaperContent] = useState<string | null>(null);
   
+  // Localized text for buttons and labels
+  const localizedText = {
+    en: {
+      liveDemo: "Live Demo",
+      paper: "Paper",
+      source: "Source",
+      researchPaper: "Research Paper",
+      videoPreview: "Video Preview",
+      watchDemo: "Watch a demonstration of the project in action",
+      videoUnavailable: "Video preview not available",
+      close: "Close",
+      viewLiveDemo: "View Live Demo"
+    },
+    ja: {
+      liveDemo: "ライブデモ",
+      paper: "論文",
+      source: "ソース",
+      researchPaper: "研究論文",
+      videoPreview: "ビデオプレビュー",
+      watchDemo: "プロジェクトの実際の動作デモを見る",
+      videoUnavailable: "ビデオプレビューはありません",
+      close: "閉じる",
+      viewLiveDemo: "ライブデモを見る"
+    },
+    ko: {
+      liveDemo: "라이브 데모",
+      paper: "논문",
+      source: "소스",
+      researchPaper: "연구 논문",
+      videoPreview: "비디오 미리보기",
+      watchDemo: "프로젝트 작동 방식 데모 보기",
+      videoUnavailable: "비디오 미리보기를 사용할 수 없음",
+      close: "닫기",
+      viewLiveDemo: "라이브 데모 보기"
+    }
+  };
+  
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'interactive': 
@@ -117,7 +154,7 @@ export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
               className="text-primary-500 hover:text-primary-600 font-medium text-sm flex items-center gap-1 transition-colors"
               onClick={(e) => e.stopPropagation()}
             >
-              <span>Live Demo</span>
+              <span>{localizedText[language as keyof typeof localizedText].liveDemo}</span>
               <ExternalLink className="h-3 w-3" />
             </a>
             
@@ -135,7 +172,7 @@ export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
                 className="text-secondary-500 hover:text-secondary-600 dark:text-secondary-400 dark:hover:text-secondary-300 font-medium text-sm flex items-center gap-1 transition-colors"
               >
                 <FileText className="h-3 w-3" />
-                <span>Paper</span>
+                <span>{localizedText[language as keyof typeof localizedText].paper}</span>
               </button>
               
               <a 
@@ -146,7 +183,7 @@ export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
                 onClick={(e) => e.stopPropagation()}
               >
                 <Github className="h-3 w-3" />
-                <span>Source</span>
+                <span>{localizedText[language as keyof typeof localizedText].source}</span>
               </a>
             </div>
           </div>
@@ -157,7 +194,7 @@ export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
       <Dialog open={showTheory} onOpenChange={setShowTheory}>
         <DialogContent className="w-full sm:w-[80vw] sm:max-w-[80%] max-h-[80vh] overflow-y-auto" style={{ maxWidth: "80%" }}>
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">{project.title} - Research Paper</DialogTitle>
+            <DialogTitle className="text-2xl font-bold">{project.title} - {localizedText[language as keyof typeof localizedText].researchPaper}</DialogTitle>
           </DialogHeader>
           
           <div className="prose dark:prose-invert max-w-none mt-4">
@@ -235,7 +272,9 @@ function tSNE(data, perplexity = 30, iterations = 1000) {
           </div>
           
           <DialogFooter className="mt-6">
-            <Button onClick={() => setShowTheory(false)} className="px-6">Close</Button>
+            <Button onClick={() => setShowTheory(false)} className="px-6">
+              {localizedText[language as keyof typeof localizedText].close}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -244,9 +283,9 @@ function tSNE(data, perplexity = 30, iterations = 1000) {
       <Dialog open={showVideoModal} onOpenChange={setShowVideoModal}>
         <DialogContent className="max-w-4xl">
           <DialogHeader>
-            <DialogTitle>{project.title} - Video Preview</DialogTitle>
+            <DialogTitle>{project.title} - {localizedText[language as keyof typeof localizedText].videoPreview}</DialogTitle>
             <DialogDescription>
-              Watch a demonstration of the project in action
+              {localizedText[language as keyof typeof localizedText].watchDemo}
             </DialogDescription>
           </DialogHeader>
           
@@ -269,7 +308,7 @@ function tSNE(data, perplexity = 30, iterations = 1000) {
                 return (
                   <div className="flex items-center justify-center h-full text-white">
                     <PlayCircle size={48} className="opacity-50" />
-                    <p className="ml-2">Video preview not available</p>
+                    <p className="ml-2">{localizedText[language as keyof typeof localizedText].videoUnavailable}</p>
                   </div>
                 );
               }
@@ -278,11 +317,11 @@ function tSNE(data, perplexity = 30, iterations = 1000) {
           
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowVideoModal(false)}>
-              Close
+              {localizedText[language as keyof typeof localizedText].close}
             </Button>
             <Button asChild>
               <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
-                View Live Demo
+                {localizedText[language as keyof typeof localizedText].viewLiveDemo}
               </a>
             </Button>
           </DialogFooter>

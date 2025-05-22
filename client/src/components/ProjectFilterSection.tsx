@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ProjectFilterSectionProps {
   filter: string;
@@ -14,6 +15,15 @@ export function ProjectFilterSection({
   categories,
   setCurrentPage,
 }: ProjectFilterSectionProps) {
+  const { language } = useLanguage();
+  
+  // Localized text for "All Projects" button
+  const allProjectsText = {
+    en: "All Projects",
+    ja: "すべてのプロジェクト",
+    ko: "모든 프로젝트"
+  };
+  
   return (
     <motion.div 
       className="flex flex-wrap justify-center gap-3 mb-10"
@@ -30,7 +40,7 @@ export function ProjectFilterSection({
           setCurrentPage(0); // Reset to first page when changing filter
         }}
       >
-        All Projects
+        {allProjectsText[language as keyof typeof allProjectsText]}
       </Button>
       
       {/* Generate filter buttons for each unique category */}
