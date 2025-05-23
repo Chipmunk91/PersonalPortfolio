@@ -22,10 +22,11 @@ export function Footer() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          {/* Always display navigation and legal side by side even on smallest screens */}
+          <div className="grid grid-cols-2 gap-4 sm:gap-8 w-full max-w-md">
             <div>
-              <h4 className="font-medium mb-3">{t('footer.navigation')}</h4>
-              <ul className="space-y-2">
+              <h4 className="font-medium mb-3 text-center sm:text-left">{t('footer.navigation')}</h4>
+              <ul className="space-y-2 text-center sm:text-left">
                 <li><Link href={`/${language}/about`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.about')}</Link></li>
                 <li><Link href={`/${language}/projects`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.projects')}</Link></li>
                 <li><Link href={`/${language}/blog`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.blog')}</Link></li>
@@ -34,8 +35,8 @@ export function Footer() {
             </div>
             
             <div>
-              <h4 className="font-medium mb-3">{t('footer.legal')}</h4>
-              <ul className="space-y-2">
+              <h4 className="font-medium mb-3 text-center sm:text-left">{t('footer.legal')}</h4>
+              <ul className="space-y-2 text-center sm:text-left">
                 <li><Link href={`/${language}/privacy-policy`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.privacyPolicy')}</Link></li>
                 <li><Link href={`/${language}/terms-of-service`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.termsOfService')}</Link></li>
                 <li><Link href={`/${language}/cookie-policy`} onClick={() => window.scrollTo(0, 0)} className="text-gray-400 hover:text-white transition-colors">{t('footer.cookiePolicy')}</Link></li>
