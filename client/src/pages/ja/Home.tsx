@@ -29,16 +29,21 @@ export default function JapaneseHome() {
     }
   }, [i18n]);
 
-  // Exit intent detection
+  // Exit intent detection - temporarily disabled
   const handleMouseLeave = (e: MouseEvent) => {
+    // Exit intent popup is disabled for now
+    // Uncomment below to re-enable when needed
+    /*
     if (e.clientY <= 0 && !sessionStorage.getItem("hasShownExitModal")) {
       setIsModalOpen(true);
       sessionStorage.setItem("hasShownExitModal", "true");
     }
+    */
   };
 
   // Add event listener on component mount and remove on unmount
   useEffect(() => {
+    // Event listener is added but the handler function doesn't trigger the popup
     document.addEventListener("mouseleave", handleMouseLeave);
     return () => {
       document.removeEventListener("mouseleave", handleMouseLeave);
