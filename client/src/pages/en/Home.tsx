@@ -170,7 +170,8 @@ export default function EnglishHome() {
       {/* Featured Projects Preview */}
       <section id="featured-projects" className="py-16 bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-end mb-10">
+          {/* Desktop header with side by side layout */}
+          <div className="hidden md:flex justify-between items-end mb-10">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                 Featured Projects
@@ -179,6 +180,22 @@ export default function EnglishHome() {
                 Some of my recent work
               </p>
             </div>
+            <Link href="/en/projects" onClick={() => window.scrollTo(0, 0)}>
+              <Button variant="link" className="text-primary-500">
+                <span>View all projects</span>
+                <ArrowRight className="ml-1 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+          
+          {/* Mobile header with centered layout */}
+          <div className="md:hidden text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              Featured Projects
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              Some of my recent work
+            </p>
             <Link href="/en/projects" onClick={() => window.scrollTo(0, 0)}>
               <Button variant="link" className="text-primary-500">
                 <span>View all projects</span>
@@ -218,7 +235,8 @@ export default function EnglishHome() {
       {/* Featured Blog Posts */}
       <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-end mb-10">
+          {/* Desktop header with side by side layout */}
+          <div className="hidden md:flex justify-between items-end mb-10">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                 Latest Insights
@@ -227,6 +245,22 @@ export default function EnglishHome() {
                 Thoughts and tutorials on AI visualization
               </p>
             </div>
+            <Link href="/en/blog" onClick={() => window.scrollTo(0, 0)}>
+              <Button variant="link" className="text-primary-500">
+                <span>Read all articles</span>
+                <ArrowRight className="ml-1 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+          
+          {/* Mobile header with centered layout */}
+          <div className="md:hidden text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              Latest Insights
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              Thoughts and tutorials on AI visualization
+            </p>
             <Link href="/en/blog" onClick={() => window.scrollTo(0, 0)}>
               <Button variant="link" className="text-primary-500">
                 <span>Read all articles</span>

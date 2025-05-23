@@ -170,7 +170,8 @@ export default function JapaneseHome() {
       {/* Featured Projects Preview */}
       <section id="featured-projects" className="py-16 bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-end mb-10">
+          {/* Desktop header with side by side layout */}
+          <div className="hidden md:flex justify-between items-end mb-10">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                 注目のプロジェクト
@@ -179,6 +180,22 @@ export default function JapaneseHome() {
                 最近の作品をご紹介します
               </p>
             </div>
+            <Link href="/ja/projects" onClick={() => window.scrollTo(0, 0)}>
+              <Button variant="link" className="text-primary-500">
+                <span>すべてのプロジェクトを見る</span>
+                <ArrowRight className="ml-1 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+          
+          {/* Mobile header with centered layout */}
+          <div className="md:hidden text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              注目のプロジェクト
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              最近の作品をご紹介します
+            </p>
             <Link href="/ja/projects" onClick={() => window.scrollTo(0, 0)}>
               <Button variant="link" className="text-primary-500">
                 <span>すべてのプロジェクトを見る</span>
