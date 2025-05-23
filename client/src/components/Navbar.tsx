@@ -4,7 +4,7 @@ import { ThemeToggle } from './ThemeToggle';
 import { LanguageSelector } from './LanguageSelector';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu } from 'lucide-react';
+import { Menu, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -64,9 +64,10 @@ export function Navbar() {
                     <Link href={`/${language}/contact`} onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.contact')}</Link>
                   </div>
                   
-                  {/* Language selector positioned at the bottom with explicit color for light mode */}
-                  <div className="mt-auto pb-8 pt-4 flex justify-center">
-                    <div className="text-gray-800 dark:text-white">
+                  {/* Language selector positioned at the bottom with button styling for visibility */}
+                  <div className="mt-auto pb-8 pt-6 flex justify-center">
+                    <div className="bg-gray-100 dark:bg-gray-800 rounded-md px-4 py-2 flex items-center">
+                      <span className="font-medium text-gray-800 dark:text-white text-sm mr-2">Language:</span>
                       <LanguageSelector />
                     </div>
                   </div>
