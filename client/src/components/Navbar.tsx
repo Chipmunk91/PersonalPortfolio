@@ -56,12 +56,16 @@ export function Navbar() {
                 </Button>
               </SheetTrigger>
               <SheetContent>
-                <div className="flex flex-col space-y-4 mt-8">
-                  <Link href={`/${language}/about`} onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.about')}</Link>
-                  <Link href={`/${language}/projects`} onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.projects')}</Link>
-                  <Link href={`/${language}/blog`} onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.blog')}</Link>
-                  <Link href={`/${language}/contact`} onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.contact')}</Link>
-                  <div className="px-3 py-2 flex items-center">
+                <div className="flex flex-col h-full">
+                  <div className="flex flex-col space-y-4 mt-8">
+                    <Link href={`/${language}/about`} onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.about')}</Link>
+                    <Link href={`/${language}/projects`} onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.projects')}</Link>
+                    <Link href={`/${language}/blog`} onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.blog')}</Link>
+                    <Link href={`/${language}/contact`} onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.contact')}</Link>
+                  </div>
+                  
+                  {/* Language selector positioned at the bottom */}
+                  <div className="mt-auto pb-8 pt-4 flex justify-center">
                     <LanguageSelector />
                   </div>
                 </div>
