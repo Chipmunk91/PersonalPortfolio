@@ -235,7 +235,8 @@ export default function JapaneseHome() {
       {/* Featured Blog Posts */}
       <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-end mb-10">
+          {/* Desktop header with side by side layout */}
+          <div className="hidden md:flex justify-between items-end mb-10">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                 最新のインサイト
@@ -244,6 +245,22 @@ export default function JapaneseHome() {
                 AI可視化に関する考察とチュートリアル
               </p>
             </div>
+            <Link href="/ja/blog" onClick={() => window.scrollTo(0, 0)}>
+              <Button variant="link" className="text-primary-500">
+                <span>すべての記事を読む</span>
+                <ArrowRight className="ml-1 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+          
+          {/* Mobile header with centered layout */}
+          <div className="md:hidden text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              最新のインサイト
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              AI可視化に関する考察とチュートリアル
+            </p>
             <Link href="/ja/blog" onClick={() => window.scrollTo(0, 0)}>
               <Button variant="link" className="text-primary-500">
                 <span>すべての記事を読む</span>

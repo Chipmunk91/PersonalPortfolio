@@ -170,7 +170,8 @@ export default function KoreanHome() {
       {/* Featured Projects Preview */}
       <section id="featured-projects" className="py-16 bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-end mb-10">
+          {/* Desktop header with side by side layout */}
+          <div className="hidden md:flex justify-between items-end mb-10">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                 주요 프로젝트
@@ -179,6 +180,22 @@ export default function KoreanHome() {
                 최근 작업 중 일부를 소개합니다
               </p>
             </div>
+            <Link href="/ko/projects" onClick={() => window.scrollTo(0, 0)}>
+              <Button variant="link" className="text-primary-500">
+                <span>모든 프로젝트 보기</span>
+                <ArrowRight className="ml-1 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+          
+          {/* Mobile header with centered layout */}
+          <div className="md:hidden text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              주요 프로젝트
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              최근 작업 중 일부를 소개합니다
+            </p>
             <Link href="/ko/projects" onClick={() => window.scrollTo(0, 0)}>
               <Button variant="link" className="text-primary-500">
                 <span>모든 프로젝트 보기</span>
@@ -218,7 +235,8 @@ export default function KoreanHome() {
       {/* Featured Blog Posts */}
       <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-end mb-10">
+          {/* Desktop header with side by side layout */}
+          <div className="hidden md:flex justify-between items-end mb-10">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                 최신 인사이트
@@ -227,6 +245,22 @@ export default function KoreanHome() {
                 AI 시각화에 관한 생각과 튜토리얼
               </p>
             </div>
+            <Link href="/ko/blog" onClick={() => window.scrollTo(0, 0)}>
+              <Button variant="link" className="text-primary-500">
+                <span>모든 글 읽기</span>
+                <ArrowRight className="ml-1 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+          
+          {/* Mobile header with centered layout */}
+          <div className="md:hidden text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              최신 인사이트
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              AI 시각화에 관한 생각과 튜토리얼
+            </p>
             <Link href="/ko/blog" onClick={() => window.scrollTo(0, 0)}>
               <Button variant="link" className="text-primary-500">
                 <span>모든 글 읽기</span>
