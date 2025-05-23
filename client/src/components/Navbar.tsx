@@ -4,7 +4,7 @@ import { ThemeToggle } from './ThemeToggle';
 import { LanguageSelector } from './LanguageSelector';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, Globe } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -65,10 +65,8 @@ export function Navbar() {
                   </div>
                   
                   {/* Language selector positioned at the bottom */}
-                  <div className="mt-auto pb-8 pt-6 flex justify-center">
-                    <Link href={`/${language === 'en' ? 'ja' : language === 'ja' ? 'ko' : 'en'}`} className="border border-gray-300 rounded-md px-4 py-2 text-gray-800 dark:text-white flex items-center gap-2">
-                      🌐 {language === 'en' ? 'English' : language === 'ja' ? '日本語' : '한국어'}
-                    </Link>
+                  <div className="mt-auto pb-8 pt-4 flex justify-center">
+                    <LanguageSelector />
                   </div>
                 </div>
               </SheetContent>
