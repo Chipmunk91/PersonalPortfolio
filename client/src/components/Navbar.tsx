@@ -64,12 +64,11 @@ export function Navbar() {
                     <Link href={`/${language}/contact`} onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.contact')}</Link>
                   </div>
                   
-                  {/* Language selector positioned at the bottom with button styling for visibility */}
+                  {/* Language selector positioned at the bottom */}
                   <div className="mt-auto pb-8 pt-6 flex justify-center">
-                    <div className="bg-gray-100 dark:bg-gray-800 rounded-md px-4 py-2 flex items-center">
-                      <span className="font-medium text-gray-800 dark:text-white text-sm mr-2">Language:</span>
-                      <LanguageSelector />
-                    </div>
+                    <Link href={`/${language === 'en' ? 'ja' : language === 'ja' ? 'ko' : 'en'}`} className="border border-gray-300 rounded-md px-4 py-2 text-gray-800 dark:text-white flex items-center gap-2">
+                      🌐 {language === 'en' ? 'English' : language === 'ja' ? '日本語' : '한국어'}
+                    </Link>
                   </div>
                 </div>
               </SheetContent>
