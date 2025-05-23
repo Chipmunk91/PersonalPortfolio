@@ -13,11 +13,11 @@ export function Footer() {
     <footer className="bg-gray-900 text-white py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-          <div className="mb-6 md:mb-0">
+          <div className="mb-6 md:mb-0 text-center md:text-left w-full md:w-auto">
             <Link href={`/${language}`} onClick={() => window.scrollTo(0, 0)} className="text-2xl font-bold">
               Hiroshi<span className="text-primary-500">.dev</span>
             </Link>
-            <p className="text-gray-400 mt-2 max-w-md">
+            <p className="text-gray-400 mt-2 max-w-md mx-auto md:mx-0">
               {t('hero.subtitle')}
             </p>
           </div>
