@@ -76,7 +76,7 @@ export function LanguageSelector() {
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
         <span 
-          className={`flex items-center gap-1.5 cursor-pointer ${linkClasses}`}
+          className={`flex items-center gap-1.5 cursor-pointer text-gray-900 dark:text-white font-medium`}
           aria-label={i18n.t('languageSelector.language')}
         >
           <Globe className="h-4 w-4" />

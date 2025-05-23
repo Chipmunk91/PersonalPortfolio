@@ -66,7 +66,9 @@ export function Navbar() {
                   
                   {/* Language selector positioned at the bottom */}
                   <div className="mt-auto pb-8 pt-4 flex justify-center">
-                    <LanguageSelector />
+                    <div className="text-gray-900 dark:text-white font-medium">
+                      <LanguageSelector />
+                    </div>
                   </div>
                 </div>
               </SheetContent>
