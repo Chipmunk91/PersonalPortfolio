@@ -89,11 +89,6 @@ export function LanguageSelector({ mobileMenu = false }: LanguageSelectorProps) 
         >
           <Globe className="h-4 w-4" />
           <span>{currentLanguage.flag}</span>
-          {mobileMenu && (
-            <span className="ml-1 text-gray-800 dark:text-white">
-              {currentLanguage.code.toUpperCase()}
-            </span>
-          )}
         </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align={mobileMenu ? "center" : "end"} className="w-48">
