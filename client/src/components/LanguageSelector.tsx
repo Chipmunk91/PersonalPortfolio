@@ -12,7 +12,11 @@ import { languageOptions } from '@/lib/i18n';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { type Language } from '@/contexts/LanguageContext';
 
-export function LanguageSelector() {
+interface LanguageSelectorProps {
+  mobileMenu?: boolean;
+}
+
+export function LanguageSelector({ mobileMenu = false }: LanguageSelectorProps) {
   const { i18n } = useTranslation('common');
   const { setLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
@@ -76,14 +80,23 @@ export function LanguageSelector() {
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
         <span 
-          className={`flex items-center gap-1.5 cursor-pointer ${linkClasses}`}
+          className={`flex items-center gap-1.5 cursor-pointer ${
+            mobileMenu 
+              ? "text-gray-800 dark:text-white" 
+              : linkClasses
+          }`}
           aria-label={i18n.t('languageSelector.language')}
         >
           <Globe className="h-4 w-4" />
           <span>{currentLanguage.flag}</span>
+          {mobileMenu && (
+            <span className="ml-1 text-gray-800 dark:text-white">
+              {currentLanguage.code.toUpperCase()}
+            </span>
+          )}
         </span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48">
+      <DropdownMenuContent align={mobileMenu ? "center" : "end"} className="w-48">
         {languageOptions.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
