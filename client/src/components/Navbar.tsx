@@ -4,7 +4,7 @@ import { ThemeToggle } from './ThemeToggle';
 import { LanguageSelector } from './LanguageSelector';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu } from 'lucide-react';
+import { Menu, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -51,7 +51,7 @@ export function Navbar() {
             {/* Mobile menu */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className={`md:hidden ${isScrolled || !isHomepage ? '' : 'text-white'}`}>
+                <Button variant="ghost" size="icon" className="md:hidden">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
@@ -64,33 +64,11 @@ export function Navbar() {
                     <Link href={`/${language}/contact`} onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.contact')}</Link>
                   </div>
                   
-                  {/* Language selector positioned at the bottom with explicit text color for mobile menu */}
-                  <div className="mt-auto pb-8 pt-4 flex justify-center">
-                    <div className="mobile-language-selector">
-                      <span className="flex items-center gap-1.5 cursor-pointer text-gray-900 dark:text-white font-medium">
-                        <Globe className="h-4 w-4" />
-                        <select 
-                          className="bg-transparent text-gray-900 dark:text-white font-medium appearance-none cursor-pointer" 
-                          value={language}
-                          onChange={(e) => {
-                            const newLang = e.target.value as Language;
-                            i18n.changeLanguage(newLang);
-                            setLanguage(newLang);
-                            
-                            // Update URL to reflect language change but keep current page
-                            const currentPath = getPathWithoutLang(location);
-                            const newPath = currentPath === '/' ? `/${newLang}` : `/${newLang}${currentPath}`;
-                            setLocation(newPath);
-                          }}
-                        >
-                          {languages.map((lang) => (
-                            <option key={lang.code} value={lang.code}>
-                              {lang.flag} {lang.name}
-                            </option>
-                          ))}
-                        </select>
-                      </span>
-                    </div>
+                  {/* Language selector positioned at the bottom */}
+                  <div className="mt-auto pb-8 pt-6 flex justify-center">
+                    <Link href={`/${language === 'en' ? 'ja' : language === 'ja' ? 'ko' : 'en'}`} className="border border-gray-300 rounded-md px-4 py-2 text-gray-800 dark:text-white flex items-center gap-2">
+                      🌐 {language === 'en' ? 'English' : language === 'ja' ? '日本語' : '한국어'}
+                    </Link>
                   </div>
                 </div>
               </SheetContent>
