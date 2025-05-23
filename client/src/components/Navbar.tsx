@@ -51,7 +51,11 @@ export function Navbar() {
             {/* Mobile menu */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className={`md:hidden ${isScrolled || !isHomepage ? 'text-gray-900 dark:text-white' : 'text-white dark:text-white'}`}
+                >
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
