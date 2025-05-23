@@ -64,9 +64,11 @@ export function Navbar() {
                     <Link href={`/${language}/contact`} onClick={() => window.scrollTo(0, 0)} className="px-3 py-2 text-base font-medium">{t('nav.contact')}</Link>
                   </div>
                   
-                  {/* Language selector positioned at the bottom */}
+                  {/* Language selector positioned at the bottom with explicit color for light mode */}
                   <div className="mt-auto pb-8 pt-4 flex justify-center">
-                    <LanguageSelector />
+                    <div className="text-gray-800 dark:text-white">
+                      <LanguageSelector />
+                    </div>
                   </div>
                 </div>
               </SheetContent>
